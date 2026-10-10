@@ -33,7 +33,7 @@ CONTACT = {
 
 
 def card_svg(inner, bg):
-    style = (f"<style>@import url('{FONTS_URL}');"
+    style = (f"<style>@import url('{FONTS_URL.replace('&', '&amp;')}');"
              ".n{font-family:Jost,sans-serif;font-weight:500}"
              ".b{font-family:Onest,sans-serif;font-weight:400}"
              ".m{font-family:'JetBrains Mono',monospace;font-weight:500}</style>")
