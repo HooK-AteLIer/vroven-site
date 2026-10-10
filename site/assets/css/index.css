@@ -59,6 +59,7 @@ ul.chip-row { list-style: none; margin: 0; padding: 0; }
 
 .repair-layout { display: grid; gap: 24px; }
 .repair-layout__photo { aspect-ratio: 16 / 9; }
+.repair-layout__photo video { display: block; width: 100%; height: 100%; object-fit: cover; }
 .repair-types { display: grid; gap: 16px; }
 
 .repair-type { display: flex; flex-direction: column; gap: 14px; }

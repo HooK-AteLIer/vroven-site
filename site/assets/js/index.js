@@ -466,6 +466,32 @@
     steps.forEach(function (s) { io.observe(s); });
   }
 
+  // Ролик «до/после» в блоке ремонта: играет только в зоне видимости.
+  // Без IntersectionObserver, при reduced motion и при ошибке остаётся постер (кадр «после»).
+  function initRevealVideo() {
+    var video = $('[data-reveal-video]');
+    if (!video) return;
+    var reduce = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in root)) return;
+    var failed = false;
+    function fail() { failed = true; video.pause(); }
+    video.addEventListener('error', fail);
+    var source = video.querySelector('source');
+    if (source) source.addEventListener('error', fail);
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (failed) return;
+        if (en.isIntersecting) {
+          var p = video.play();
+          if (p && p.catch) p.catch(fail);
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(video);
+  }
+
   function init() {
     if (!data || !pricing || !V.city || !V.lead) return;
     renderPrices();
@@ -474,6 +500,7 @@
     initCalc();
     initLeadForm();
     initSteps();
+    initRevealVideo();
   }
 
   // core.js стартует на DOMContentLoaded раньше нас (подключён выше)
