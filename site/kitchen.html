@@ -10,9 +10,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Jost:wght@400;500;600&family=Onest:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/kitchen.css">
   <script defer src="assets/js/data.js"></script>
   <script defer src="assets/js/core.js"></script>
   <script defer src="assets/js/lead.js"></script>
+  <script defer src="assets/js/pricing.js"></script>
+  <script defer src="assets/js/kitchen-layout.js"></script>
+  <script defer src="assets/js/kitchen-styles.js"></script>
+  <script defer src="assets/js/kitchen-render.js"></script>
+  <script defer src="assets/js/kitchen-app.js"></script>
 </head>
 <body data-page="kitchen">
   <a class="skip-link" href="#main">К содержанию</a>
@@ -59,8 +65,235 @@
       <p class="lead-text">Введите форму и длины стен в миллиметрах, выберите стиль и посмотрите чертёж фасадов и вид сверху.</p>
       <div class="level-line" data-reveal aria-hidden="true"></div>
     </section>
-    <!-- Содержимое страницы наполняет её таск-владелец -->
-    <section class="section" id="kitchen-app" aria-label="Ваша кухня на ваших размерах"></section>
+    <section class="section kd" id="kitchen-app" aria-label="Конструктор: размеры, стиль и цена кухни">
+      <div class="container kd__grid">
+        <form class="kd-form" id="kd-form" novalidate aria-label="Размеры кухни">
+          <fieldset class="kd-step" data-kd-err="shape">
+            <legend class="kd-step__title"><span class="kd-step__num">01</span>Форма кухни</legend>
+            <div class="kd-shapes">
+              <label class="kd-shape">
+                <input type="radio" name="kd-shape" value="straight" class="visually-hidden">
+                <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M4 4H44"/><rect x="6" y="6" width="36" height="8"/></svg>
+                <span>Прямая</span>
+              </label>
+              <label class="kd-shape">
+                <input type="radio" name="kd-shape" value="corner" class="visually-hidden">
+                <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M4 4H44V32"/><path d="M6 6H42V30H34V14H6Z"/></svg>
+                <span>Угловая</span>
+              </label>
+              <label class="kd-shape">
+                <input type="radio" name="kd-shape" value="u" class="visually-hidden">
+                <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M4 32V4H44V32"/><path d="M6 30V6H42V30H34V14H14V30Z"/></svg>
+                <span>П-образная</span>
+              </label>
+              <label class="kd-shape">
+                <input type="radio" name="kd-shape" value="island" class="visually-hidden">
+                <svg viewBox="0 0 48 36" aria-hidden="true"><path d="M4 4H44"/><rect x="6" y="6" width="36" height="8"/><rect x="14" y="22" width="20" height="9"/></svg>
+                <span>С островом</span>
+              </label>
+            </div>
+            <p class="field__error" hidden></p>
+          </fieldset>
+
+          <fieldset class="kd-step">
+            <legend class="kd-step__title"><span class="kd-step__num">02</span>Стены и потолок</legend>
+            <p class="field__hint kd-step__hint">Стены называем по часовой стрелке, если стоять лицом к кухне: A, затем B справа от неё, затем C. Мерьте у пола, на 850 и на 2000 мм и берите меньшее.</p>
+            <div class="kd-fields">
+              <div class="field" data-kd-err="walls.A" data-kd-wall="A">
+                <label for="kd-wall-A">Стена A</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-wall-A" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" data-kd-err="walls.B" data-kd-wall="B">
+                <label for="kd-wall-B">Стена B</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-wall-B" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" data-kd-err="walls.C" data-kd-wall="C">
+                <label for="kd-wall-C">Стена C</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-wall-C" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" data-kd-err="ceiling">
+                <label for="kd-ceiling">Потолок</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-ceiling" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" data-kd-err="island.length" data-kd-island>
+                <label for="kd-island-length">Остров, длина</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-island-length" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" data-kd-err="island.depth" data-kd-island>
+                <label for="kd-island-depth">Остров, глубина</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-island-depth" type="number" inputmode="numeric" min="0" step="10"></div>
+                <p class="field__error" hidden></p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="kd-step">
+            <legend class="kd-step__title"><span class="kd-step__num">03</span>Окно и дверь</legend>
+            <div class="kd-opening" data-kd-err="window">
+              <label class="kd-check"><input type="checkbox" id="kd-win-on"><span>На кухонной стене есть окно</span></label>
+              <div class="kd-fields" id="kd-win-fields">
+                <div class="field">
+                  <label for="kd-win-wall">Стена</label>
+                  <select id="kd-win-wall"></select>
+                </div>
+                <div class="field">
+                  <label for="kd-win-offset">От левого угла</label>
+                  <div class="field__unit" data-unit="мм"><input id="kd-win-offset" type="number" inputmode="numeric" min="0" step="10"></div>
+                </div>
+                <div class="field">
+                  <label for="kd-win-width">Ширина окна</label>
+                  <div class="field__unit" data-unit="мм"><input id="kd-win-width" type="number" inputmode="numeric" min="0" step="10"></div>
+                </div>
+                <div class="field">
+                  <label for="kd-win-sill">Подоконник от пола</label>
+                  <div class="field__unit" data-unit="мм"><input id="kd-win-sill" type="number" inputmode="numeric" min="0" step="10"></div>
+                </div>
+              </div>
+              <p class="field__error" hidden></p>
+            </div>
+            <div class="kd-opening" data-kd-err="door">
+              <label class="kd-check"><input type="checkbox" id="kd-door-on"><span>На кухонной стене есть дверь или проём</span></label>
+              <div class="kd-fields" id="kd-door-fields">
+                <div class="field">
+                  <label for="kd-door-wall">Стена</label>
+                  <select id="kd-door-wall"></select>
+                </div>
+                <div class="field">
+                  <label for="kd-door-offset">От левого угла</label>
+                  <div class="field__unit" data-unit="мм"><input id="kd-door-offset" type="number" inputmode="numeric" min="0" step="10"></div>
+                </div>
+                <div class="field">
+                  <label for="kd-door-width">Ширина проёма</label>
+                  <div class="field__unit" data-unit="мм"><input id="kd-door-width" type="number" inputmode="numeric" min="0" step="10"></div>
+                </div>
+              </div>
+              <p class="field__error" hidden></p>
+            </div>
+          </fieldset>
+
+          <fieldset class="kd-step">
+            <legend class="kd-step__title"><span class="kd-step__num">04</span>Мойка и плита</legend>
+            <p class="field__hint kd-step__hint">Мойку ставим к стояку, плиту к газовой трубе или розетке. Не знаете точно, оставьте «авто».</p>
+            <div class="kd-fields">
+              <div class="field" data-kd-err="sink">
+                <label for="kd-sink-wall">Мойка</label>
+                <select id="kd-sink-wall"></select>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" id="kd-sink-offset-field">
+                <label for="kd-sink-offset">Мойка от левого угла</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-sink-offset" type="number" inputmode="numeric" min="0" step="10" placeholder="по центру"></div>
+              </div>
+              <div class="field" data-kd-err="stove">
+                <label for="kd-stove-wall">Плита</label>
+                <select id="kd-stove-wall"></select>
+                <p class="field__error" hidden></p>
+              </div>
+              <div class="field" id="kd-stove-offset-field">
+                <label for="kd-stove-offset">Плита от левого угла</label>
+                <div class="field__unit" data-unit="мм"><input id="kd-stove-offset" type="number" inputmode="numeric" min="0" step="10" placeholder="авто"></div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="kd-step">
+            <legend class="kd-step__title"><span class="kd-step__num">05</span>Дополнительно</legend>
+            <label class="kd-check"><input type="checkbox" id="kd-tall"><span>Пенал под духовку и СВЧ</span></label>
+            <div class="field kd-fields--one" data-kd-err="options.upperHeight">
+              <label for="kd-upper">Верхние шкафы</label>
+              <select id="kd-upper">
+                <option value="0">По высоте потолка</option>
+                <option value="720">720 мм</option>
+                <option value="920">920 мм, выше и вместительнее</option>
+              </select>
+              <p class="field__error" hidden></p>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="kd-stage" id="kd-stage">
+          <div class="kd-look">
+            <div class="kd-look__head">
+              <h2 class="kd-h">Стиль</h2>
+              <p class="kd-look__blurb" id="kd-style-blurb" aria-live="polite"></p>
+            </div>
+            <div class="kd-styles" id="kd-styles" role="radiogroup" aria-label="Стиль кухни"></div>
+            <div class="kd-colors" id="kd-colors" role="radiogroup" aria-label="Цвет"></div>
+          </div>
+
+          <figure class="kd-sheet">
+            <div class="kd-sheet__bar">
+              <p class="kd-sheet__title">Фасады</p>
+              <div class="kd-tabs" id="kd-tabs" role="tablist" aria-label="Стены"></div>
+            </div>
+            <p class="kd-stale" id="kd-stale" role="status" hidden>Размер с ошибкой: показываем чертёж по последним верным размерам.</p>
+            <p class="kd-empty" id="kd-empty" hidden>Введите размеры слева, и здесь появится чертёж.</p>
+            <div class="kd-canvas"><svg id="kd-elevation" class="kd-svg" role="img" aria-label="Развёртка стены"></svg></div>
+            <figcaption class="kd-caption" id="kd-elev-caption"></figcaption>
+          </figure>
+
+          <figure class="kd-sheet kd-sheet--plan">
+            <div class="kd-sheet__bar"><p class="kd-sheet__title">Вид сверху</p></div>
+            <div class="kd-canvas"><svg id="kd-plan" class="kd-svg" role="img" aria-label="Вид сверху"></svg></div>
+            <figcaption class="kd-caption">Пунктир: верхние шкафы и вытяжка. Модули стандартные: низ 720 мм на цоколе 100 мм, столешница 38 мм, глубина 600 мм.</figcaption>
+          </figure>
+
+          <ul class="kd-warnings" id="kd-warnings" aria-live="polite" hidden></ul>
+
+          <div class="kd-price" id="kd-price-box">
+            <fieldset class="kd-price__mat">
+              <legend class="kd-h kd-h--sm">Фасады из</legend>
+              <div class="chip-row" role="radiogroup">
+                <label class="kd-mat"><input type="radio" name="kd-material" value="ldsp" class="visually-hidden"><span class="chip">ЛДСП</span></label>
+                <label class="kd-mat"><input type="radio" name="kd-material" value="mdf-film" class="visually-hidden"><span class="chip">МДФ в плёнке</span></label>
+                <label class="kd-mat"><input type="radio" name="kd-material" value="enamel" class="visually-hidden"><span class="chip">МДФ эмаль</span></label>
+                <label class="kd-mat"><input type="radio" name="kd-material" value="acrylic" class="visually-hidden"><span class="chip">Акрил</span></label>
+                <label class="kd-mat"><input type="radio" name="kd-material" value="veneer" class="visually-hidden"><span class="chip">Шпон</span></label>
+              </div>
+            </fieldset>
+
+            <div class="kd-price__repair">
+              <label class="kd-check"><input type="checkbox" id="kd-repair"><span>Делаю ремонт у вас, хочу скидку на кухню</span></label>
+              <div class="field" id="kd-repair-type-field">
+                <label for="kd-repair-type">Ремонт</label>
+                <select id="kd-repair-type">
+                  <option value="cosmetic">Косметический, скидка на кухню 5%</option>
+                  <option value="capital">Капитальный, скидка на кухню 10%</option>
+                  <option value="design">Дизайнерский, скидка на кухню 15%</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="kd-price__sum">
+              <p class="kd-price__label">Примерная цена кухни</p>
+              <p class="kd-price__value"><span id="kd-price">…</span></p>
+              <p class="kd-price__old" id="kd-price-old" hidden></p>
+              <p class="kd-price__save" id="kd-price-save" hidden></p>
+              <p class="kd-price__note mono" id="kd-price-note"></p>
+              <p class="kd-offer" id="kd-offer"></p>
+            </div>
+
+            <div class="kd-send">
+              <a class="btn btn--block" id="kd-send" href="#" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 20l1.2-3.9A8.2 8.2 0 1 1 8 18.9L4 20Z"/><path d="M9 8.6c0 3.3 2.9 6.4 6.3 6.4l1-1.5-2-1-1 .8a4.8 4.8 0 0 1-2.4-2.4l.8-1-1-2L9 8.6Z" stroke-width="1.3"/></svg>
+                Отправить замер
+              </a>
+              <div class="kd-send__alt">
+                <button class="btn btn--ghost" type="button" id="kd-copy">Скопировать проект</button>
+                <a class="btn btn--ghost" data-tel href="#">Позвонить</a>
+              </div>
+              <p class="btn-note">Откроется WhatsApp с размерами, стилем, цветом и ссылкой на этот проект. Ссылка в адресной строке тоже открывает ваш проект.</p>
+              <p class="btn-note" id="kd-copy-status" role="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer" id="footer">
