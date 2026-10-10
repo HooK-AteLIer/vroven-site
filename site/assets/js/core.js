@@ -82,7 +82,7 @@
       var b = doc.createElement('span');
       b.className = 'badge-placeholder';
       b.setAttribute('data-auto-badge', '');
-      b.textContent = label || 'ориентир, уточняется';
+      b.textContent = label || 'ориентировочно';
       el.insertAdjacentElement('afterend', b);
     } else if (!isPlaceholder && has) {
       next.remove();

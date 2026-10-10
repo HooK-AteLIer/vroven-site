@@ -6,16 +6,29 @@
   <title>ВРОВЕНЬ: ремонт под ключ и мебель своего производства</title>
   <meta name="description" content="Ремонт квартир и коммерческих помещений под ключ и корпусная мебель своего производства в Тюмени и Нижневартовске. Один договор, один прораб.">
   <meta name="theme-color" content="#EEE7DC">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ВРОВЕНЬ">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:title" content="ВРОВЕНЬ: ремонт и мебель по одному договору">
+  <meta property="og:description" content="Ремонт квартир и помещений под ключ и мебель из своего цеха в Тюмени и Нижневартовске. Кухня встаёт точно в размер после ремонта.">
+  <!-- DEPLOY STEP: после публикации сделать og:image абсолютным (https://ДОМЕН/assets/img/hero/og-image.jpg) и добавить og:url, см. README.md -->
+  <meta property="og:image" content="assets/img/hero/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Jost:wght@400;500;600&family=Onest:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/index.css">
+  <link rel="stylesheet" href="assets/css/hero.css">
   <script defer src="assets/js/data.js"></script>
   <script defer src="assets/js/core.js"></script>
   <script defer src="assets/js/lead.js"></script>
   <script defer src="assets/js/pricing.js"></script>
   <script defer src="assets/js/index.js"></script>
+  <script defer src="assets/js/hero-scrub.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">К содержанию</a>
@@ -56,18 +69,49 @@
   </header>
 
   <main id="main">
-    <!-- Герой: временная заглушка, кинематографичный герой делает таск 07 -->
-    <section class="section page-intro" id="hero" aria-label="Ремонт и мебель одной командой">
-      <div class="container">
-        <p class="eyebrow">Ремонт и мебель <span data-city-text="nameIn"></span></p>
-        <h1>Ремонт и мебель вровень</h1>
-        <p class="lead-text">Делаем ремонт квартир и коммерческих помещений и сами производим корпусную мебель. Один договор, один прораб, кухня по замеру после ремонта.</p>
-        <div class="btn-row">
-          <a class="btn" data-lead="general" href="#lead">Получить смету</a>
-          <a class="btn btn--ghost" data-tel href="#">Позвонить</a>
+    <!-- Герой: ролик прокручивается скроллом (hero-scrub.js); на телефоне, при reduced motion и без видео статичный кадр -->
+    <section class="hero" id="hero" aria-label="Ремонт и мебель одной командой" data-hero>
+      <div class="hero__stage">
+        <div class="hero__media" aria-hidden="true">
+          <div class="hero__still"></div>
+          <div class="hero__poster" data-hero-poster></div>
+          <video class="hero__video" data-hero-video preload="none" muted playsinline disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
+          <div class="hero__scrim"></div>
         </div>
-        <p class="btn-note">Откроется WhatsApp с готовым текстом заявки</p>
-        <div class="level-line" data-reveal aria-hidden="true"></div>
+
+        <div class="hero__band hero__band--brand" data-band="0 0.22" data-fx="level">
+          <p class="hero__eyebrow mono">Тюмень · Нижневартовск</p>
+          <p class="hero__brand" data-split>ВРОВЕНЬ</p>
+          <span class="hero__laser" aria-hidden="true"></span>
+          <p class="hero__tag" data-split>Ремонт и мебель вровень</p>
+        </div>
+
+        <div class="hero__band hero__band--beat hero__band--right" data-band="0.25 0.5" data-fx="drift">
+          <p class="hero__num mono">01 · ремонт</p>
+          <p class="hero__beat" data-split>Сначала выравниваем стены</p>
+          <p class="hero__beat-sub">Квартира, офис или кафе под ключ. Свои бригады, без субподряда.</p>
+        </div>
+
+        <div class="hero__band hero__band--beat" data-band="0.53 0.78" data-fx="rise">
+          <p class="hero__num mono">02 · мебель</p>
+          <p class="hero__beat" data-split>Потом делаем мебель под эти стены</p>
+          <p class="hero__beat-sub">Кухни, шкафы и гардеробные из своего цеха. Меряем после ремонта, поэтому всё встаёт в размер.</p>
+        </div>
+
+        <div class="hero__band hero__band--settle" data-band="0.81 1" data-fx="settle">
+          <h1 class="hero__title" data-split>Ремонт и мебель по&nbsp;одному договору</h1>
+          <p class="hero__sub">Один прораб, одна смета, один срок. Кухня встаёт точно в&nbsp;размер после ремонта.</p>
+          <p class="hero__price"><span data-hero-price="repair">Ремонт по смете</span><span class="hero__price-sep" aria-hidden="true">·</span><span data-hero-price="kitchen">кухня по смете</span><span class="badge-placeholder" data-hero-badge hidden>ориентировочно</span></p>
+          <div class="btn-row hero__cta">
+            <a class="btn" href="#bundle">Рассчитать комплект</a>
+            <a class="btn btn--ghost" href="kitchen.html">Конструктор кухни</a>
+          </div>
+        </div>
+
+        <div class="hero__cue" aria-hidden="true">
+          <svg class="hero__ring" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="3"/><circle class="hero__ring-bar" cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126"/></svg>
+          <span class="hero__cue-text mono">листайте</span>
+        </div>
       </div>
     </section>
     <!-- О компании: цена «от» и один договор сразу после героя -->

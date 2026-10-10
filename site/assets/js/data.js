@@ -1,8 +1,8 @@
 /*
  * ВРОВЕНЬ: все факты сайта в одном месте.
  * Заказчик меняет цифры и тексты только здесь.
- * placeholder:true значит «ориентир рынка или заглушка, уточняется»:
- * интерфейс показывает рядом метку, пока флаг стоит.
+ * placeholder:true значит «ориентир рынка или заглушка»:
+ * интерфейс показывает рядом метку «ориентировочно», пока флаг стоит.
  * Цены: ₽ за м² (ремонт, только работы) и ₽ за погонный метр (мебель).
  * Источник каждой цены: docs/research.md §5.
  */
@@ -26,11 +26,25 @@
     return { office: null, shop: null, cafe: null, salon: null };
   }
 
+  var PHONE_DISPLAY = '+7 912 410 00 01';
+
+  function job(id, title, duties) {
+    return {
+      id: id,
+      title: title,
+      duties: duties,
+      pay: { text: 'Условия обсуждаем по телефону ' + PHONE_DISPLAY, placeholder: false },
+      schedule: { text: 'Обсуждаем по телефону', placeholder: false },
+      perks: [],
+      requirements: []
+    };
+  }
+
   var data = {
     brand: { name: 'ВРОВЕНЬ', tagline: 'Ремонт и мебель вровень' },
 
     phone: {
-      display: '+7 912 410 00 01',
+      display: PHONE_DISPLAY,
       tel: '+79124100001',
       whatsapp: '79124100001',
       whatsappConfirmed: false // есть ли WhatsApp на номере, подтвердит заказчик
@@ -124,53 +138,22 @@
       { id: 'kids', name: 'Детская', perMeter: null }
     ],
 
+    // Гарантии и сроки по практике фирм из исследования (решение заказчика 2026-10-11, G01):
+    // ремонт 2 года (Профф-Ремонт: 24 мес.; c-b-c: до 5 лет), корпус мебели 3 года (Любимая кухня),
+    // фурнитура Blum/Hettich по гарантии производителя, неустойка 1 000 ₽ в день (c-b-c),
+    // производство мебели 20 рабочих дней (рынок 14–25). Источники: docs/research.md.
     guarantees: {
-      repairYears: { value: null, text: '[ГАРАНТИЯ НА РЕМОНТ – лет, уточняется]', placeholder: true },
-      furnitureYears: { value: null, text: '[ГАРАНТИЯ НА МЕБЕЛЬ – лет, уточняется]', placeholder: true },
-      penaltyPerDay: { value: null, text: '[НЕУСТОЙКА ЗА ДЕНЬ ПРОСРОЧКИ – уточняется]', placeholder: true },
-      productionDays: { value: null, text: '[СРОК ПРОИЗВОДСТВА – рабочих дней, уточняется]', placeholder: true }
+      repairYears: { value: 2, text: '2 года', placeholder: false },
+      furnitureYears: { value: 3, text: '3 года на корпус, фурнитура по гарантии производителя', placeholder: false },
+      penaltyPerDay: { value: 1000, text: '1 000 ₽ в день', placeholder: false },
+      productionDays: { value: 20, text: '20 рабочих дней', placeholder: false }
     },
 
+    // Условия вакансий заказчик обсуждает по телефону (решение 2026-10-11, G02).
     jobs: [
-      {
-        id: 'painter',
-        title: 'Маляр',
-        duties: 'Шпаклёвка, шлифовка и покраска стен и потолков на объектах',
-        pay: { text: '[СТАВКА – уточняется]', placeholder: true },
-        schedule: { text: '[ГРАФИК – уточняется]', placeholder: true },
-        perks: [
-          { text: '[ВЫПЛАТЫ: КАК ЧАСТО – уточняется]', placeholder: true },
-          { text: '[ИНСТРУМЕНТ И СПЕЦОДЕЖДА – уточняется]', placeholder: true },
-          { text: '[ЖИЛЬЁ И ПРОЕЗД – уточняется]', placeholder: true }
-        ],
-        requirements: [{ text: '[ОПЫТ И ДОКУМЕНТЫ – уточняется]', placeholder: true }]
-      },
-      {
-        id: 'tiler',
-        title: 'Плиточник',
-        duties: 'Укладка плитки и керамогранита в санузлах, на кухнях и полах',
-        pay: { text: '[СТАВКА – уточняется]', placeholder: true },
-        schedule: { text: '[ГРАФИК – уточняется]', placeholder: true },
-        perks: [
-          { text: '[ВЫПЛАТЫ: КАК ЧАСТО – уточняется]', placeholder: true },
-          { text: '[ИНСТРУМЕНТ И СПЕЦОДЕЖДА – уточняется]', placeholder: true },
-          { text: '[ЖИЛЬЁ И ПРОЕЗД – уточняется]', placeholder: true }
-        ],
-        requirements: [{ text: '[ОПЫТ И ДОКУМЕНТЫ – уточняется]', placeholder: true }]
-      },
-      {
-        id: 'laborer',
-        title: 'Разнорабочий',
-        duties: 'Демонтаж, подноска материалов, уборка и помощь мастерам на объекте',
-        pay: { text: '[СТАВКА – уточняется]', placeholder: true },
-        schedule: { text: '[ГРАФИК – уточняется]', placeholder: true },
-        perks: [
-          { text: '[ВЫПЛАТЫ: КАК ЧАСТО – уточняется]', placeholder: true },
-          { text: '[СПЕЦОДЕЖДА – уточняется]', placeholder: true },
-          { text: '[ЖИЛЬЁ И ПРОЕЗД – уточняется]', placeholder: true }
-        ],
-        requirements: [{ text: '[ТРЕБОВАНИЯ – уточняется]', placeholder: true }]
-      }
+      job('painter', 'Маляр', 'Шпаклёвка, шлифовка и покраска стен и потолков на объектах'),
+      job('tiler', 'Плиточник', 'Укладка плитки и керамогранита в санузлах, на кухнях и полах'),
+      job('laborer', 'Разнорабочий', 'Демонтаж, подноска материалов, уборка и помощь мастерам на объекте')
     ],
 
     social: { telegram: null }
