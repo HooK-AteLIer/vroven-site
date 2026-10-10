@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ВРОВЕНЬ: бренд-доска</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --canvas: #F2EDE4;
+    --panel: #E8E0D3;
+    --ink: #26241F;
+    --ink-2: #5E5950;
+    --oak: #B38755;
+    --accent: #B5852E;
+    --accent-hover: #96691F;
+    --laser: #1FBF5B;
+    --line: #D9CFC0;
+    --f-display: 'Jost', 'Century Gothic', sans-serif;
+    --f-body: 'Onest', 'Segoe UI', sans-serif;
+    --f-mono: 'JetBrains Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--canvas); color: var(--ink); font: 16px/1.55 var(--f-body); }
+  .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-family: var(--f-display); font-weight: 500; line-height: 1.15; margin: 0; }
+  h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: .01em; }
+  h3 { font-size: 20px; }
+  p { margin: 0 0 12px; }
+  .eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .eyebrow::before { content: ""; width: 40px; height: 2px; background: var(--laser); }
+  section { padding: 72px 0; border-top: 1px solid var(--line); }
+  .lead { font-size: 18px; max-width: 720px; color: var(--ink-2); }
+  .mono { font-family: var(--f-mono); font-size: 13px; }
+
+  /* шапка */
+  .hero { padding: 64px 0 56px; position: relative; overflow: hidden; }
+  .hero .beam { position: absolute; left: 0; right: 0; height: 2px; background: var(--laser); top: var(--beam-top, 50%); opacity: .9; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
+  .hero img { width: 100%; max-width: 520px; display: block; position: relative; }
+  .hero h1 { font-size: clamp(32px, 5vw, 52px); margin-bottom: 16px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; font: 13px var(--f-mono); color: var(--ink-2); }
+
+  /* таблицы названий */
+  .names { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 15px; }
+  .names th, .names td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .names th { font: 500 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
+  .names td:first-child { font-family: var(--f-display); font-weight: 500; font-size: 18px; white-space: nowrap; }
+  .names tr.chosen { background: #fff8; }
+  .names tr.chosen td:first-child { box-shadow: inset 4px 0 0 var(--laser); }
+  .tag { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; background: var(--ink); color: var(--canvas); margin-left: 8px; vertical-align: middle; }
+  .muted { color: var(--ink-2); }
+  .table-scroll { overflow-x: auto; }
+
+  /* поиски */
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+  .concept { background: var(--panel); border-radius: 6px; padding: 16px; position: relative; }
+  .concept img { width: 100%; display: block; border-radius: 4px; }
+  .concept h3 { margin: 14px 0 6px; }
+  .concept p { font-size: 14px; color: var(--ink-2); margin: 0; }
+  .concept.win { outline: 2px solid var(--ink); }
+  .verdict { margin-top: 28px; padding: 20px 24px; background: var(--ink); color: var(--canvas); border-radius: 6px; font-size: 18px; position: relative; overflow: hidden; }
+  .verdict::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--laser); }
+
+  /* построение */
+  .build { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-top: 28px; }
+  .build svg { width: 100%; height: auto; background: #fff6; border-radius: 6px; }
+  .rules { list-style: none; padding: 0; margin: 0; }
+  .rules li { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .rules b { font-family: var(--f-display); font-weight: 500; }
+  .sizes { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-top: 24px; }
+  .sizes figure { margin: 0; text-align: center; font: 12px var(--f-mono); color: var(--ink-2); }
+  .sizes img { display: block; margin: 0 auto 8px; }
+  .pix { image-rendering: pixelated; width: 192px; height: 192px; border: 1px solid var(--line); }
+
+  /* версии */
+  .versions { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 28px; }
+  .ver { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff5; }
+  .ver .pic { aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 28px; }
+  .ver .pic img { max-width: 100%; max-height: 100%; }
+  .ver .pic.dark { background: var(--ink); }
+  .ver .cap { padding: 14px 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .ver a { color: var(--ink); font: 13px var(--f-mono); }
+
+  /* палитра */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-top: 28px; }
+  .sw { border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #fff6; }
+  .sw .chip { height: 96px; }
+  .sw .txt { padding: 12px 14px; font-size: 14px; }
+  .sw code { font: 500 13px var(--f-mono); display: block; }
+  .sw small { color: var(--ink-2); display: block; line-height: 1.4; margin-top: 4px; }
+
+  /* шрифты */
+  .fonts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
+  .font { background: var(--panel); border-radius: 6px; padding: 22px; }
+  .font .big { font-size: 56px; line-height: 1; margin: 12px 0 14px; }
+  .font p { font-size: 14px; color: var(--ink-2); }
+
+  /* визитка */
+  .mock { margin-top: 28px; border-radius: 8px; padding: clamp(28px, 6vw, 72px); display: flex; gap: clamp(20px, 4vw, 48px); justify-content: center; flex-wrap: wrap;
+          background: radial-gradient(120% 90% at 30% 20%, #c79a68 0%, #a77a4a 55%, #8a6239 100%); }
+  .card-trim { width: 360px; max-width: 100%; aspect-ratio: 90 / 50; overflow: hidden; border-radius: 3px; box-shadow: 0 1px 1px #0003, 0 14px 30px -8px #0007; position: relative; }
+  .card-trim svg { position: absolute; width: 104.444%; height: 108%; left: -2.222%; top: -4%; }
+  .card-trim.f { transform: rotate(-4deg) translateY(6px); }
+  .card-trim.b { transform: rotate(3deg); }
+  .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+  .flat { position: relative; width: 100%; max-width: 470px; aspect-ratio: 94 / 54; }
+  .flat svg { width: 100%; height: 100%; display: block; }
+  .flat > svg:first-child { box-shadow: 0 0 0 1px var(--line); }
+  .guides { position: absolute; inset: 0; pointer-events: none; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 12px var(--f-mono); color: var(--ink-2); margin-top: 10px; }
+  .legend i { display: inline-block; width: 18px; height: 0; border-top: 1.5px dashed; vertical-align: middle; margin-right: 6px; }
+  .downloads { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 4px; background: var(--accent); color: #fff; text-decoration: none; font: 500 14px var(--f-body); }
+  .btn:hover { background: var(--accent-hover); }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+
+  .todo { columns: 2; gap: 40px; padding-left: 20px; }
+  .todo li { margin-bottom: 8px; break-inside: avoid; }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font: 12px var(--f-mono); color: var(--ink-2); }
+
+  @media (max-width: 860px) {
+    .hero-grid, .build, .specs { grid-template-columns: 1fr; }
+    .grid3, .fonts { grid-template-columns: 1fr; }
+    .todo { columns: 1; }
+    .hero .beam { display: none; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    section { padding: 48px 0; }
+    .ver .pic { padding: 18px; }
+    .names { font-size: 14px; }
+    .names td:first-child { white-space: normal; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Бренд-доска · Тюмень · Нижневартовск</div>
+      <h1>ВРОВЕНЬ. Ремонт и мебель вровень</h1>
+      <p class="lead">Мебель встаёт вровень со стенами, которые выровняла эта же команда. Один договор, один прораб, кухня по замеру после ремонта. Здесь всё для запуска бренда: имя, логотип, цвета, шрифты и визитка в печать.</p>
+      <div class="meta"><span>логотип в кривых</span><span>SVG · PNG 1024 px</span><span>визитка 90 × 50 мм, PDF</span></div>
+    </div>
+    <img src="logo/vroven-primary.svg" alt="Логотип ВРОВЕНЬ: знак, слово и подпись «Ремонт и мебель вровень»">
+  </div>
+</header>
+
+<main>
+<section id="names">
+  <div class="wrap">
+    <div class="eyebrow">01 · Название</div>
+    <h2>Имя выбрано из шестнадцати вариантов</h2>
+    <p class="lead" style="margin-top:14px">Главное отличие из исследования рынка: в Тюмени и Нижневартовске никто не совмещает ремонт и своё мебельное производство. Имя должно говорить про обе услуги и про точность. Подробно в <span class="mono">docs/naming.md</span>.</p>
+
+    <h3 style="margin-top:36px">Второй круг</h3>
+    <div class="table-scroll"><table class="names">
+      <tr><th>Название</th><th>Идея</th><th>Подпись</th><th>Риск</th></tr>
+      <tr class="chosen"><td>ВРОВЕНЬ <span class="tag">выбрано</span></td><td>Мебель встаёт вровень со стенами, которые выровняла эта же команда. Одно слово про обе услуги и про точность</td><td>«Ремонт и мебель вровень»</td><td>Наречие, его держат знак и подпись. До регистрации проверить товарный знак и домен</td></tr>
+      <tr><td>ФУГА</td><td>Шов плитки и музыкальная фуга: два голоса в одной партии</td><td>«Ремонт и мебель в одной партии»</td><td>Многие знают «фугу» только как затирку</td></tr>
+      <tr><td>КУБАТУРА</td><td>Весь объём помещения в одних руках</td><td>«Вся кубатура под ключ»</td><td>Звучит технично и холодно</td></tr>
+      <tr><td>ОТВЕС</td><td>Строительный отвес: всё ровно по вертикали</td><td>«Всё по отвесу»</td><td>Профессиональное слово, про мебель не говорит</td></tr>
+      <tr><td>ШИП &amp; ПАЗ</td><td>Соединение, которое сходится до миллиметра</td><td>«Сходится до миллиметра»</td><td>Два слова и амперсанд, больше про столярку, чем про ремонт</td></tr>
+    </table></div>
+
+    <h3>Вариант заказчика</h3>
+    <div class="table-scroll"><table class="names">
+      <tr><th>Название</th><th>Идея</th><th>Подпись</th><th>Риск</th></tr>
+      <tr><td>В Ремонти</td><td>Игра слов: «в ремонте» и сам ремонт</td><td>«Всё о ремонте»</td><td>«В ремонте» значит «сломано, не работает». Мебели в имени нет, а это половина бизнеса</td></tr>
+    </table></div>
+
+    <h3>Первый круг <span class="muted" style="font-size:15px;font-family:var(--f-body)">отклонён заказчиком как слишком простой</span></h3>
+    <div class="table-scroll"><table class="names">
+      <tr><th>Название</th><th>Идея</th><th>Подпись</th><th>Риск</th></tr>
+      <tr><td>МЕРА</td><td>Всё по мерке: замер, смета, мебель в размер</td><td>«Ремонт и мебель по мерке»</td><td>Слово общее, слабо ищется</td></tr>
+      <tr><td>ЛАД</td><td>Дом в ладу: всё сделано и подогнано</td><td>«Ремонт и мебель в ладу»</td><td>Ничего не говорит об услугах</td></tr>
+      <tr><td>Метр &amp; Фасад</td><td>Квадратный метр ремонта и фасад мебели</td><td>«Квадратные и погонные метры»</td><td>Длинно, амперсанд плохо звучит по телефону</td></tr>
+      <tr><td>ВНУТРИ</td><td>Всё, что внутри квартиры, делаем мы</td><td>«Всё внутри дома»</td><td>Похоже на студию дизайна, а не на стройку</td></tr>
+      <tr><td>КАРКАС</td><td>Основа ремонта и корпус мебели</td><td>«От стен до шкафов»</td><td>Путается с каркасными домами</td></tr>
+      <tr><td>ДОМ ГОТОВ</td><td>Заезжаете в готовый дом с мебелью</td><td>«Заезжайте и живите»</td><td>Похоже на застройщиков</td></tr>
+      <tr><td>Новоселье</td><td>Праздник новой квартиры</td><td>«Ремонт и мебель к новоселью»</td><td>Занято магазинами и сайтами недвижимости</td></tr>
+      <tr><td>Обустрой</td><td>Призыв: обустрой квартиру с нами</td><td>«Обустроим под ключ»</td><td>Глагол читается как реклама, а не бренд</td></tr>
+      <tr><td>Ключ &amp; Фасад</td><td>Ремонт под ключ плюс фасады мебели</td><td>«Под ключ и до фасада»</td><td>Сложно запомнить, «под ключ» есть у всех</td></tr>
+      <tr><td>Уютно</td><td>Итог работы: уютный дом</td><td>«Сделаем уютно»</td><td>Мягкое слово, мало доверия к подрядчику</td></tr>
+    </table></div>
+  </div>
+</section>
+
+<section id="search">
+  <div class="wrap">
+    <div class="eyebrow">02 · Поиски знака</div>
+    <h2>Три идеи на одну мысль: стена и шкаф на одной линии</h2>
+    <div class="grid3">
+      <div class="concept">
+        <img src="logo/explorations/concept-a-joint.svg" alt="Поиск А. Стык">
+        <h3>А. Стык</h3>
+        <p>Плита стены и корпус шкафа, верх корпуса стоит на луче. Понятно, но в малом размере похоже на значок завода.</p>
+      </div>
+      <div class="concept win">
+        <img src="logo/explorations/concept-b-section.svg" alt="Поиск Б. Разрез">
+        <h3>Б. Разрез <span class="tag">выбран</span></h3>
+        <p>Стена, верхние и нижние шкафы в разрезе складываются в букву В, луч уровня проходит на высоте столешницы.</p>
+      </div>
+      <div class="concept">
+        <img src="logo/explorations/concept-c-vial.svg" alt="Поиск В. Пузырёк">
+        <h3>В. Пузырёк</h3>
+        <p>Колба строительного уровня, пузырёк ровно по центру. Знакомо, но так рисуют многие строители, и мебели в знаке нет.</p>
+      </div>
+    </div>
+    <p class="verdict">Выбран «Разрез»: знак читается дважды, как буква В и как разрез кухни у стены, где верхние и нижние шкафы сходятся со стеной на одной линии уровня.</p>
+  </div>
+</section>
+
+<section id="construction">
+  <div class="wrap">
+    <div class="eyebrow">03 · Построение</div>
+    <h2>Сетка 24 × 24, всё на целых модулях</h2>
+    <div class="build">
+      {{GRID}}
+      <ul class="rules">
+        <li><b>Стена</b> · ствол буквы, 4 модуля в ширину, во всю высоту знака.</li>
+        <li><b>Верхний шкаф</b> · 8 × 8, стенка 2 модуля. Он мельче нижнего, как навесные шкафы мельче напольных (300 и 560 мм).</li>
+        <li><b>Нижний шкаф</b> · 11 × 9, стенка 2 модуля.</li>
+        <li><b>Луч уровня</b> · 1 модуль, выходит за знак на 3 модуля влево и на 4 вправо. Просвет до шкафов 1 модуль. В цвете он зелёный, в монохроме того же цвета, что знак.</li>
+        <li><b>Слово</b> · геометрический гротеск в духе Jost, построен из прямых и дуг, переведён в кривые. Шрифт для логотипа не нужен.</li>
+        <li><b>Охранное поле</b> · 2 модуля знака со всех сторон (пунктир на схеме). В горизонтальной версии луч знака стоит на высоте средних черт букв.</li>
+        <li><b>Минимальный размер</b> · знак 16 px на экране, 6 мм в печати; при 24 px сетка ложится в пиксели один к одному.</li>
+      </ul>
+    </div>
+    <div class="sizes">
+      <figure><img src="logo/vroven-mark.svg" width="96" height="96" alt="Знак 96 px">96 px</figure>
+      <figure><img src="logo/vroven-mark.svg" width="48" height="48" alt="Знак 48 px">48 px</figure>
+      <figure><img src="logo/vroven-mark.svg" width="32" height="32" alt="Знак 32 px">32 px</figure>
+      <figure><img src="logo/vroven-mark.svg" width="24" height="24" alt="Знак 24 px">24 px</figure>
+      <figure><img src="logo/vroven-mark.svg" width="16" height="16" alt="Знак 16 px">16 px</figure>
+      <figure><img class="pix" src="logo/png/vroven-mark-24.png" alt="Знак 24 px, увеличено в 8 раз">24 px, увеличено ×8</figure>
+    </div>
+  </div>
+</section>
+
+<section id="versions">
+  <div class="wrap">
+    <div class="eyebrow">04 · Версии логотипа</div>
+    <h2>Пять версий для сайта, вывески и документов</h2>
+    <div class="versions">
+      <div class="ver"><div class="pic"><img src="logo/vroven-primary.svg" alt="Основной"></div><div class="cap"><b>Основной</b><span><a href="logo/vroven-primary.svg">SVG</a> · <a href="logo/png/vroven-primary.png">PNG</a></span></div></div>
+      <div class="ver"><div class="pic"><img src="logo/vroven-horizontal.svg" alt="Горизонтальный"></div><div class="cap"><b>Горизонтальный</b><span><a href="logo/vroven-horizontal.svg">SVG</a> · <a href="logo/png/vroven-horizontal.png">PNG</a></span></div></div>
+      <div class="ver"><div class="pic"><img src="logo/vroven-mark.svg" alt="Знак" style="height:150px"></div><div class="cap"><b>Знак</b><span><a href="logo/vroven-mark.svg">SVG</a> · <a href="logo/png/vroven-mark.png">PNG</a></span></div></div>
+      <div class="ver"><div class="pic dark"><img src="logo/vroven-inverse.svg" alt="Инверсия на графите"></div><div class="cap"><b>Инверсия на графите</b><span><a href="logo/vroven-inverse.svg">SVG</a> · <a href="logo/png/vroven-inverse.png">PNG</a></span></div></div>
+      <div class="ver"><div class="pic"><img src="logo/vroven-mono.svg" alt="Монохром"></div><div class="cap"><b>Монохром</b><span><a href="logo/vroven-mono.svg">SVG</a> · <a href="logo/png/vroven-mono.png">PNG</a></span></div></div>
+      <div class="ver"><div class="pic dark"><img src="logo/vroven-horizontal-inverse.svg" alt="Горизонтальный на графите"></div><div class="cap"><b>Горизонтальный на графите</b><span><a href="logo/vroven-horizontal-inverse.svg">SVG</a> · <a href="logo/png/vroven-horizontal-inverse.png">PNG</a></span></div></div>
+    </div>
+    <p class="muted" style="margin-top:16px;font-size:14px">Монохром для гравировки, штампа, плёнки и печати в одну краску. PNG шириной 1024 px с прозрачным фоном, инверсии на графитовом фоне.</p>
+  </div>
+</section>
+
+<section id="palette">
+  <div class="wrap">
+    <div class="eyebrow">05 · Цвета</div>
+    <h2>Тёплая штукатурка, графит, дуб и луч</h2>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:#F2EDE4"></div><div class="txt"><b>Штукатурка</b><code>#F2EDE4</code><small>--canvas · фон сайта и визитки</small></div></div>
+      <div class="sw"><div class="chip" style="background:#E8E0D3"></div><div class="txt"><b>Панель</b><code>#E8E0D3</code><small>--panel · карточки, блоки</small></div></div>
+      <div class="sw"><div class="chip" style="background:#26241F"></div><div class="txt"><b>Графит</b><code>#26241F</code><small>--ink · текст, логотип, тёмный фон</small></div></div>
+      <div class="sw"><div class="chip" style="background:#5E5950"></div><div class="txt"><b>Графит светлый</b><code>#5E5950</code><small>--ink-2 · подписи, второстепенный текст</small></div></div>
+      <div class="sw"><div class="chip" style="background:#B38755"></div><div class="txt"><b>Дуб</b><code>#B38755</code><small>--oak · подпись на визитке, дерево</small></div></div>
+      <div class="sw"><div class="chip" style="background:#B5852E"></div><div class="txt"><b>Латунь</b><code>#B5852E</code><small>--accent · кнопки и призывы; наведение #96691F</small></div></div>
+      <div class="sw"><div class="chip" style="background:#1FBF5B"></div><div class="txt"><b>Луч уровня</b><code>#1FBF5B</code><small>--laser · тонкая линия, малыми дозами; на графите #35D873</small></div></div>
+      <div class="sw"><div class="chip" style="background:#D9CFC0"></div><div class="txt"><b>Линия</b><code>#D9CFC0</code><small>--line · разделители, рамки</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="fonts">
+  <div class="wrap">
+    <div class="eyebrow">06 · Шрифты</div>
+    <h2>Три гарнитуры с кириллицей, все из Google Fonts</h2>
+    <div class="fonts">
+      <div class="font"><span class="mono">Jost · заголовки</span><div class="big" style="font-family:var(--f-display);font-weight:500">Вровень</div><p>Геометрический гротеск. Заголовки, имя на визитке. Логотип нарисован в его духе и шрифта не требует.</p></div>
+      <div class="font"><span class="mono">Onest · текст</span><div class="big" style="font-family:var(--f-body)">Ремонт</div><p>Спокойный текстовый шрифт для абзацев, кнопок и форм. Хорошо читается на телефоне.</p></div>
+      <div class="font"><span class="mono">JetBrains Mono · размеры</span><div class="big" style="font-family:var(--f-mono);font-size:44px">2 400 мм</div><p>Размеры в миллиметрах, цены, телефон, технические подписи. Цифры одной ширины.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="card">
+  <div class="wrap">
+    <div class="eyebrow">07 · Визитка</div>
+    <h2>Визитка 90 × 50 мм, готова к печати</h2>
+    <div class="mock">
+      <div class="card-trim f">{{CARD_FRONT}}</div>
+      <div class="card-trim b">{{CARD_BACK}}</div>
+    </div>
+    <div class="specs">
+      <div>
+        <h3 style="margin-bottom:12px">Лицо</h3>
+        <div class="flat">{{CARD_FRONT}}{{GUIDES}}</div>
+      </div>
+      <div>
+        <h3 style="margin-bottom:12px">Оборот</h3>
+        <div class="flat">{{CARD_BACK}}{{GUIDES}}</div>
+      </div>
+    </div>
+    <div class="legend"><span><i style="color:#e2483d"></i>обрез 90 × 50 мм</span><span><i style="color:#3b7de0"></i>безопасное поле 3 мм</span><span>файл 94 × 54 мм, вылеты 2 мм</span></div>
+    <p class="muted" style="margin-top:14px;font-size:14px">Луч уровня на лице уходит в вылеты с обеих сторон: после резки он идёт от края до края. Логотип в кривых, текст набран Jost, Onest и JetBrains Mono, в PDF шрифты встроены. Имя, должность, сайт и почту нужно вписать.</p>
+    <div class="downloads">
+      <a class="btn" href="card/card-front.pdf">Лицо, PDF</a>
+      <a class="btn" href="card/card-back.pdf">Оборот, PDF</a>
+      <a class="btn ghost" href="card/card-front.svg">Лицо, SVG</a>
+      <a class="btn ghost" href="card/card-back.svg">Оборот, SVG</a>
+    </div>
+  </div>
+</section>
+
+<section id="todo">
+  <div class="wrap">
+    <div class="eyebrow">08 · Что уточнить</div>
+    <h2>Нужно от заказчика</h2>
+    <ul class="todo" style="margin-top:20px">
+      <li>Имя и фамилия для визитки: сейчас [ИМЯ ФАМИЛИЯ]</li>
+      <li>Должность: сейчас [ДОЛЖНОСТЬ]</li>
+      <li>Адрес сайта: сейчас [САЙТ]</li>
+      <li>Электронная почта: сейчас [ПОЧТА]</li>
+      <li>Проверка «ВРОВЕНЬ» в реестре товарных знаков (классы 37 и 20) и свободный домен</li>
+      <li>Типография: нужен ли CMYK-профиль и плотность бумаги; зелёный луч в CMYK станет чуть глуше</li>
+    </ul>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">ВРОВЕНЬ · бренд-доска · файлы в папке brand/ · собрано скриптом brand/build/build_all.py</div></footer>
+</body>
+</html>
