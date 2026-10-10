@@ -276,15 +276,8 @@ html.menu-open .site-header::before { background: var(--canvas); }
   min-height: var(--tap); justify-content: center;
   text-decoration: none; color: var(--ink); flex: none;
 }
-.logo__word {
-  font: 600 1.32rem/1 var(--f-display);
-  letter-spacing: .2em; margin-right: -.2em;
-}
-.logo__level {
-  height: 1px; width: 100%;
-  background: linear-gradient(90deg, var(--laser), var(--laser) 70%, transparent);
-  box-shadow: 0 0 6px var(--laser-glow);
-}
+.logo__img { display: block; height: 30px; width: auto; max-width: none; }
+@media (min-width: 768px) { .logo__img { height: 36px; } }
 .logo:hover { color: var(--ink); }
 
 .site-nav ul { list-style: none; margin: 0; padding: 0; }
@@ -374,8 +367,8 @@ html.menu-open .site-header::before { background: var(--canvas); }
   .site-menu__meta .city-switch, .site-menu__meta .header-phone { display: none; }
 }
 
-/* от 1240: меню в строку */
-@media (min-width: 1240px) {
+/* от 1366: меню в строку */
+@media (min-width: 1366px) {
   .site-header__bar { gap: clamp(14px, 1.2vw, 36px); }
   .site-header__actions { gap: 10px; }
   .site-header__city .city-switch__btn { padding-inline: 10px; }

@@ -210,7 +210,7 @@
         toggle.focus();
       }
     });
-    var mq = root.matchMedia('(min-width: 1240px)');
+    var mq = root.matchMedia('(min-width: 1366px)');
     var onMq = function () { if (mq.matches) setOpen(false); };
     if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
   }
