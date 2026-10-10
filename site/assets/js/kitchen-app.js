@@ -217,7 +217,8 @@
 
   /* ---------- текст заявки ---------- */
 
-  function mm(v) { return String(Math.round(v)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' мм'; }
+  // текст для WhatsApp: формат чисел общий с lead.js
+  function mm(v) { return lead.mm(v); }
 
   function placeOf(layout, kind) {
     if (!layout || !layout.ok) return null;
@@ -556,7 +557,7 @@
     var est = estimate({ runMeters: layout.runMeters, materialId: state.material, city: cityId(), withRepair: state.withRepair, repairType: state.repairType }, data, V.pricing);
     var mat = materialById(state.material);
     out.textContent = est.priceWithDiscount != null ? V.format.rub(est.priceWithDiscount) : 'по смете после замера';
-    V.placeholderBadge(out, est.placeholder, 'ориентир');
+    V.placeholderBadge(out, est.placeholder, 'ориентировочно');
     if (old) {
       old.hidden = !est.discountPct;
       old.textContent = est.discountPct ? V.format.rub(est.price) : '';

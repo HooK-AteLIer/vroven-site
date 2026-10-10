@@ -90,8 +90,8 @@
     var base = perM2 * area;
     return {
       ok: true,
-      min: Math.round(base * (1 - SPREAD)),
-      max: Math.round(base * (1 + SPREAD)),
+      min: Math.round(base * (1 - SPREAD) / 100) * 100, // вилка круглая: до сотни рублей
+      max: Math.round(base * (1 + SPREAD) / 100) * 100,
       perM2: perM2,
       placeholder: !!rate.placeholder
     };

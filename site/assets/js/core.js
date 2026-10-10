@@ -72,7 +72,7 @@
     num: group
   };
 
-  /* ---------- метка «ориентир, уточняется» ---------- */
+  /* ---------- метка «ориентировочно» ---------- */
 
   function placeholderBadge(el, isPlaceholder, label) {
     if (!el) return;

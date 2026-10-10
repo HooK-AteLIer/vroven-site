@@ -76,7 +76,8 @@
   var HAIR = { 'vector-effect': 'non-scaling-stroke' };
   function st(color, px, extra) { return Object.assign({ stroke: color, 'stroke-width': px, 'vector-effect': 'non-scaling-stroke' }, extra || {}); }
 
-  function group(digits) { return String(Math.round(digits)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  // числа на чертеже: общий хелпер страницы (core.js), разделитель NBSP
+  function group(digits) { return V.format.num(digits); }
 
   /* ---------- тема стиля ---------- */
 

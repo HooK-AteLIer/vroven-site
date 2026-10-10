@@ -34,11 +34,11 @@
     return isFinite(n) ? n : NaN;
   }
 
-  // метка «ориентир, уточняется» внутри элемента (а не после него)
+  // метка «ориентировочно» внутри элемента (а не после него)
   function badgeInside(host, on) {
     var b = host.querySelector('.badge-placeholder');
     if (on && !b) {
-      b = el('span', 'badge-placeholder', 'ориентир, уточняется');
+      b = el('span', 'badge-placeholder', 'ориентировочно');
       host.appendChild(b);
     } else if (!on && b) {
       b.remove();
@@ -149,7 +149,7 @@
     $$('[data-furniture-price]').forEach(function (n) {
       var it = byId(data.furnitureItems, n.getAttribute('data-furniture-price'));
       var pm = it && it.perMeter;
-      n.textContent = pm ? 'от ' + rub(pm.value) + ' за п.м.' + (pm.placeholder ? ' · ориентир, уточняется' : '') : BY_SURVEY;
+      n.textContent = pm ? 'от ' + rub(pm.value) + ' за п.м.' + (pm.placeholder ? ' · ориентировочно' : '') : BY_SURVEY;
     });
 
     var mat = $('[data-materials]');

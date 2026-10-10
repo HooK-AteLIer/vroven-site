@@ -130,7 +130,8 @@
     return 'tel:' + data.phone.tel;
   }
 
-  var lead = { buildMessage: buildMessage, whatsappUrl: whatsappUrl, telUrl: telUrl };
+  // mm: числа для текста WhatsApp (обычный пробел); на странице числа форматирует VROVEN.format
+  var lead = { buildMessage: buildMessage, whatsappUrl: whatsappUrl, telUrl: telUrl, mm: mm };
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = lead;

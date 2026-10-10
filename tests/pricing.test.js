@@ -84,7 +84,21 @@ test('repairEstimate: границы площади 1 и 5000 допустимы
   assert.equal(est({ area: 5000 }).ok, true);
   const r = est({ area: '12,5' });
   assert.equal(r.ok, true);
-  assert.equal(r.min, 106250); // 125 000 × 0,85
+  assert.equal(r.min, 106300); // 125 000 × 0,85 = 106 250 → до сотни
+  assert.equal(r.max, 143800); // 125 000 × 1,15 = 143 750 → до сотни
+});
+
+test('repairEstimate: вилка круглая, min и max кратны 100', () => {
+  // 10 000 × 7,77 = 77 700; × 0,85 = 66 045 → 66 000; × 1,15 = 89 355 → 89 400
+  const r = est({ area: 7.77 });
+  assert.equal(r.ok, true);
+  assert.equal(r.min, 66000);
+  assert.equal(r.max, 89400);
+  for (const area of [1, 3.3, 12.5, 41, 777.7]) {
+    const x = est({ area });
+    assert.equal(x.min % 100, 0, 'min area=' + area);
+    assert.equal(x.max % 100, 0, 'max area=' + area);
+  }
 });
 
 test('repairEstimate: невозможный потолок даёт ошибку ceiling', () => {

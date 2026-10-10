@@ -90,7 +90,7 @@
   var list = el('div', 'jobs__cards');
   data.jobs.forEach(function (j) { list.appendChild(card(j)); });
 
-  var note = el('p', 'jobs__note', 'Условия уточняются, пока расскажем по телефону или в WhatsApp. Работаем в Тюмени и Нижневартовске.');
+  var note = el('p', 'jobs__note', 'Условия обсуждаем по телефону или в WhatsApp. Работаем в Тюмени и Нижневартовске.');
   list.appendChild(note);
 
   layout.appendChild(poster);
