@@ -1,0 +1,107 @@
+/* Лукбук: сетка кадров и просмотр. Токены из site.css. */
+
+.lookbook { display: grid; gap: clamp(20px, 3vw, 32px); }
+
+.lookbook__filters { display: grid; gap: 10px; }
+.lookbook__cap {
+  margin: 8px 0 0; font: 500 .72rem/1 var(--f-mono);
+  letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3);
+}
+.lookbook__cap:first-child { margin-top: 0; }
+.lookbook__count { margin: 0; min-height: 1.6em; font: 400 .85rem/1.6 var(--f-mono); color: var(--ink-3); }
+
+.lookbook__grid {
+  list-style: none; margin: 0; padding: 0;
+  columns: 1; column-gap: clamp(12px, 2vw, 24px);
+}
+@media (min-width: 560px) { .lookbook__grid { columns: 2; } }
+@media (min-width: 980px) { .lookbook__grid { columns: 3; } }
+
+.lookbook__item { break-inside: avoid; margin: 0 0 clamp(12px, 2vw, 24px); }
+
+.lookbook__shot {
+  position: relative; display: block; width: 100%; padding: 0;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  background: var(--panel-2); overflow: hidden; cursor: zoom-in;
+  font: inherit; color: inherit; text-align: left;
+  box-shadow: var(--shadow);
+}
+.lookbook__shot img { width: 100%; height: auto; transition: transform .8s var(--ease); }
+.lookbook__shot:hover img { transform: scale(1.025); }
+.lookbook__caption {
+  position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px;
+  background: linear-gradient(to top, rgba(34, 33, 30, .72), transparent);
+  color: var(--on-ink);
+}
+.lookbook__title { font: 500 1rem/1.25 var(--f-display); letter-spacing: .005em; }
+
+.lookbook__empty {
+  padding: clamp(28px, 5vw, 56px); text-align: center; justify-items: center;
+  border: 1px dashed var(--line-strong); border-radius: var(--radius-lg); background: var(--panel);
+}
+.lookbook__empty:not([hidden]) { display: grid; gap: 8px; }
+.lookbook__empty p { margin-inline: auto; }
+.lookbook__empty-title { font: 500 1.4rem/1.2 var(--f-display); margin-bottom: 0; }
+
+.lookbook__note { margin: 0; font-size: .85rem; color: var(--ink-3); max-width: 70ch; }
+
+/* ---------- просмотр ---------- */
+
+html.viewer-open { overflow: hidden; }
+
+.viewer {
+  position: fixed; inset: 0; z-index: 90;
+  display: grid; grid-template-rows: minmax(0, 1fr) auto;
+  background: rgba(24, 23, 20, .94); color: var(--on-ink);
+  animation: viewer-in .25s var(--ease);
+}
+.viewer[hidden] { display: none; }
+@keyframes viewer-in { from { opacity: 0; } to { opacity: 1; } }
+
+.viewer__stage {
+  display: grid; place-items: center; min-height: 0; min-width: 0;
+  padding: clamp(56px, 8vh, 72px) clamp(16px, 7vw, 96px) 8px;
+  touch-action: pan-y;
+}
+.viewer__img {
+  max-width: 100%; max-height: 100%; width: auto; height: auto;
+  object-fit: contain; border-radius: var(--radius);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, .7);
+}
+
+.viewer__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 12px clamp(16px, 4vw, 48px) max(16px, env(safe-area-inset-bottom));
+}
+.viewer__meta { min-width: 0; }
+.viewer__title { margin: 0; font: 500 1.1rem/1.25 var(--f-display); }
+.viewer__count { margin: 2px 0 0; color: var(--on-ink-2); }
+.viewer__act { flex: none; white-space: nowrap; }
+
+.viewer__btn {
+  position: absolute; display: grid; place-items: center;
+  width: var(--tap); height: var(--tap); padding: 0;
+  border: 1px solid rgba(238, 231, 220, .28); border-radius: 50%;
+  background: rgba(34, 33, 30, .55); color: var(--on-ink); cursor: pointer;
+  transition: background-color .2s, border-color .2s;
+}
+.viewer__btn:hover { background: rgba(238, 231, 220, .16); border-color: var(--on-ink); }
+.viewer__btn:focus-visible, .viewer__act:focus-visible { outline-color: var(--on-ink); }
+.viewer__btn svg { width: 22px; height: 22px; }
+.viewer__btn[hidden] { display: none; }
+.viewer__close { top: 12px; right: 12px; }
+.viewer__prev, .viewer__next { top: calc(50% - 56px); }
+.viewer__prev { left: 12px; }
+.viewer__next { right: 12px; }
+
+@media (max-width: 560px) {
+  .viewer__stage { padding-inline: 8px; }
+  .viewer__bar { flex-direction: column; align-items: stretch; }
+  .viewer__act { width: 100%; }
+  .viewer__prev, .viewer__next { top: auto; bottom: 96px; background: rgba(34, 33, 30, .75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lookbook__shot img { transition: none; }
+  .viewer { animation: none; }
+}
