@@ -41,7 +41,7 @@
   }
 
   var data = {
-    brand: { name: 'ВРОВЕНЬ', tagline: 'Ремонт и мебель вровень' },
+    brand: { name: 'ВРОВЕНЬ', tagline: 'Ремонт и мебель под ключ' },
 
     phone: {
       display: PHONE_DISPLAY,

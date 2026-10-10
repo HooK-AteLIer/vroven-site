@@ -60,6 +60,12 @@ def diagonal(x_top, x_bottom, w):
                     (x_bottom + t / 2, CAP), (x_bottom - t / 2, CAP)])
 
 
+def stroke(x0, y0, x1, y1, w):
+    """Наклонный штрих толщины w между двумя уровнями, концы срезаны горизонтально."""
+    t = w * math.hypot(x1 - x0, y1 - y0) / abs(y1 - y0)
+    return polygon([(x0 - t / 2, y0), (x0 + t / 2, y0), (x1 + t / 2, y1), (x1 - t / 2, y1)]), t
+
+
 # Тип боковой стороны буквы для межбуквенного просвета:
 # S прямая вертикаль, R круглая, O открытая (Т, Е справа), D диагональ.
 SIDE = {"S": 1.0, "R": 0.78, "O": 0.5, "D": 0.7}
@@ -110,6 +116,43 @@ def glyph(ch, w):
         top_x = 16
         return (rect(W - w, 0, w, CAP) + rect(top_x, 0, W - top_x, w)
                 + diagonal(top_x + w / 2, foot + w / 2, w)), W, "D", "S"
+    if ch == "П":
+        W = 68
+        return rect(0, 0, w, CAP) + rect(W - w, 0, w, CAP) + rect(0, 0, W, w), W, "S", "S"
+    if ch == "Д":
+        # треугольник как у Л, основание с выносными ножками под строку
+        W = 76
+        top_x = 18
+        right = W - 6
+        drop = 14
+        leg, _ = stroke(top_x + w / 2, 0, 6 + w / 2, CAP, w)
+        return (rect(right - w, 0, w, CAP) + rect(top_x, 0, right - top_x, w) + leg
+                + rect(0, CAP - w, W, w) + rect(0, CAP, w, drop)
+                + rect(W - w, CAP, w, drop)), W, "S", "S"
+    if ch == "К":
+        W = 62
+        d = w * 0.92
+        _, t = stroke(0, 0, W, mid, d)
+        j = w + t * 0.15                 # узел ветвей у ствола
+        up, _ = stroke(j, mid, W - t / 2, 0, d)
+        down, _ = stroke(j, mid, W - t / 2, CAP, d)
+        return rect(0, 0, w, CAP) + up + down, W, "S", "D"
+    if ch == "Ю":
+        ring_w = 84
+        gap = 12
+        W = w + gap + ring_w
+        return (rect(0, 0, w, CAP) + rect(0, mid - w / 2, w + gap + w, w)
+                + ring(w + gap + ring_w / 2, mid, ring_w / 2, mid + 1.6, w * 1.1, w * 0.98)), W, "S", "R"
+    if ch == "Ч":
+        W = 64
+        r = 14                           # внутренний радиус скругления
+        bar_bottom = 60
+        yc = bar_bottom - w - r
+        cx = w + r
+        hook = (f"M0 0H{fmt(w)}V{fmt(yc)}A{fmt(r)} {fmt(r)} 0 0 0 {fmt(cx)} {fmt(yc + r)}"
+                f"H{fmt(W - w)}V{fmt(bar_bottom)}H{fmt(cx)}"
+                f"A{fmt(r + w)} {fmt(r + w)} 0 0 1 0 {fmt(yc)}Z")
+        return hook + rect(W - w, 0, w, CAP), W, "S", "S"
     raise ValueError(f"нет буквы {ch!r}")
 
 
