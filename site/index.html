@@ -10,9 +10,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Jost:wght@400;500;600&family=Onest:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/site.css">
+  <link rel="stylesheet" href="assets/css/index.css">
   <script defer src="assets/js/data.js"></script>
   <script defer src="assets/js/core.js"></script>
   <script defer src="assets/js/lead.js"></script>
+  <script defer src="assets/js/pricing.js"></script>
+  <script defer src="assets/js/index.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">К содержанию</a>
@@ -53,7 +56,7 @@
   </header>
 
   <main id="main">
-    <!-- Каркас главной: разделы наполняет таск 04 -->
+    <!-- Герой: временная заглушка, кинематографичный герой делает таск 07 -->
     <section class="section page-intro" id="hero" aria-label="Ремонт и мебель одной командой">
       <div class="container">
         <p class="eyebrow">Ремонт и мебель <span data-city-text="nameIn"></span></p>
@@ -67,20 +70,593 @@
         <div class="level-line" data-reveal aria-hidden="true"></div>
       </div>
     </section>
-    <section class="section" id="about" aria-label="О компании"></section>
-    <section class="section" id="repair" aria-label="Ремонт квартир"></section>
-    <section class="section" id="commercial" aria-label="Коммерческие помещения"></section>
-    <section class="section" id="furniture" aria-label="Мебель"></section>
-    <section class="section" id="bundle" aria-label="Комплект: ремонт и мебель"></section>
-    <section class="section" id="calc" aria-label="Калькулятор ремонта"></section>
-    <section class="section" id="kitchen-teaser" aria-label="Конструктор кухни"></section>
-    <section class="section" id="lookbook-teaser" aria-label="Лукбук"></section>
-    <section class="section" id="steps" aria-label="Этапы работы"></section>
-    <section class="section" id="trust" aria-label="Гарантии"></section>
-    <section class="section" id="faq" aria-label="Вопросы и ответы"></section>
-    <section class="section" id="jobs" aria-label="Вакансии"></section>
-    <section class="section" id="contacts" aria-label="Контакты"></section>
-    <section class="section" id="lead" aria-label="Получить смету"></section>
+    <!-- О компании: цена «от» и один договор сразу после героя -->
+    <section class="section about" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <div class="about__grid">
+          <div class="about__text" data-reveal>
+            <p class="eyebrow">Почему вровень</p>
+            <h2 id="about-title">Один договор на&nbsp;ремонт и&nbsp;мебель</h2>
+            <p class="lead-text">Обычно стены делает одна бригада, а кухню заказывают в салоне. Потом шкаф не встаёт в нишу, розетка оказалась за пеналом, и каждый говорит, что виноват другой. У нас это одна команда: мы выравниваем стены и сами делаем под них мебель.</p>
+          </div>
+          <dl class="price-strip" data-reveal>
+            <div class="price-strip__item">
+              <dt>Ремонт квартиры</dt>
+              <dd><span class="price-strip__value" data-price="repair-from">по смете</span><span class="price-strip__unit">за м², работы</span></dd>
+            </div>
+            <div class="price-strip__item">
+              <dt>Кухня своего производства</dt>
+              <dd><span class="price-strip__value" data-price="kitchen-from">по смете</span><span class="price-strip__unit">за погонный метр</span></dd>
+            </div>
+            <div class="price-strip__item price-strip__item--offer">
+              <dt>Комплектом</dt>
+              <dd><span class="price-strip__value" data-price="bundle-max">до 15%</span><span class="price-strip__unit">скидка на мебель при заказе ремонта</span></dd>
+            </div>
+          </dl>
+        </div>
+        <div class="level-line about__line" data-reveal aria-hidden="true"></div>
+        <ol class="pillars">
+          <li class="pillar" data-reveal>
+            <span class="pillar__num mono">01</span>
+            <h3>Один договор</h3>
+            <p>Ремонт и мебель в одной смете. Не нужно сводить сроки двух подрядчиков и искать, кто ответит за щель между шкафом и стеной.</p>
+          </li>
+          <li class="pillar" data-reveal>
+            <span class="pillar__num mono">02</span>
+            <h3>Один прораб</h3>
+            <p>Один человек ведёт объект от замера до сборки последнего шкафа. Звоните ему, а не трём разным менеджерам.</p>
+          </li>
+          <li class="pillar" data-reveal>
+            <span class="pillar__num mono">03</span>
+            <h3>Кухня по замеру после ремонта</h3>
+            <p>Мебель меряем, когда стены уже ровные и трубы выведены. Поэтому кухня встаёт в размер, а не «примерно».</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Ремонт квартир -->
+    <section class="section section--panel" id="repair" aria-labelledby="repair-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Ремонт квартир под ключ</p>
+          <h2 id="repair-title">Что входит в&nbsp;ремонт и&nbsp;сколько он стоит</h2>
+          <p class="lead-text">Цена за м² ниже только за работы, без материалов. Точную сумму пишем в смете по пунктам, и она идёт приложением к договору.</p>
+        </div>
+        <div class="repair-layout">
+          <figure class="photo repair-layout__photo" data-reveal>
+            <img src="assets/img/index/repair-bathroom.webp" width="1024" height="688" loading="lazy" decoding="async" alt="Санузел с крупноформатной плиткой, душем с трапом, подвесным унитазом и дубовой тумбой">
+            <figcaption>Визуализация проекта: санузел под ключ</figcaption>
+          </figure>
+          <div class="repair-types" data-repair-types></div>
+        </div>
+        <p class="note">Цены <span data-city-text="nameIn"></span>. Где ставки пока нет, считаем по смете после замера. <a href="#calc">Посчитать свою квартиру</a></p>
+      </div>
+    </section>
+
+    <!-- Коммерческие помещения -->
+    <section class="section section--ink" id="commercial" aria-labelledby="commercial-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Коммерческие помещения</p>
+          <h2 id="commercial-title">Офис, магазин, кафе или салон под ключ</h2>
+          <p class="lead-text">Делаем ремонт и сразу мебель под ваш бизнес: стойки, витрины, шкафы, стеллажи. Один подрядчик вместо бригады и мебельщика, поэтому открытие не ждёт, пока они договорятся.</p>
+        </div>
+        <div class="commercial-grid">
+          <figure class="photo commercial-grid__photo" data-reveal>
+            <img src="assets/img/index/repair-office.webp" width="1024" height="688" loading="lazy" decoding="async" alt="Офис с дубовой стеной хранения, стойкой ресепшена и стеклянной перегородкой">
+            <figcaption>Визуализация проекта: офис</figcaption>
+          </figure>
+          <ul class="object-list">
+            <li class="object" data-reveal>
+              <h3>Офис</h3>
+              <p>Перегородки, свет и кабель-каналы, кухня для сотрудников, шкафы для документов и стойка ресепшена.</p>
+            </li>
+            <li class="object" data-reveal>
+              <h3>Магазин</h3>
+              <p>Торговый зал, примерочные, подсобка. Витрины и стеллажи делаем в своём цехе под ваш товар.</p>
+            </li>
+            <li class="object" data-reveal>
+              <h3>Кафе, ресторан</h3>
+              <p>Зал, барная стойка, отделка, которая выдерживает поток гостей и каждодневную мойку.</p>
+            </li>
+            <li class="object" data-reveal>
+              <h3>Салон, студия</h3>
+              <p>Кабинеты, зона ожидания, ресепшен, шкафы для расходников и рабочие места мастеров.</p>
+            </li>
+          </ul>
+          <figure class="photo commercial-grid__photo2" data-reveal>
+            <img src="assets/img/index/repair-cafe.webp" width="1024" height="688" loading="lazy" decoding="async" alt="Кафе с дубовой рифлёной барной стойкой, полками и терракотовой плиткой">
+            <figcaption>Визуализация проекта: кафе</figcaption>
+          </figure>
+          <div class="commercial-cta card" data-reveal>
+            <p class="commercial-cta__price">Цена по смете после замера</p>
+            <p>У каждого помещения свои требования к свету, вентиляции и пожарной безопасности. Приедем, замерим и распишем смету по пунктам.</p>
+            <div class="btn-row">
+              <a class="btn" data-lead="general" data-lead-payload='{"task":"Ремонт коммерческого помещения"}' href="#lead">Позвать на замер</a>
+              <a class="btn btn--ghost" data-tel href="#">Позвонить</a>
+            </div>
+            <p class="btn-note">Откроется WhatsApp с готовым текстом</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Мебель -->
+    <section class="section" id="furniture" aria-labelledby="furniture-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Своё производство</p>
+          <h2 id="furniture-title">Корпусная мебель любой сложности из своего цеха</h2>
+          <p class="lead-text">Проектируем по вашему замеру, делаем в своём цехе и собираем своими сборщиками. Кухня, шкаф в нишу со скосом, гардеробная под потолок: если это корпус, мы его сделаем.</p>
+        </div>
+        <ul class="furniture-grid">
+          <li class="furniture-item furniture-item--wide" data-reveal>
+            <a href="kitchen.html">
+              <img src="assets/img/index/kitchen-neoclassic.webp" width="1024" height="688" loading="lazy" decoding="async" alt="Шалфейная кухня с рамочными фасадами, мраморной стеновой панелью, островом и латунными светильниками">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Кухни</span>
+                <span class="furniture-item__price" data-furniture-price="kitchen"></span>
+              </span>
+            </a>
+          </li>
+          <li class="furniture-item" data-reveal>
+            <a href="lookbook.html">
+              <img src="assets/img/index/wardrobe-kupe-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Встроенный шкаф-купе с дубовыми дверями и бронзовым зеркалом в спальне">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Шкафы-купе</span>
+                <span class="furniture-item__price" data-furniture-price="wardrobe"></span>
+              </span>
+            </a>
+          </li>
+          <li class="furniture-item" data-reveal>
+            <a href="lookbook.html">
+              <img src="assets/img/index/walkin-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Гардеробная из дуба с подсветкой, островом с ящиками и зеркалом">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Гардеробные</span>
+                <span class="furniture-item__price" data-furniture-price="walkin"></span>
+              </span>
+            </a>
+          </li>
+          <li class="furniture-item" data-reveal>
+            <a href="lookbook.html">
+              <img src="assets/img/index/hallway-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Встроенная прихожая: шкаф, ниша со скамьёй и крючками, зеркальная панель">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Прихожие</span>
+                <span class="furniture-item__price" data-furniture-price="hallway"></span>
+              </span>
+            </a>
+          </li>
+          <li class="furniture-item" data-reveal>
+            <a href="lookbook.html">
+              <img src="assets/img/index/kids-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Мятно-белый шкаф с деревянными ручками, письменный стол и полки в детской">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Детские</span>
+                <span class="furniture-item__price" data-furniture-price="kids"></span>
+              </span>
+            </a>
+          </li>
+          <li class="furniture-item" data-reveal>
+            <a href="#commercial">
+              <img src="assets/img/index/repair-cafe-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Барная стойка из рифлёного дуба и полки в кафе">
+              <span class="furniture-item__body">
+                <span class="furniture-item__title">Мебель для коммерции</span>
+                <span class="furniture-item__price">по смете после замера</span>
+              </span>
+            </a>
+          </li>
+        </ul>
+        <div class="materials" data-reveal>
+          <h3 class="materials__title">Фасады кухни: ориентир за погонный метр</h3>
+          <ul class="materials__list" data-materials></ul>
+          <p class="note">Цех <span data-city-text="nameIn"></span>: <span data-city-text="workshop"></span>. Срок изготовления пишем в договоре: <span data-fact="guarantees.productionDays"></span>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Комплект: ремонт и мебель -->
+    <section class="section section--panel" id="bundle" aria-labelledby="bundle-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Комплект</p>
+          <h2 id="bundle-title">Закажите ремонт, и&nbsp;мебель станет дешевле</h2>
+          <p class="lead-text">Чем больше ремонт, тем больше скидка на мебель: косметический −5%, капитальный −10%, дизайнерский −15%. Выберите ремонт и отметьте мебель: посчитаем, сколько вы сэкономите.</p>
+        </div>
+        <div class="bundle" data-bundle>
+          <div class="bundle__stage" data-bundle-stage>
+            <div class="bundle__level" aria-hidden="true"><span class="bundle__level-label mono">вровень</span></div>
+            <fieldset class="card bundle-card" data-bundle-card="repair">
+              <legend class="bundle-card__legend"><span class="mono">01</span> Ремонт</legend>
+              <p class="field__label" id="bundle-repair-label">Тип ремонта</p>
+              <div class="chip-row" role="radiogroup" aria-labelledby="bundle-repair-label" data-bundle-repair></div>
+              <div class="field">
+                <label for="bundle-area">Площадь квартиры</label>
+                <div class="field__unit" data-unit="м²"><input id="bundle-area" name="bundle-area" type="text" inputmode="decimal" autocomplete="off" value="60" data-bundle-area></div>
+                <p class="field__error" data-bundle-area-error hidden></p>
+              </div>
+              <p class="bundle-card__sum">Ремонт: <strong data-bundle-out="repair">считаем…</strong></p>
+            </fieldset>
+            <fieldset class="card bundle-card" data-bundle-card="furniture">
+              <legend class="bundle-card__legend"><span class="mono">02</span> Мебель</legend>
+              <p class="field__label">Что сделать в цеху</p>
+              <ul class="bundle-items" data-bundle-items></ul>
+              <p class="bundle-card__sum">Мебель: <strong data-bundle-out="furniture">ничего не отмечено</strong></p>
+            </fieldset>
+          </div>
+          <div class="bundle-result" aria-live="polite">
+            <div class="bundle-result__cell">
+              <span class="bundle-result__label">Скидка на мебель</span>
+              <span class="bundle-result__value" data-bundle-out="discount">0%</span>
+            </div>
+            <div class="bundle-result__cell bundle-result__cell--save">
+              <span class="bundle-result__label">Вы экономите</span>
+              <span class="bundle-result__value" data-bundle-out="savings">0 ₽</span>
+              <span class="bundle-result__hint" data-bundle-out="hint"></span>
+            </div>
+            <div class="bundle-result__cell">
+              <span class="bundle-result__label">Итого ориентир</span>
+              <span class="bundle-result__value" data-bundle-out="total">по смете</span>
+            </div>
+            <div class="bundle-result__cta">
+              <a class="btn" data-lead="bundle" data-bundle-lead href="#lead">Хочу комплектом</a>
+              <p class="btn-note">Откроется WhatsApp с вашим расчётом</p>
+            </div>
+          </div>
+          <div class="bundle-offer" data-reveal><span class="bundle-offer__tag mono">Наоборот тоже работает</span><p class="bundle-offer__text"><span data-fact="kitchenOffer"></span>. <a href="kitchen.html">Собрать кухню в конструкторе</a></p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Калькулятор ремонта -->
+    <section class="section" id="calc" aria-labelledby="calc-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Калькулятор ремонта</p>
+          <h2 id="calc-title">Сколько стоит ваш ремонт</h2>
+          <p class="lead-text">Пять параметров, и вы видите вилку цены. Телефон не спрашиваем. Точную сумму назовём после замера.</p>
+        </div>
+        <form class="calc" data-calc novalidate>
+          <div class="calc__fields">
+            <div class="field">
+              <span class="field__label" id="calc-city-label">Город</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="calc-city-label" data-calc-city></div>
+            </div>
+            <div class="field">
+              <label for="calc-object">Объект</label>
+              <select id="calc-object" name="objectType" data-calc-object></select>
+            </div>
+            <div class="calc__pair">
+              <div class="field" data-calc-field="area">
+                <label for="calc-area">Площадь пола</label>
+                <div class="field__unit" data-unit="м²"><input id="calc-area" name="area" type="text" inputmode="decimal" autocomplete="off" value="54" aria-describedby="calc-area-error"></div>
+                <p class="field__error" id="calc-area-error" data-calc-error="area" hidden></p>
+              </div>
+              <div class="field" data-calc-field="ceiling">
+                <label for="calc-ceiling">Высота потолка</label>
+                <div class="field__unit" data-unit="мм"><input id="calc-ceiling" name="ceiling" type="text" inputmode="numeric" autocomplete="off" value="2700" aria-describedby="calc-ceiling-hint calc-ceiling-error"></div>
+                <p class="field__hint" id="calc-ceiling-hint">Выше 3000 мм ставка +10%</p>
+                <p class="field__error" id="calc-ceiling-error" data-calc-error="ceiling" hidden></p>
+              </div>
+            </div>
+            <div class="field">
+              <span class="field__label" id="calc-type-label">Тип ремонта</span>
+              <div class="chip-row" role="radiogroup" aria-labelledby="calc-type-label" data-calc-type></div>
+              <p class="field__hint" data-calc-works></p>
+            </div>
+          </div>
+          <div class="calc__result" aria-live="polite">
+            <p class="calc__result-label">Ориентир по работам</p>
+            <p class="calc__range"><span data-calc-out="range">считаем…</span></p>
+            <p class="calc__meta" data-calc-out="meta"></p>
+            <div class="level-line calc__line" aria-hidden="true"></div>
+            <p class="calc__note">Вилка ±15%: точнее скажем после замера. Материалы считаем отдельно, по вашему выбору.</p>
+            <a class="btn btn--block" data-lead="repair" data-calc-lead href="#lead">Получить точную смету</a>
+            <p class="btn-note">Откроется WhatsApp с этим расчётом</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Тизер конструктора кухни -->
+    <section class="section section--ink" id="kitchen-teaser" aria-labelledby="kitchen-teaser-title">
+      <div class="container kitchen-teaser">
+        <div class="kitchen-teaser__text" data-reveal>
+          <p class="eyebrow">Конструктор кухни</p>
+          <h2 id="kitchen-teaser-title">Ваши размеры, восемь стилей</h2>
+          <p class="lead-text">Введите длины стен, потолок, окно и мойку в миллиметрах. Конструктор разложит модули и покажет чертёж каждой стены. Один клик меняет стиль, размеры остаются ваши.</p>
+          <ul class="chip-row kitchen-teaser__styles" aria-label="Стили кухни">
+            <li><a class="chip" href="kitchen.html#style=classic">Классика</a></li>
+            <li><a class="chip" href="kitchen.html#style=neoclassic">Неоклассика</a></li>
+            <li><a class="chip" href="kitchen.html#style=modern">Модерн</a></li>
+            <li><a class="chip" href="kitchen.html#style=minimal">Минимализм</a></li>
+            <li><a class="chip" href="kitchen.html#style=hitech">Хай-тек</a></li>
+            <li><a class="chip" href="kitchen.html#style=loft">Лофт</a></li>
+            <li><a class="chip" href="kitchen.html#style=scandi">Скандинавский</a></li>
+            <li><a class="chip" href="kitchen.html#style=provence">Прованс</a></li>
+          </ul>
+          <div class="btn-row">
+            <a class="btn" href="kitchen.html">Открыть конструктор</a>
+          </div>
+        </div>
+        <figure class="kitchen-teaser__draw" data-reveal aria-label="Чертёж стены кухни с размерами">
+          <svg viewBox="0 0 492 332" role="img" aria-labelledby="kt-svg-title">
+            <title id="kt-svg-title">Фасадная развёртка кухни 3000 мм</title>
+            <g class="draw" fill="none" stroke="currentColor" stroke-width="1.2">
+              <path d="M40 40h120v72H40zM160 40h80v72h-80zM300 40h140v72H300z"/>
+              <path d="M100 40v72M370 40v72"/>
+              <path d="M40 182h400v4H40z"/>
+              <path d="M40 186h90v100H40zM130 186h120v100H130zM250 186h90v100h-90zM340 186h100v100H340z"/>
+              <path d="M85 186v100M130 219h120M130 252h120M295 186v100"/>
+              <path d="M40 286h400v12H40z"/>
+            </g>
+            <g class="draw draw--dim" fill="none" stroke-width="1">
+              <path d="M40 310h400M40 304v12M440 304v12"/>
+              <path d="M462 40v258M456 40h12M456 298h12"/>
+            </g>
+            <text x="240" y="328" text-anchor="middle" class="dim-text">3 000 мм</text>
+            <text x="482" y="169" text-anchor="middle" class="dim-text" transform="rotate(-90 482 169)">2 700 мм</text>
+            <line class="draw-laser" x1="20" y1="182" x2="460" y2="182"/>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Тизер лукбука -->
+    <section class="section" id="lookbook-teaser" aria-labelledby="lookbook-teaser-title">
+      <div class="container">
+        <div class="section-head section-head--row" data-reveal>
+          <div>
+            <p class="eyebrow">Визуализации проектов</p>
+            <h2 id="lookbook-teaser-title">Посмотрите, как это может выглядеть у вас</h2>
+          </div>
+          <a class="btn btn--ghost" href="lookbook.html">Весь лукбук</a>
+        </div>
+        <ul class="lookbook-strip">
+          <li data-reveal><a href="lookbook.html"><img src="assets/img/index/kitchen-scandi-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Белая кухня со светлым деревом, голубым пеналом и открытыми полками"><span>Кухня в скандинавском стиле</span></a></li>
+          <li data-reveal><a href="lookbook.html"><img src="assets/img/index/kitchen-loft-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Кухня из тёмного дуба и бетона, открытые полки на чёрных кронштейнах, кирпичная стена"><span>Кухня лофт</span></a></li>
+          <li data-reveal><a href="lookbook.html"><img src="assets/img/index/kitchen-modern-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Двухцветная кухня: песочные верхние шкафы и дубовые нижние, скруглённый пенал"><span>Кухня модерн</span></a></li>
+          <li data-reveal><a href="lookbook.html"><img src="assets/img/index/kitchen-classic-sm.webp" width="560" height="376" loading="lazy" decoding="async" alt="Кухня цвета слоновой кости с филёнчатыми фасадами, арочными витринами и бронзовыми ручками"><span>Кухня в классике</span></a></li>
+        </ul>
+        <p class="note">Это визуализации проектов, а не фото с объектов. Фотографии готовых работ добавим по мере сдачи.</p>
+      </div>
+    </section>
+
+    <!-- Этапы -->
+    <section class="section section--panel" id="steps" aria-labelledby="steps-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Как идёт работа</p>
+          <h2 id="steps-title">Шесть шагов от заявки до ключей</h2>
+        </div>
+        <ol class="steps" data-steps>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">01</span>
+            <h3>Заявка</h3>
+            <p>Пишете в WhatsApp или звоните. Задаём пару вопросов и договариваемся о дне замера.</p>
+          </li>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">02</span>
+            <h3>Замер</h3>
+            <p>Прораб приезжает на объект, меряет помещение и смотрит стены, полы и коммуникации.</p>
+          </li>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">03</span>
+            <h3>Смета и проект</h3>
+            <p>Расписываем смету по пунктам, без строки «прочие работы». Подписываем договор со сроком и этапами оплаты.</p>
+          </li>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">04</span>
+            <h3>Ремонт</h3>
+            <p>Свои бригады делают ремонт по этапам. После каждого этапа присылаем фото и подписываем акт.</p>
+          </li>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">05</span>
+            <h3>Замер мебели и производство</h3>
+            <p>Стены ровные, и мы меряем мебель заново. Согласуем чертёж и отдаём его в свой цех.</p>
+          </li>
+          <li class="step">
+            <span class="step__dot" aria-hidden="true"></span>
+            <span class="step__num mono">06</span>
+            <h3>Монтаж и сдача</h3>
+            <p>Собираем мебель, убираем за собой и сдаём объект по акту. Вы проверяете каждый пункт.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Доверие и гарантии -->
+    <section class="section" id="trust" aria-labelledby="trust-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Гарантии</p>
+          <h2 id="trust-title">Чего обычно боятся в&nbsp;ремонте, и&nbsp;что мы с&nbsp;этим делаем</h2>
+        </div>
+        <ul class="trust-grid">
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Смета вырастет по ходу»</p>
+            <h3>Смета в договоре</h3>
+            <p>Смета по пунктам идёт приложением к договору. Новые работы только через допсоглашение с суммой, которую вы подписали.</p>
+          </li>
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Возьмут аванс и пропадут»</p>
+            <h3>Оплата по этапам</h3>
+            <p>Платите за этап, который принят по акту. Большой аванс за весь ремонт вперёд не берём.</p>
+          </li>
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Обещали три месяца, вышло шесть»</p>
+            <h3>Срок и неустойка</h3>
+            <p>Срок пишем в договоре. За каждый день просрочки платим неустойку: <span data-fact="guarantees.penaltyPerDay"></span>.</p>
+          </li>
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Не знаю, что там на объекте»</p>
+            <h3>Фотоотчёты</h3>
+            <p>Прораб присылает фото и видео с объекта в WhatsApp. Видно, что сделано, даже если вы в другом городе.</p>
+          </li>
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Через год всё отвалится»</p>
+            <h3>Гарантия</h3>
+            <p>На ремонт: <span data-fact="guarantees.repairYears"></span>. На мебель: <span data-fact="guarantees.furnitureYears"></span>. Срок гарантии пишем в договоре.</p>
+          </li>
+          <li class="trust-item card" data-reveal>
+            <p class="trust-item__fear">«Пришлют случайных людей»</p>
+            <h3>Свои бригады</h3>
+            <p>Работают наши мастера, без субподряда. За каждого отвечает прораб, а за прораба отвечаем мы.</p>
+          </li>
+          <li class="trust-item card trust-item--wide" data-reveal>
+            <p class="trust-item__fear">«Кухня не встанет, фасады не те»</p>
+            <h3>Свой цех</h3>
+            <p>Мебель делаем сами, а не перепродаём чужую. Декор и материал фасадов записываем в спецификацию, чертёж согласуем до запуска. Цех <span data-city-text="nameIn"></span>: <span data-city-text="workshop"></span>.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Вопросы -->
+    <section class="section section--panel" id="faq" aria-labelledby="faq-title">
+      <div class="container faq-layout">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Вопросы</p>
+          <h2 id="faq-title">О чём спрашивают перед ремонтом</h2>
+          <p class="lead-text">Не нашли свой вопрос? Напишите, ответит прораб.</p>
+          <a class="btn btn--ghost" data-lead="general" data-lead-payload='{"task":"Вопрос по ремонту"}' href="#lead">Задать вопрос</a>
+        </div>
+        <div class="faq" data-faq>
+          <details class="faq__item">
+            <summary>Смета вырастет, когда начнётся ремонт?</summary>
+            <p>Нет. Смета по пунктам идёт приложением к договору, и цена работ в ней не меняется. Если вы захотите добавить работу, сначала подпишем допсоглашение с суммой, потом начнём.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Сколько нужно заплатить вперёд?</summary>
+            <p>Платите по этапам. Закончили этап, вы его приняли по акту, оплачиваете следующий. Деньги за весь ремонт вперёд не берём.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Что будет, если вы сорвёте сроки?</summary>
+            <p>Срок стоит в договоре. За каждый день просрочки платим неустойку: <span data-fact="guarantees.penaltyPerDay"></span>.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Кухня точно встанет по размеру?</summary>
+            <p>Мы меряем кухню после того, как выровняли стены и вывели трубы и розетки. Чертёж с размерами вы видите и подписываете до того, как его отдадут в цех.</p>
+          </details>
+          <details class="faq__item">
+            <summary>А если фасады привезут не того цвета?</summary>
+            <p>Цвет и фактуру выбираете по образцам, мат или глянец тоже. Название декора и материал записываем в спецификацию.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Почему ремонт и мебель вместе выходят дешевле?</summary>
+            <p>Мы не платим посреднику и сами планируем загрузку цеха. Поэтому при заказе ремонта даём скидку на мебель: 5% к косметическому, 10% к капитальному и 15% к дизайнерскому.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Какая у вас гарантия?</summary>
+            <p>На ремонт: <span data-fact="guarantees.repairYears"></span>. На мебель: <span data-fact="guarantees.furnitureYears"></span>. Срок гарантии и что она покрывает пишем в договоре.</p>
+          </details>
+          <details class="faq__item">
+            <summary>Вы работаете в Нижневартовске?</summary>
+            <p>Да, в Тюмени и Нижневартовске. Выберите город в шапке сайта: покажем адрес, цены и контакты вашего города.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- Вакансии -->
+    <section class="section" id="jobs" aria-labelledby="jobs-title">
+      <div class="container">
+        <div class="section-head section-head--row" data-reveal>
+          <div>
+            <p class="eyebrow">Работа у нас</p>
+            <h2 id="jobs-title">Ищем маляров, плиточников и разнорабочих</h2>
+          </div>
+          <a class="btn btn--ghost" href="jobs.html">Все условия</a>
+        </div>
+        <div class="jobs-teaser">
+          <ul class="jobs-teaser__cards">
+            <li class="job-card card" data-reveal>
+              <h3 data-fact="jobs.0.title">Маляр</h3>
+              <p data-fact="jobs.0.duties"></p>
+              <dl class="job-card__terms"><dt>Оплата</dt><dd data-fact="jobs.0.pay"></dd><dt>График</dt><dd data-fact="jobs.0.schedule"></dd></dl>
+              <a class="btn btn--sm btn--dark" data-lead="job" data-lead-payload='{"position":"Маляр"}' href="jobs.html">Откликнуться в WhatsApp</a>
+            </li>
+            <li class="job-card card" data-reveal>
+              <h3 data-fact="jobs.1.title">Плиточник</h3>
+              <p data-fact="jobs.1.duties"></p>
+              <dl class="job-card__terms"><dt>Оплата</dt><dd data-fact="jobs.1.pay"></dd><dt>График</dt><dd data-fact="jobs.1.schedule"></dd></dl>
+              <a class="btn btn--sm btn--dark" data-lead="job" data-lead-payload='{"position":"Плиточник"}' href="jobs.html">Откликнуться в WhatsApp</a>
+            </li>
+            <li class="job-card card" data-reveal>
+              <h3 data-fact="jobs.2.title">Разнорабочий</h3>
+              <p data-fact="jobs.2.duties"></p>
+              <dl class="job-card__terms"><dt>Оплата</dt><dd data-fact="jobs.2.pay"></dd><dt>График</dt><dd data-fact="jobs.2.schedule"></dd></dl>
+              <a class="btn btn--sm btn--dark" data-lead="job" data-lead-payload='{"position":"Разнорабочий"}' href="jobs.html">Откликнуться в WhatsApp</a>
+            </li>
+          </ul>
+          <aside class="jobs-teaser__poster" data-reveal>
+            <img src="assets/img/index/vakansii-poster.webp" width="341" height="338" loading="lazy" decoding="async" alt="Плакат: требуются специалисты, маляры, плиточники, разнорабочие. Звоните прямо сейчас, +7 912 410 00 01">
+            <a class="footer-phone jobs-teaser__phone" data-phone href="#"></a>
+            <a class="btn btn--block" data-tel href="#">Позвонить</a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Контакты своего города -->
+    <section class="section section--ink" id="contacts" aria-labelledby="contacts-title">
+      <div class="container contacts">
+        <div data-reveal>
+          <p class="eyebrow">Контакты</p>
+          <h2 id="contacts-title">Мы <span data-city-text="nameIn"></span></h2>
+          <div class="city-switch contacts__city" data-city-switch aria-label="Город"></div>
+        </div>
+        <dl class="contacts__list" data-reveal>
+          <div><dt>Телефон</dt><dd><a class="contacts__phone" data-phone href="#"></a></dd></div>
+          <div><dt>Офис</dt><dd data-city-text="office"></dd></div>
+          <div><dt>Цех</dt><dd data-city-text="workshop"></dd></div>
+          <div><dt>Города</dt><dd>Тюмень и Нижневартовск</dd></div>
+        </dl>
+        <div class="btn-row contacts__actions" data-reveal>
+          <a class="btn" data-lead="general" href="#lead">Написать в WhatsApp</a>
+          <a class="btn btn--ghost" data-tel href="#">Позвонить</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Финальная заявка -->
+    <section class="section section--panel" id="lead" aria-labelledby="lead-title">
+      <div class="container lead">
+        <div class="lead__intro" data-reveal>
+          <p class="eyebrow">Получить смету</p>
+          <h2 id="lead-title">Расскажите, что нужно сделать</h2>
+          <p class="lead-text">Перезвоним, зададим пару вопросов и договоримся о замере. Ничего не обещаем по телефону, всё пишем в смету.</p>
+          <div class="level-line" data-reveal aria-hidden="true"></div>
+          <p class="lead__or">Или сразу позвоните: <a data-phone href="#"></a></p>
+        </div>
+        <form class="lead-form card" data-lead-form novalidate>
+          <div class="field">
+            <label for="lead-name">Как к вам обращаться</label>
+            <input id="lead-name" name="name" type="text" autocomplete="name" maxlength="60">
+          </div>
+          <div class="field" data-lead-field="phone">
+            <label for="lead-phone">Телефон</label>
+            <input id="lead-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="24" required aria-describedby="lead-phone-error">
+            <p class="field__error" id="lead-phone-error" data-lead-error hidden></p>
+          </div>
+          <div class="field">
+            <label for="lead-city">Город</label>
+            <select id="lead-city" name="city" data-lead-city></select>
+          </div>
+          <div class="field">
+            <label for="lead-task">Задача</label>
+            <textarea id="lead-task" name="task" maxlength="800" placeholder="Например: двушка 54 м² в новостройке, ремонт и кухня"></textarea>
+          </div>
+          <button class="btn btn--block" type="submit">Получить смету в WhatsApp</button>
+          <p class="btn-note">Откроется WhatsApp с готовым текстом заявки. Отправляете вы сами, мы ничего не сохраняем на сайте.</p>
+          <p class="lead-form__done" data-lead-done hidden>WhatsApp открыт в новой вкладке. Не открылся? <a data-lead-fallback href="#" target="_blank" rel="noopener">Открыть ещё раз</a> или позвоните <a data-phone href="#"></a>.</p>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer" id="footer">
