@@ -12,7 +12,7 @@
 - Любой факт о компании, которого нет в `data.js`, не выдумывается. Заглушка выглядит как `[АДРЕС — уточняется]` и видна на странице.
 - Размеры в конструкторе везде в миллиметрах, целыми числами.
 - Мобильная ширина от 360 px без горизонтального скролла. `prefers-reduced-motion` гасит анимации до конечного состояния.
-- Проверка: `node --test tests/` из корня проекта. Предпросмотр: `python -m http.server 8130 --directory site`.
+- Проверка: `node --test` из корня проекта (папку не передавать: Node 24 не принимает путь к папке). Один файл: `node --test tests/<имя>.test.js`. Предпросмотр: `python -m http.server 8130 --directory site`.
 
 ## Границы, решённые в спецификации
 
@@ -60,7 +60,7 @@
 - `bundle({ repairType, repairArea, city, furniture:[{ id, meters }] }, data)` → `{ repairTotal, furnitureTotal, discountPct, savings, total, placeholder }`.
 - `kitchenEstimate({ runMeters, materialId, city, withRepair, repairType }, data)` → `{ price, discountPct, priceWithDiscount, placeholder }`.
 
-### `site/assets/js/kitchen-layout.js` — раскладка (владелец: T04, чистый)
+### `site/assets/js/kitchen-layout.js` — раскладка (владелец: T03, чистый)
 Вход:
 ```js
 { shape:'straight'|'corner'|'u'|'island',
@@ -100,3 +100,36 @@
 
 ## Что построили завершённые таски
 (дописывается после каждого таска)
+
+### T01 — каркас (готово)
+- `VROVEN.data` по форме выше, плюс: `jobs[].duties`; `perks/requirements: [{text, placeholder}]`; `furnitureItems[].perMeter: {value,source,placeholder}|null` (у шкафа-купе, гардеробной, прихожей, детской = null — pricing.bundle должен это учитывать: «по смете»); `repairPrices.*.commercial.{office,shop,cafe,salon} = null`.
+- `VROVEN.lead.buildMessage(kind, payload, cityName)`, `whatsappUrl(text)`, `telUrl()`. Поля payload: general {name,phone,task}; repair {objectName,repairName,area,ceiling,min,max}; bundle {repairName,area,furniture:[{name,meters}],discountPct,savings,total}; kitchen {shapeName,walls{A,B,C},ceiling,styleName,colorName,materialName,runMeters,price,withRepair,link}; job {position,name,phone,experience}. Пустые поля в текст не попадают.
+- `VROVEN.city.get()/set(id)/current()`, событие `vroven:city` {detail.id}, localStorage `vroven.city`.
+- `VROVEN.format.rub/mm/num` (разделитель NBSP). `VROVEN.placeholderBadge(el, isPlaceholder, label?)`. `VROVEN.leadUrl(kind,payload)`, `VROVEN.refreshLeads()` — вызвать после динамической смены `data-lead-payload`.
+- Разметка: `data-city-switch`, `data-city-text`, `data-phone`, `data-tel`, `data-lead` + `data-lead-payload` (JSON), `data-fact="path"`, `data-reveal`, `body[data-page]`, `nav a[data-nav]`.
+- Порядок скриптов: `data.js` → `core.js` → `lead.js` → модули страницы (core.js стартует на DOMContentLoaded).
+- CSS-токены сверх списка: `--panel-2, --ink-3, --oak-deep, --laser-glow, --line-strong, --on-ink, --on-ink-2`; классы `.eyebrow, .lead-text, .btn--dark/--sm/--block, .btn-row, .btn-note, .is-placeholder, .page-intro, .container, .section--panel/--ink`.
+- Заглушки пишутся с коротким тире: `[АДРЕС ОФИСА – уточняется]`.
+
+### T03 — раскладка кухни (готово)
+- `VROVEN.kitchenLayout.layout(input)` / `module.exports.layout`; вход по контракту выше.
+- Константы сверх контракта: `UPPER_H_TALL=920, WORKTOP_H=858, WORKTOP_D=600, UPPER_TALL_AUTO_CEILING=2600, TALL_W=600`.
+- Выход сверх контракта: `upperHeight` (720|920), `ceiling`; у стены `upperFillers:[{x,width}]` (`fillers` — только низ), `openings:[{type:'window'|'door', x, width, sill?}]`, `joins:{start,end}`; `island: {length, depth, lower, fillers}`.
+- Геометрия: x слева направо у каждой стены; стыки A→B→C. Угол принадлежит A (на её конце) и C (на её начале): нижний глухой угол 1000/900 и `upper-corner` 600; соседняя стена начинает низ с 600, верх с 300. `offset` у мойки и плиты — левый край модуля.
+- `runMeters` = фронт низа без проёмов и без чужого углового квадрата + длина острова (угловая 3000/2000 → 4.40).
+- Ошибки: `field` ∈ `walls.A|B|C, ceiling, window, door, sink, stove, shape, island.length, island.depth, options.upperHeight`. Предупреждения (`warnings`) — тоже показывать пользователю.
+- дверь ближе 600 мм к стыку стен → ошибка field 'door' (решение ремонта T03)
+
+### T06 — лукбук и вакансии (готово)
+- `VROVEN.lookbook = [{src, thumb, w, h, category, style?, title, alt}]` (thumb — превью 800 px). Кадры: site/assets/img/lookbook/*.webp и *-sm.webp.
+- «Хочу так» → kitchen.html#style=<id>; «Хочу похожее»/«Откликнуться» через VROVEN.leadUrl('general'|'job', …).
+
+### T04 — главная (готово)
+- `VROVEN.pricing = { repairEstimate, bundle, kitchenEstimate, HIGH_CEILING=3000, AREA_MIN=1, AREA_MAX=5000 }`; `bundle` возвращает ещё `bySurvey`, `items:[{id,name,meters,price|null}]`; `repairTotal=null` без ставки; `kitchenEstimate` → `price/priceWithDiscount=null` при неверных метрах/материале, при withRepair без repairType — минимальная ступень лесенки. Потолок вне 2000–6000 → reason 'ceiling'.
+- Ставки читаются как `{value}` или по городу `{tyumen:{value}}`.
+- Разметка главной: `data-price="repair-from|kitchen-from|bundle-max"`, `data-furniture-price`, `data-bundle*`, `data-calc*`, `data-lead-form`. В head index.html подключены index.css, pricing.js, index.js.
+
+### T05 — конструктор (готово)
+- `VROVEN.kitchenStyles` (8) + необязательные colors[].lower/tall/wall и style.lowerFacade/hood/apron/topDrawer/led/toCeiling/farmSink/knobRing/gas/patinaColor/plinth.
+- `VROVEN.kitchenRender.renderElevation(svgEl, wallLayout, style, colorId, ceiling, opts?)`, `renderPlan(svgEl, layout, opts?)`, `swatch(style, colorId)`.
+- `VROVEN.kitchenApp`: defaults, toHash, fromHash, sanitize, toLayoutInput, estimate, buildMessage. Hash: style,color,shape,a,b,c,h,win,door,sink,stove,isl,tall,up,mat,rep; localStorage `vroven.kitchen`.
