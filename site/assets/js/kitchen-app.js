@@ -430,7 +430,18 @@
       var input = label.querySelector('input');
       input.value = s.id;
       label.querySelector('.kd-style__name').textContent = s.name;
-      label.querySelector('.kd-style__img').innerHTML = V.kitchenRender.swatch(s, s.colors[0].id);
+      var tile = label.querySelector('.kd-style__img');
+      var swatchSvg = function () { tile.innerHTML = V.kitchenRender.swatch(s, s.colors[0].id); };
+      if (s.photo) {
+        var img = doc.createElement('img');
+        img.src = s.photo;
+        img.alt = 'Фасады в стиле ' + s.name.toLowerCase();
+        img.width = 480; img.height = 600;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.addEventListener('error', swatchSvg);
+        tile.appendChild(img);
+      } else swatchSvg();
       label.title = s.blurb;
       list.appendChild(label);
     });
