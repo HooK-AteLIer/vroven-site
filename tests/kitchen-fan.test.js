@@ -75,11 +75,21 @@ test('наведение: соседи раздвигаются по форму�
 const fs = require('node:fs');
 const styles = require(path.join(__dirname, '..', 'site', 'assets', 'js', 'kitchen-styles.js'));
 
-test('у каждого стиля фото всей кухни из лукбука, файл на месте', () => {
+// Таск 15: раскрытие в выбранном цвете — фото всей кухни у каждого цвета, а не у стиля.
+test('у каждого цвета фото всей кухни в этом цвете, webp до 150 КБ', () => {
+  let count = 0;
   styles.forEach((s) => {
-    assert.equal(s.scene, 'assets/img/lookbook/kitchen-' + s.id + '.webp', s.id);
-    assert.ok(fs.existsSync(path.join(__dirname, '..', 'site', s.scene)), s.id + ': файл');
+    assert.equal(s.scene, undefined, s.id + ': фото всей кухни теперь у цветов');
+    s.colors.forEach((c) => {
+      const want = 'assets/img/kitchens/' + s.id + '--' + c.id + '.webp';
+      assert.equal(c.scene, want, s.id + '/' + c.id);
+      const file = path.join(__dirname, '..', 'site', c.scene);
+      assert.ok(fs.existsSync(file), want + ': файл');
+      assert.ok(fs.statSync(file).size <= 150 * 1024, want + ': до 150 КБ');
+      count++;
+    });
   });
+  assert.equal(count, 24);
 });
 
 const near = (a, b) => Math.abs(a - b) < 0.01;
@@ -108,4 +118,18 @@ test('раскрытие у края окна прижимается внутр�
   assert.ok(near(edge.top + edge.height, 900 - 16), 'снизу поле 16');
   const phone = fan.revealBox({ vw: 360, vh: 740, minTop: 84, cx: 180, cy: 400, ratio: RATIO });
   assert.ok(near(phone.width, 328) && near(phone.left, 16));
+});
+
+// ---- плавность раскрытия (таск 15): FLIP вместо анимации размеров -----------------
+
+test('FLIP: transform переводит итоговый бокс раскрытия в прямоугольник карточки', () => {
+  const box = { left: 570, top: 213, width: 720, height: 484 };
+  const card = { left: 840, top: 300, width: 180, height: 225 };
+  const t = fan.flipTransform(card, box);
+  // при transform-origin 0 0: left' = box.left + x, ширина' = box.width * sx
+  assert.equal(t.x, 270);
+  assert.equal(t.y, 87);
+  assert.equal(t.sx, 0.25);
+  assert.ok(Math.abs(t.sy - 225 / 484) < 1e-9);
+  assert.equal(fan.flipTransform(box, box).x, 0, 'на месте — без сдвига');
 });

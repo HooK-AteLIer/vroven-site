@@ -432,7 +432,9 @@
 
   /* Ставит на плитки фото их цвета; новое фото подменяет старое, когда загрузилось (без мигания). */
   function syncTilePhotos() {
-    styles.forEach(function (s) {
+    styles.forEach(function (s, i) {
+      // фото всей кухни для раскрытия: у центральной текущий цвет, у остальных основной
+      if (fan) fan.setScene(i, colorById(s, tileColorId(s)).scene || null);
       var img = tileImgs[s.id];
       if (!img) return;
       var c = colorById(s, tileColorId(s));
@@ -461,7 +463,7 @@
     if (!list || !V.kitchenFan) return;
     fan = V.kitchenFan.create(list, {
       names: styles.map(function (s) { return s.name; }),
-      scenes: styles.map(function (s) { return s.scene || null; }),
+      scenes: styles.map(function (s) { return colorById(s, tileColorId(s)).scene || null; }),
       center: styleIndex(state.style),
       label: 'Стиль кухни',
       onSelect: function (i) {

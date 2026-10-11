@@ -92,11 +92,24 @@
     return { left: left, top: top, width: width, height: height };
   }
 
+  /*
+   * FLIP: transform (transform-origin 0 0), который переводит бокс box в прямоугольник from.
+   * Бокс раскрытия ставится один раз, анимируются только transform и opacity.
+   */
+  function flipTransform(from, box) {
+    return {
+      x: from.left - box.left,
+      y: from.top - box.top,
+      sx: box.width ? from.width / box.width : 1,
+      sy: box.height ? from.height / box.height : 1
+    };
+  }
+
   var api = {
     SLOTS: SLOTS, CENTER: CENTER,
     widthFactor: widthFactor, heightFactor: heightFactor,
     visibleMap: visibleMap, circularDelta: circularDelta, hoverOffsets: hoverOffsets,
-    revealBox: revealBox
+    revealBox: revealBox, flipTransform: flipTransform
   };
 
   if (isNode) { module.exports = api; return; }
@@ -125,6 +138,7 @@
 
   /*
    * create(el, { names:[string], center, label, onSelect(index), scenes?:[url] })
+   * → setScene(i, url) меняет фото всей кухни карточки i (смена цвета).
    * → { media:[HTMLElement], setCenter(index, animate), center() }
    * media[i] — место под картинку карточки i (картинку кладёт kitchen-app.js).
    * scenes[i] — фото всей кухни: наведение мышью на карточку раскрывает его целиком,
@@ -187,18 +201,57 @@
     el.appendChild(nav);
 
     // раскрытая кухня: одна на веер, поверх страницы, ниже шапки
-    var reveal = null, revealImg = null, revealPoster = null, revealName = null;
+    var reveal = null, revealFrame = null, revealPoster = null, revealName = null;
+    var revealUrl = null, box = null, scrollY0 = 0, intentTimer = null, intentIndex = null;
     if (scenes) {
       reveal = doc.createElement('div');
       reveal.className = 'kd-reveal';
       reveal.hidden = true;
       reveal.setAttribute('aria-hidden', 'true');
-      reveal.innerHTML = '<img class="kd-reveal__poster" alt=""><img class="kd-reveal__img" alt="" decoding="async"><p class="kd-reveal__name"></p>';
+      reveal.innerHTML = '<img class="kd-reveal__poster" alt=""><span class="kd-reveal__frame"></span><p class="kd-reveal__name"></p>';
       revealPoster = reveal.children[0];
-      revealImg = reveal.children[1];
+      revealFrame = reveal.children[1];
       revealName = reveal.children[2];
-      revealImg.addEventListener('load', function () { reveal.classList.add('is-loaded'); });
       doc.body.appendChild(reveal);
+    }
+
+    /*
+     * Фото всей кухни: по одному элементу <img> на адрес, декодируется заранее (img.decode()),
+     * в раскрытие вставляется уже готовый элемент — без декодирования на лету при наведении.
+     */
+    var sceneCache = {};
+    function sceneImage(url) {
+      var e = sceneCache[url];
+      if (e) return e;
+      var img = new root.Image();
+      img.className = 'kd-reveal__img';
+      img.alt = '';
+      img.decoding = 'async';
+      e = sceneCache[url] = { img: img, ready: false };
+      var done = function () {
+        if (e.ready) return;
+        e.ready = true;
+        if (revealUrl === url) reveal.classList.add('is-loaded');
+      };
+      img.src = url;
+      if (img.decode) img.decode().then(done, function () { if (img.complete && img.naturalWidth) done(); });
+      else img.onload = done;
+      return e;
+    }
+
+    /* Когда браузер свободен — сцены 7 видимых карточек в их текущем цвете, от центра к краям. */
+    var idleId = null;
+    function schedulePreload() {
+      if (!scenes || !entered || idleId !== null) return;
+      var run = function () {
+        idleId = null;
+        visibleMap(n, center)
+          .map(function (i, s) { return { i: i, d: Math.abs(s - CENTER) }; })
+          .filter(function (o) { return o.i !== null && scenes[o.i]; })
+          .sort(function (a, b) { return a.d - b.d; })
+          .forEach(function (o) { sceneImage(scenes[o.i]); });
+      };
+      idleId = root.requestIdleCallback ? root.requestIdleCallback(run, { timeout: 1500 }) : root.setTimeout(run, 400);
     }
 
     function slotOf(i) { return visibleMap(n, center).indexOf(i); }
@@ -237,17 +290,8 @@
       return delay + o.duration;
     }
 
-    /* Фото всей кухни центрального стиля подгружаем заранее, остальные — при наведении. */
-    var preloadTimer = null;
-    function preloadCenter() {
-      if (!scenes || !scenes[center]) return;
-      root.clearTimeout(preloadTimer);
-      var src = scenes[center];
-      preloadTimer = root.setTimeout(function () { (new root.Image()).src = src; }, 900);
-    }
-
     function syncAttrs() {
-      preloadCenter();
+      schedulePreload();
       var map = visibleMap(n, center);
       cards.forEach(function (card, i) {
         var slot = map.indexOf(i);
@@ -316,6 +360,7 @@
       });
       el.classList.add('is-ready');
       lock(longest);
+      schedulePreload();
     }
 
     /* Сдвиг центра на delta шагов (знак — направление листания). */
@@ -371,16 +416,36 @@
 
     /* ----- раскрытие всей кухни ----- */
 
-    function frame(r) {
-      return { left: r.left.toFixed(1) + 'px', top: r.top.toFixed(1) + 'px', width: r.width.toFixed(1) + 'px', height: r.height.toFixed(1) + 'px' };
+    /* FLIP: итоговый бокс ставится один раз, анимируются только transform и opacity. */
+    function flipTo(rect) {
+      var t = flipTransform(rect, box);
+      return 'translate(' + t.x.toFixed(1) + 'px, ' + t.y.toFixed(1) + 'px) scale(' + t.sx.toFixed(4) + ', ' + t.sy.toFixed(4) + ')';
+    }
+
+    function stopReveal() {
+      if (reveal._anim) { reveal._anim.cancel(); reveal._anim = null; }
+      reveal.classList.remove('is-animating');
     }
 
     function animateReveal(from, to, done) {
-      if (reveal._anim) { reveal._anim.cancel(); reveal._anim = null; }
-      Object.keys(to).forEach(function (k) { reveal.style[k] = to[k]; });
+      stopReveal();
+      reveal.style.transform = to.transform;
+      reveal.style.opacity = to.opacity;
       if (!motion) { if (done) done(); return; }
-      reveal._anim = reveal.animate([from, to], { duration: 380, easing: glide });
-      reveal._anim.onfinish = function () { reveal._anim = null; if (done) done(); };
+      reveal.classList.add('is-animating');
+      var a = reveal._anim = reveal.animate([from, to], { duration: 380, easing: glide });
+      a.onfinish = function () {
+        if (reveal._anim !== a) return;
+        reveal._anim = null;
+        reveal.classList.remove('is-animating');
+        if (done) done();
+      };
+    }
+
+    /* Текущий вид раскрытия (посреди анимации — промежуточный). */
+    function currentLook() {
+      var cs = root.getComputedStyle(reveal);
+      return { transform: cs.transform === 'none' ? 'none' : cs.transform, opacity: cs.opacity };
     }
 
     function revealTarget() {
@@ -396,35 +461,55 @@
     function fillReveal(i) {
       var img = media[i].querySelector('img');
       var poster = img ? img.currentSrc || img.src : '';
-      if (poster) revealPoster.src = poster; else revealPoster.removeAttribute('src');
-      if (revealImg.getAttribute('src') !== scenes[i]) {
-        reveal.classList.remove('is-loaded');
-        revealImg.src = scenes[i];
-        if (revealImg.complete && revealImg.naturalWidth) reveal.classList.add('is-loaded');
+      if (revealPoster.getAttribute('src') !== poster) {
+        if (poster) revealPoster.src = poster; else revealPoster.removeAttribute('src');
+      }
+      var url = scenes[i];
+      if (url !== revealUrl) {
+        revealUrl = url;
+        var e = sceneImage(url);
+        while (revealFrame.firstChild) revealFrame.removeChild(revealFrame.firstChild);
+        revealFrame.appendChild(e.img);
+        reveal.classList.toggle('is-loaded', e.ready);
       }
       revealName.textContent = names[i] || '';
+    }
+
+    function cancelIntent() {
+      root.clearTimeout(intentTimer);
+      intentTimer = null;
     }
 
     function openReveal(i, pin) {
       if (!reveal || !scenes[i] || !entered || busy() || slotOf(i) < 0) return;
       root.clearTimeout(closeTimer);
+      cancelIntent();
       pinned = !!pin;
       reveal.classList.toggle('is-pinned', pinned);
       fillReveal(i);
       stage.setAttribute('data-revealed', String(i));
       if (revealed !== null) { revealed = i; return; }   // уже раскрыто: меняется только кадр
       revealed = i;
+      scrollY0 = root.scrollY || 0;
       stage.classList.add('is-revealing');
+      var from;
+      if (!reveal.hidden && reveal._anim) {
+        from = currentLook();                            // сворачивалось — разворачиваем с того же места
+      } else {
+        box = revealTarget();
+        reveal.style.left = box.left.toFixed(1) + 'px';
+        reveal.style.top = box.top.toFixed(1) + 'px';
+        reveal.style.width = box.width.toFixed(1) + 'px';
+        reveal.style.height = box.height.toFixed(1) + 'px';
+        from = { transform: flipTo(cards[i].getBoundingClientRect()), opacity: '0.4' };
+      }
       reveal.hidden = false;
-      var from = frame(cards[i].getBoundingClientRect());
-      from.opacity = '0.4';
-      var to = frame(revealTarget());
-      to.opacity = '1';
-      animateReveal(from, to);
+      animateReveal(from, { transform: 'none', opacity: '1' });
     }
 
     function closeReveal(animate) {
       root.clearTimeout(closeTimer);
+      cancelIntent();
       if (revealed === null) return;
       var i = revealed;
       revealed = null;
@@ -433,15 +518,8 @@
       stage.classList.remove('is-revealing');
       reveal.classList.remove('is-pinned');
       var hide = function () { if (revealed === null) reveal.hidden = true; };
-      if (!animate || !motion) {
-        if (reveal._anim) { reveal._anim.cancel(); reveal._anim = null; }
-        hide();
-        return;
-      }
-      var from = { left: reveal.style.left, top: reveal.style.top, width: reveal.style.width, height: reveal.style.height, opacity: '1' };
-      var to = frame(cards[i].getBoundingClientRect());
-      to.opacity = '0';
-      animateReveal(from, to, hide);
+      if (!animate || !motion) { stopReveal(); hide(); return; }
+      animateReveal(currentLook(), { transform: flipTo(cards[i].getBoundingClientRect()), opacity: '0' }, hide);
     }
 
     function toggleReveal(i) {
@@ -483,7 +561,17 @@
       var card = e.target.closest('.kd-fan__card');
       if (!card) return;
       var i = Number(card.getAttribute('data-index'));
-      if (scenes) { if (!pinned) openReveal(i, false); return; }
+      if (scenes) {
+        if (pinned) return;
+        root.clearTimeout(closeTimer);
+        if (revealed !== null) { openReveal(i, false); return; }   // уже раскрыто: кадр меняется сразу
+        // намерение: быстрый проход мышью по вееру не раскрывает каждую карточку
+        if (intentTimer !== null && intentIndex === i) return;
+        cancelIntent();
+        intentIndex = i;
+        intentTimer = root.setTimeout(function () { intentTimer = null; openReveal(intentIndex, false); }, 120);
+        return;
+      }
       var slot = slotOf(i);
       if (slot >= 0) hover(slot);
     });
@@ -491,6 +579,7 @@
       if (e.pointerType !== 'mouse' || !scenes || pinned) return;
       var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.kd-fan__card') : null;
       if (next && stage.contains(next)) return;
+      cancelIntent();
       root.clearTimeout(closeTimer);
       closeTimer = root.setTimeout(function () { closeReveal(true); }, 90);
     });
@@ -505,7 +594,9 @@
       doc.addEventListener('pointerdown', function (e) {
         if (revealed !== null && pinned && !stage.contains(e.target) && !reveal.contains(e.target)) closeReveal(true);
       });
-      root.addEventListener('scroll', function () { if (revealed !== null) closeReveal(false); }, { passive: true });
+      root.addEventListener('scroll', function () {
+        if (revealed !== null && Math.abs((root.scrollY || 0) - scrollY0) > 40) closeReveal(false);
+      }, { passive: true });
     }
     nav.addEventListener('click', function (e) {
       var arrow = e.target.closest('[data-step]');
@@ -560,6 +651,13 @@
     return {
       media: media,
       center: function () { return center; },
+      /* Новое фото всей кухни у карточки i (сменили цвет); раскрытая меняет кадр без закрытия. */
+      setScene: function (i, url) {
+        if (!scenes || scenes[i] === url) return;
+        scenes[i] = url;
+        if (url && entered && slotOf(i) >= 0) sceneImage(url);   // новый цвет — сразу в загрузку и декодирование
+        if (revealed === i) fillReveal(i);
+      },
       setCenter: function (i, animate) {
         i = mod(i, n);
         if (i === center) return;

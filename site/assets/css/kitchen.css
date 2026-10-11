@@ -123,15 +123,18 @@
 .kd-reveal {
   position: fixed; z-index: 40; left: 0; top: 0; width: 0; height: 0;
   border-radius: var(--radius-lg); overflow: hidden; background: var(--panel-2);
-  box-shadow: 0 4px 12px rgba(50, 38, 22, .18), 0 40px 80px -30px rgba(34, 33, 30, .6);
-  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(50, 38, 22, .2), 0 24px 44px -18px rgba(34, 33, 30, .55);
+  pointer-events: none; transform-origin: 0 0;
 }
+/* FLIP: анимируются только transform и opacity, слой поднимается на время анимации */
+.kd-reveal.is-animating { will-change: transform, opacity; }
 .kd-reveal[hidden] { display: none; }
 .kd-reveal.is-pinned { pointer-events: auto; cursor: zoom-out; }
+.kd-reveal__frame { position: absolute; inset: 0; }
 .kd-reveal__poster, .kd-reveal__img {
   position: absolute; inset: 0; display: block; width: 100%; height: 100%;
 }
-.kd-reveal__poster { object-fit: cover; filter: blur(6px); transform: scale(1.06); }
+.kd-reveal__poster { object-fit: cover; }
 .kd-reveal__img { object-fit: contain; opacity: 0; transition: opacity .25s var(--ease); }
 .kd-reveal.is-loaded .kd-reveal__img { opacity: 1; }
 .kd-reveal__name {
