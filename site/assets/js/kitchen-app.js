@@ -418,6 +418,36 @@
 
   /* ----- стили и цвета ----- */
 
+  var tileImgs = {};
+
+  /* Цвет плитки: у выбранного стиля текущий, у остальных основной (первый). */
+  function tileColorId(s) {
+    return s.id === state.style ? state.color : s.colors[0].id;
+  }
+
+  function colorById(s, id) {
+    for (var i = 0; i < s.colors.length; i++) if (s.colors[i].id === id) return s.colors[i];
+    return s.colors[0];
+  }
+
+  /* Ставит на плитки фото их цвета; новое фото подменяет старое, когда загрузилось (без мигания). */
+  function syncTilePhotos() {
+    styles.forEach(function (s) {
+      var img = tileImgs[s.id];
+      if (!img) return;
+      var c = colorById(s, tileColorId(s));
+      if (!c.photo || img.getAttribute('data-photo') === c.photo) return;
+      img.setAttribute('data-photo', c.photo);
+      if (!img.getAttribute('src')) { img.src = c.photo; return; }
+      var pre = new root.Image();
+      pre.onload = function () { if (img.getAttribute('data-photo') === c.photo) img.src = c.photo; };
+      pre.onerror = function () { if (img.getAttribute('data-photo') === c.photo) img.src = c.photo; };
+      pre.src = c.photo;
+    });
+    // цвета выбранного стиля подгружаем заранее, остальные стили не трогаем
+    styleById(state.style).colors.forEach(function (c) { if (c.photo) (new root.Image()).src = c.photo; });
+  }
+
   function buildStyles() {
     var list = $('#kd-styles');
     if (!list) return;
@@ -431,17 +461,17 @@
       input.value = s.id;
       label.querySelector('.kd-style__name').textContent = s.name;
       var tile = label.querySelector('.kd-style__img');
-      var swatchSvg = function () { tile.innerHTML = V.kitchenRender.swatch(s, s.colors[0].id); };
-      if (s.photo) {
-        var img = doc.createElement('img');
-        img.src = s.photo;
-        img.alt = 'Фасады в стиле ' + s.name.toLowerCase();
-        img.width = 480; img.height = 600;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.addEventListener('error', swatchSvg);
-        tile.appendChild(img);
-      } else swatchSvg();
+      var img = doc.createElement('img');
+      img.alt = 'Фасады в стиле ' + s.name.toLowerCase();
+      img.width = 480; img.height = 600;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.addEventListener('error', function () {
+        tile.innerHTML = V.kitchenRender.swatch(s, tileColorId(s));
+        tileImgs[s.id] = null;
+      });
+      tile.appendChild(img);
+      tileImgs[s.id] = img;
       label.title = s.blurb;
       list.appendChild(label);
     });
@@ -457,6 +487,7 @@
   function syncStyles() {
     var st = styleById(state.style);
     $$('input[name="kd-style"]').forEach(function (i) { i.checked = i.value === state.style; });
+    syncTilePhotos();
     var blurb = $('#kd-style-blurb');
     if (blurb) blurb.textContent = st.blurb;
     var colors = $('#kd-colors');
@@ -664,6 +695,7 @@
       colors.addEventListener('change', function (e) {
         if (e.target.name !== 'kd-color') return;
         state.color = e.target.value;
+        syncTilePhotos();
         draw(true);
         updateSend();
         save();
