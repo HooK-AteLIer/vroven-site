@@ -5,7 +5,7 @@
 
 ## Команды
 
-- Тесты (73 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
+- Тесты (81 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
 - Предпросмотр: `python -m http.server 8130 --directory site`, затем http://localhost:8130/ (сборки и npm нет; тот же сервер в `.claude/launch.json`, имя `site`).
 - Бренд (логотипы, визитка PNG/PDF через headless Edge): `python brand/build/build_all.py`.
 
