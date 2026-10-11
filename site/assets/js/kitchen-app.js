@@ -448,45 +448,48 @@
     styleById(state.style).colors.forEach(function (c) { if (c.photo) (new root.Image()).src = c.photo; });
   }
 
+  var fan = null;
+
+  function styleIndex(id) {
+    for (var i = 0; i < styles.length; i++) if (styles[i].id === id) return i;
+    return 0;
+  }
+
+  /* Веер карточек стилей (kitchen-fan.js): центральная карточка = выбранный стиль. */
   function buildStyles() {
     var list = $('#kd-styles');
-    if (!list) return;
-    list.textContent = '';
-    styles.forEach(function (s) {
-      var label = doc.createElement('label');
-      label.className = 'kd-style';
-      label.innerHTML = '<input type="radio" name="kd-style" class="visually-hidden">' +
-        '<span class="kd-style__img"></span><span class="kd-style__name"></span>';
-      var input = label.querySelector('input');
-      input.value = s.id;
-      label.querySelector('.kd-style__name').textContent = s.name;
-      var tile = label.querySelector('.kd-style__img');
+    if (!list || !V.kitchenFan) return;
+    fan = V.kitchenFan.create(list, {
+      names: styles.map(function (s) { return s.name; }),
+      center: styleIndex(state.style),
+      label: 'Стиль кухни',
+      onSelect: function (i) {
+        var st = styles[i];
+        state.style = st.id;
+        state.color = st.colors[0].id;
+        onLook();
+      }
+    });
+    styles.forEach(function (s, i) {
+      var tile = fan.media[i];
       var img = doc.createElement('img');
       img.alt = 'Фасады в стиле ' + s.name.toLowerCase();
       img.width = 480; img.height = 600;
-      img.loading = 'lazy';
       img.decoding = 'async';
+      img.draggable = false;
       img.addEventListener('error', function () {
         tile.innerHTML = V.kitchenRender.swatch(s, tileColorId(s));
         tileImgs[s.id] = null;
       });
       tile.appendChild(img);
       tileImgs[s.id] = img;
-      label.title = s.blurb;
-      list.appendChild(label);
-    });
-    list.addEventListener('change', function (e) {
-      if (e.target.name !== 'kd-style') return;
-      var st = styleById(e.target.value);
-      state.style = st.id;
-      state.color = st.colors[0].id;
-      onLook();
+      tile.parentNode.title = s.blurb;
     });
   }
 
   function syncStyles() {
     var st = styleById(state.style);
-    $$('input[name="kd-style"]').forEach(function (i) { i.checked = i.value === state.style; });
+    if (fan) fan.setCenter(styleIndex(state.style), true);
     syncTilePhotos();
     var blurb = $('#kd-style-blurb');
     if (blurb) blurb.textContent = st.blurb;
