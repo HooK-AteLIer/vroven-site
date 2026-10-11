@@ -5,6 +5,7 @@
  * Поля контракта: id, name, blurb, facade, handle, cornice, patina, glassUppers,
  * openShelves, colors[{ id, name, facade, accent, counter }].
  * colors[].photo — фото плитки стиля в этом цвете (читает kitchen-app.js).
+ * scene — фото всей кухни стиля (кадр лукбука 3:2), раскрывается при наведении на карточку веера.
  * Сверх контракта (их читает только kitchen-render.js):
  *   colors[].lower   — цвет нижнего ряда, если кухня двухцветная
  *   colors[].tall    — цвет пенала (пастельная деталь скандинавского стиля)
@@ -27,6 +28,7 @@
   var kitchenStyles = [
     {
       id: 'classic',
+      scene: 'assets/img/lookbook/kitchen-classic.webp',
       name: 'Классика',
       blurb: 'Филёнчатые фасады с патиной, арочные витрины, карниз и бронзовые ракушки.',
       facade: 'raised-panel', handle: 'shell',
@@ -40,6 +42,7 @@
     },
     {
       id: 'neoclassic',
+      scene: 'assets/img/lookbook/kitchen-neoclassic.webp',
       name: 'Неоклассика',
       blurb: 'Рамочный фасад с узкой рамкой, эмаль приглушённого цвета, латунные ручки, мрамор.',
       facade: 'shaker', handle: 'brass-bar',
@@ -53,6 +56,7 @@
     },
     {
       id: 'modern',
+      scene: 'assets/img/lookbook/kitchen-modern.webp',
       name: 'Модерн',
       blurb: 'Гладкие фасады, светлый верх и древесный низ, длинные ручки-рейлинги, подсветка.',
       facade: 'flat-matte', lowerFacade: 'wood-grain', handle: 'rail',
@@ -66,6 +70,7 @@
     },
     {
       id: 'minimal',
+      scene: 'assets/img/lookbook/kitchen-minimal.webp',
       name: 'Минимализм',
       blurb: 'Плоские фасады без ручек на профиле Gola, монохром, шкафы до потолка.',
       facade: 'flat-matte', handle: 'gola',
@@ -79,6 +84,7 @@
     },
     {
       id: 'hitech',
+      scene: 'assets/img/lookbook/kitchen-hitech.webp',
       name: 'Хай-тек',
       blurb: 'Глухие глянцевые фасады без ручек, контраст глянца и мата, металл, стекло и подсветка.',
       facade: 'flat-gloss', handle: 'none',
@@ -92,6 +98,7 @@
     },
     {
       id: 'loft',
+      scene: 'assets/img/lookbook/kitchen-loft.webp',
       name: 'Лофт',
       blurb: 'Фасады с выраженной текстурой дерева или под бетон, открытые полки на чёрных кронштейнах, кирпич.',
       facade: 'wood-grain', handle: 'black-bar',
@@ -105,6 +112,7 @@
     },
     {
       id: 'scandi',
+      scene: 'assets/img/lookbook/kitchen-scandi.webp',
       name: 'Скандинавский',
       blurb: 'Белые гладкие фасады, светлое дерево, одна пастельная деталь, открытые полки и плитка «кабанчик».',
       facade: 'flat-matte', handle: 'knob',
@@ -118,6 +126,7 @@
     },
     {
       id: 'provence',
+      scene: 'assets/img/lookbook/kitchen-provence.webp',
       name: 'Прованс',
       blurb: 'Рамочные фасады с вагонкой, выбеленная патина, витрины с решёткой, полки для посуды, кованые ручки.',
       facade: 'beadboard', handle: 'knob',

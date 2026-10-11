@@ -461,6 +461,7 @@
     if (!list || !V.kitchenFan) return;
     fan = V.kitchenFan.create(list, {
       names: styles.map(function (s) { return s.name; }),
+      scenes: styles.map(function (s) { return s.scene || null; }),
       center: styleIndex(state.style),
       label: 'Стиль кухни',
       onSelect: function (i) {

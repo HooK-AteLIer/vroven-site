@@ -117,6 +117,28 @@
 }
 .kd-fan__dot:hover::before { background: var(--ink-3); }
 .kd-fan__dot.is-active::before { width: 18px; background: var(--accent); }
+
+/* Раскрытая кухня: фото всей кухни стиля поверх веера, размер и место задаёт kitchen-fan.js. */
+.kd-fan__stage.is-revealing .kd-fan__card::after { background: rgba(34, 33, 30, .32); }
+.kd-reveal {
+  position: fixed; z-index: 40; left: 0; top: 0; width: 0; height: 0;
+  border-radius: var(--radius-lg); overflow: hidden; background: var(--panel-2);
+  box-shadow: 0 4px 12px rgba(50, 38, 22, .18), 0 40px 80px -30px rgba(34, 33, 30, .6);
+  pointer-events: none;
+}
+.kd-reveal[hidden] { display: none; }
+.kd-reveal.is-pinned { pointer-events: auto; cursor: zoom-out; }
+.kd-reveal__poster, .kd-reveal__img {
+  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+}
+.kd-reveal__poster { object-fit: cover; filter: blur(6px); transform: scale(1.06); }
+.kd-reveal__img { object-fit: contain; opacity: 0; transition: opacity .25s var(--ease); }
+.kd-reveal.is-loaded .kd-reveal__img { opacity: 1; }
+.kd-reveal__name {
+  position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 36px 20px 14px;
+  font: 500 clamp(1rem, 1.6vw, 1.25rem)/1.2 var(--f-display); color: var(--on-ink);
+  background: linear-gradient(rgba(34, 33, 30, 0), rgba(34, 33, 30, .62));
+}
 @media (max-width: 400px) {
   .kd-fan__nav { gap: 6px; }
   .kd-fan__dot { width: 14px; }
@@ -226,5 +248,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .kd-ghost { display: none; }
-  .kd-fan__card, .kd-fan__card::after, .kd-fan__dot::before { transition: none; }
+  .kd-fan__card, .kd-fan__card::after, .kd-fan__dot::before, .kd-reveal__img { transition: none; }
 }

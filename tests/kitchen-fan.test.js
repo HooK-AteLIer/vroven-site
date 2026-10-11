@@ -69,3 +69,43 @@ test('наведение: соседи раздвигаются по форму�
   // коэффициент ширины множит сдвиг
   assert.ok(Math.abs(fan.hoverOffsets(3, 0.5)[4].x - near * 0.5) < 1e-9);
 });
+
+// ---- раскрытие всей кухни при наведении (таск 14) ----------------------------
+
+const fs = require('node:fs');
+const styles = require(path.join(__dirname, '..', 'site', 'assets', 'js', 'kitchen-styles.js'));
+
+test('у каждого стиля фото всей кухни из лукбука, файл на месте', () => {
+  styles.forEach((s) => {
+    assert.equal(s.scene, 'assets/img/lookbook/kitchen-' + s.id + '.webp', s.id);
+    assert.ok(fs.existsSync(path.join(__dirname, '..', 'site', s.scene)), s.id + ': файл');
+  });
+});
+
+const near = (a, b) => Math.abs(a - b) < 0.01;
+const RATIO = 1024 / 688;
+
+test('раскрытие на десктопе: 720 px по ширине, 3:2 без обрезки, по центру веера', () => {
+  const b = fan.revealBox({ vw: 1440, vh: 900, minTop: 84, cx: 922, cy: 500, ratio: RATIO });
+  assert.ok(near(b.width, 720), 'ширина ' + b.width);
+  assert.ok(near(b.height, 720 / RATIO), 'высота ' + b.height);
+  assert.ok(near(b.left, 922 - 360));
+  assert.ok(near(b.top, 500 - b.height / 2));
+});
+
+test('раскрытие на низком окне: высота влезает под шапку, ширина уменьшается в пропорции', () => {
+  // доступно по высоте 560 - 84 - 16 = 460 (460 * 1.49 < 720)
+  const b = fan.revealBox({ vw: 1024, vh: 560, minTop: 84, cx: 700, cy: 300, ratio: RATIO });
+  assert.ok(near(b.height, 460), 'высота ' + b.height);
+  assert.ok(near(b.width, 460 * RATIO));
+  assert.ok(near(b.top, 84), 'не заходит под шапку');
+  assert.ok(b.left >= 16 && b.left + b.width <= 1024 - 16, 'в пределах окна по ширине');
+});
+
+test('раскрытие у края окна прижимается внутрь, на узком экране по ширине окна', () => {
+  const edge = fan.revealBox({ vw: 1024, vh: 900, minTop: 84, cx: 1000, cy: 880, ratio: RATIO });
+  assert.ok(near(edge.left + edge.width, 1024 - 16), 'справа поле 16');
+  assert.ok(near(edge.top + edge.height, 900 - 16), 'снизу поле 16');
+  const phone = fan.revealBox({ vw: 360, vh: 740, minTop: 84, cx: 180, cy: 400, ratio: RATIO });
+  assert.ok(near(phone.width, 328) && near(phone.left, 16));
+});

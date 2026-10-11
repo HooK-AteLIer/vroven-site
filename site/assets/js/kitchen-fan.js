@@ -77,10 +77,26 @@
     });
   }
 
+  /*
+   * Где раскрыть фото всей кухни (координаты окна, px): по центру веера (cx, cy),
+   * не шире max (720), в пропорции ratio без обрезки, с полем margin от краёв окна
+   * и не выше minTop (низ шапки + поле).
+   */
+  function revealBox(o) {
+    var m = o.margin === undefined ? 16 : o.margin;
+    var max = o.max || 720;
+    var width = Math.max(0, Math.min(max, o.vw - 2 * m, (o.vh - o.minTop - m) * o.ratio));
+    var height = width / o.ratio;
+    var left = Math.min(Math.max(o.cx - width / 2, m), o.vw - m - width);
+    var top = Math.max(Math.min(o.cy - height / 2, o.vh - m - height), o.minTop);
+    return { left: left, top: top, width: width, height: height };
+  }
+
   var api = {
     SLOTS: SLOTS, CENTER: CENTER,
     widthFactor: widthFactor, heightFactor: heightFactor,
-    visibleMap: visibleMap, circularDelta: circularDelta, hoverOffsets: hoverOffsets
+    visibleMap: visibleMap, circularDelta: circularDelta, hoverOffsets: hoverOffsets,
+    revealBox: revealBox
   };
 
   if (isNode) { module.exports = api; return; }
@@ -108,9 +124,11 @@
     '<path d="M14.5 5.5 8 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   /*
-   * create(el, { names:[string], center, label, onSelect(index) })
+   * create(el, { names:[string], center, label, onSelect(index), scenes?:[url] })
    * → { media:[HTMLElement], setCenter(index, animate), center() }
    * media[i] — место под картинку карточки i (картинку кладёт kitchen-app.js).
+   * scenes[i] — фото всей кухни: наведение мышью на карточку раскрывает его целиком,
+   * тап или Enter по центральной раскрывает и сворачивает, Esc сворачивает.
    */
   function create(el, opts) {
     var names = opts.names || [];
@@ -122,6 +140,8 @@
     var springHover = elasticEasing(0.55);
     var glide = 'cubic-bezier(.22, 1, .36, 1)';
     var busyUntil = 0, entered = !motion, hoverSlot = null;
+    var scenes = opts.scenes || null;
+    var revealed = null, pinned = false, closeTimer = null, lastPointer = 'mouse';
     var f = { x: 1, y: 1, rem: 16 };
 
     el.classList.add('kd-fan');
@@ -166,6 +186,21 @@
     el.appendChild(nameEl);
     el.appendChild(nav);
 
+    // раскрытая кухня: одна на веер, поверх страницы, ниже шапки
+    var reveal = null, revealImg = null, revealPoster = null, revealName = null;
+    if (scenes) {
+      reveal = doc.createElement('div');
+      reveal.className = 'kd-reveal';
+      reveal.hidden = true;
+      reveal.setAttribute('aria-hidden', 'true');
+      reveal.innerHTML = '<img class="kd-reveal__poster" alt=""><img class="kd-reveal__img" alt="" decoding="async"><p class="kd-reveal__name"></p>';
+      revealPoster = reveal.children[0];
+      revealImg = reveal.children[1];
+      revealName = reveal.children[2];
+      revealImg.addEventListener('load', function () { reveal.classList.add('is-loaded'); });
+      doc.body.appendChild(reveal);
+    }
+
     function slotOf(i) { return visibleMap(n, center).indexOf(i); }
 
     function pose(slot, extra) {
@@ -202,7 +237,17 @@
       return delay + o.duration;
     }
 
+    /* Фото всей кухни центрального стиля подгружаем заранее, остальные — при наведении. */
+    var preloadTimer = null;
+    function preloadCenter() {
+      if (!scenes || !scenes[center]) return;
+      root.clearTimeout(preloadTimer);
+      var src = scenes[center];
+      preloadTimer = root.setTimeout(function () { (new root.Image()).src = src; }, 900);
+    }
+
     function syncAttrs() {
+      preloadCenter();
       var map = visibleMap(n, center);
       cards.forEach(function (card, i) {
         var slot = map.indexOf(i);
@@ -280,6 +325,7 @@
       center = target;
       var after = visibleMap(n, center), longest = 0;
       hoverSlot = null;
+      if (revealed !== null) closeReveal(false);
       cards.forEach(function (card, i) {
         var was = before.indexOf(i), now = after.indexOf(i);
         if (now >= 0) {
@@ -323,15 +369,111 @@
       });
     }
 
+    /* ----- раскрытие всей кухни ----- */
+
+    function frame(r) {
+      return { left: r.left.toFixed(1) + 'px', top: r.top.toFixed(1) + 'px', width: r.width.toFixed(1) + 'px', height: r.height.toFixed(1) + 'px' };
+    }
+
+    function animateReveal(from, to, done) {
+      if (reveal._anim) { reveal._anim.cancel(); reveal._anim = null; }
+      Object.keys(to).forEach(function (k) { reveal.style[k] = to[k]; });
+      if (!motion) { if (done) done(); return; }
+      reveal._anim = reveal.animate([from, to], { duration: 380, easing: glide });
+      reveal._anim.onfinish = function () { reveal._anim = null; if (done) done(); };
+    }
+
+    function revealTarget() {
+      var sr = stage.getBoundingClientRect();
+      var header = doc.querySelector('.site-header');
+      var hb = header ? Math.max(0, header.getBoundingClientRect().bottom) : 0;
+      return revealBox({
+        vw: doc.documentElement.clientWidth, vh: root.innerHeight, minTop: hb + 16,
+        cx: sr.left + sr.width / 2, cy: sr.top + sr.height / 2, ratio: 1024 / 688
+      });
+    }
+
+    function fillReveal(i) {
+      var img = media[i].querySelector('img');
+      var poster = img ? img.currentSrc || img.src : '';
+      if (poster) revealPoster.src = poster; else revealPoster.removeAttribute('src');
+      if (revealImg.getAttribute('src') !== scenes[i]) {
+        reveal.classList.remove('is-loaded');
+        revealImg.src = scenes[i];
+        if (revealImg.complete && revealImg.naturalWidth) reveal.classList.add('is-loaded');
+      }
+      revealName.textContent = names[i] || '';
+    }
+
+    function openReveal(i, pin) {
+      if (!reveal || !scenes[i] || !entered || busy() || slotOf(i) < 0) return;
+      root.clearTimeout(closeTimer);
+      pinned = !!pin;
+      reveal.classList.toggle('is-pinned', pinned);
+      fillReveal(i);
+      stage.setAttribute('data-revealed', String(i));
+      if (revealed !== null) { revealed = i; return; }   // уже раскрыто: меняется только кадр
+      revealed = i;
+      stage.classList.add('is-revealing');
+      reveal.hidden = false;
+      var from = frame(cards[i].getBoundingClientRect());
+      from.opacity = '0.4';
+      var to = frame(revealTarget());
+      to.opacity = '1';
+      animateReveal(from, to);
+    }
+
+    function closeReveal(animate) {
+      root.clearTimeout(closeTimer);
+      if (revealed === null) return;
+      var i = revealed;
+      revealed = null;
+      pinned = false;
+      stage.removeAttribute('data-revealed');
+      stage.classList.remove('is-revealing');
+      reveal.classList.remove('is-pinned');
+      var hide = function () { if (revealed === null) reveal.hidden = true; };
+      if (!animate || !motion) {
+        if (reveal._anim) { reveal._anim.cancel(); reveal._anim = null; }
+        hide();
+        return;
+      }
+      var from = { left: reveal.style.left, top: reveal.style.top, width: reveal.style.width, height: reveal.style.height, opacity: '1' };
+      var to = frame(cards[i].getBoundingClientRect());
+      to.opacity = '0';
+      animateReveal(from, to, hide);
+    }
+
+    function toggleReveal(i) {
+      if (revealed !== null) closeReveal(true);
+      else openReveal(i, true);
+    }
+
+    stage.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType || 'mouse'; });
     stage.addEventListener('click', function (e) {
       var card = e.target.closest('.kd-fan__card');
       if (!card) return;
       var i = Number(card.getAttribute('data-index'));
       var slot = slotOf(i);
-      if (slot < 0 || i === center) return;
+      var how = lastPointer;
+      lastPointer = 'mouse';
+      if (slot < 0) return;
+      if (i === center) {
+        // тап пальцем или пробел с клавиатуры; мышь раскрывает наведением
+        if (scenes && (how !== 'mouse' || e.detail === 0)) toggleReveal(i);
+        return;
+      }
       choose(i, slot - CENTER);
     });
     stage.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && scenes) {
+        var card = e.target.closest('.kd-fan__card');
+        if (card && Number(card.getAttribute('data-index')) === center) {
+          e.preventDefault();
+          toggleReveal(center);
+        }
+        return;
+      }
       if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
       e.preventDefault();
       if (step(e.key === 'ArrowRight' ? 1 : -1)) cards[center].focus({ preventScroll: true });
@@ -340,12 +482,31 @@
       if (e.pointerType !== 'mouse') return;
       var card = e.target.closest('.kd-fan__card');
       if (!card) return;
-      var slot = slotOf(Number(card.getAttribute('data-index')));
+      var i = Number(card.getAttribute('data-index'));
+      if (scenes) { if (!pinned) openReveal(i, false); return; }
+      var slot = slotOf(i);
       if (slot >= 0) hover(slot);
     });
-    stage.addEventListener('pointerleave', function (e) {
-      if (e.pointerType === 'mouse') hover(null);
+    stage.addEventListener('pointerout', function (e) {
+      if (e.pointerType !== 'mouse' || !scenes || pinned) return;
+      var next = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest('.kd-fan__card') : null;
+      if (next && stage.contains(next)) return;
+      root.clearTimeout(closeTimer);
+      closeTimer = root.setTimeout(function () { closeReveal(true); }, 90);
     });
+    stage.addEventListener('pointerleave', function (e) {
+      if (e.pointerType === 'mouse' && !scenes) hover(null);
+    });
+    if (reveal) {
+      reveal.addEventListener('click', function () { closeReveal(true); });
+      doc.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && revealed !== null) closeReveal(true);
+      });
+      doc.addEventListener('pointerdown', function (e) {
+        if (revealed !== null && pinned && !stage.contains(e.target) && !reveal.contains(e.target)) closeReveal(true);
+      });
+      root.addEventListener('scroll', function () { if (revealed !== null) closeReveal(false); }, { passive: true });
+    }
     nav.addEventListener('click', function (e) {
       var arrow = e.target.closest('[data-step]');
       if (arrow) { step(Number(arrow.getAttribute('data-step'))); return; }
@@ -364,6 +525,7 @@
         lastW = stage.clientWidth;
         lastH = root.innerHeight;
         measure();
+        if (revealed !== null) closeReveal(false);
         if (entered) { busyUntil = 0; hoverSlot = null; place(); }
       }, 120);
     }
