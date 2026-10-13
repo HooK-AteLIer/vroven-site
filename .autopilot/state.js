@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T12:16:16+04:00",
-  "finishedAt": "2026-10-13T12:16:16+04:00",
+  "updatedAt": "2026-10-13T12:31:08+04:00",
+  "finishedAt": "2026-10-13T12:31:08+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T12:07:06+04:00",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "startedAt": "2026-10-13T12:21:36+04:00",
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T12:16:16+04:00",
-      "startedAt": "2026-10-13T12:16:16+04:00"
+      "finishedAt": "2026-10-13T12:31:08+04:00",
+      "startedAt": "2026-10-13T12:31:08+04:00"
     }
   ],
   "requirements": {
-    "total": 41,
-    "done": 39,
+    "total": 43,
+    "done": 41,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -640,9 +640,9 @@ window.STATE =
       "model": "обычная",
       "status": "done",
       "startedAt": "2026-10-13T12:07:33+04:00",
+      "finishedAt": "2026-10-13T12:14:28+04:00",
       "retries": 0,
       "repairs": 0,
-      "finishedAt": "2026-10-13T12:14:28+04:00",
       "tests": {
         "passed": 91,
         "failed": 91
@@ -667,9 +667,9 @@ window.STATE =
       "model": "обычная",
       "status": "done",
       "startedAt": "2026-10-13T12:07:33+04:00",
+      "finishedAt": "2026-10-13T12:13:11+04:00",
       "retries": 0,
       "repairs": 0,
-      "finishedAt": "2026-10-13T12:13:11+04:00",
       "tests": {
         "passed": 91,
         "failed": 91
@@ -697,15 +697,50 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
-      "retries": 0,
-      "repairs": 0,
       "startedAt": "2026-10-13T12:14:28+04:00",
       "finishedAt": "2026-10-13T12:16:15+04:00",
+      "retries": 0,
+      "repairs": 0,
       "tests": {
         "passed": 91,
         "failed": 91
       },
       "commit": "35f653e"
+    },
+    {
+      "id": "21",
+      "title": "Шкафы и гардеробные: цены, блок с информацией, новые фото",
+      "requirements": [
+        "G18",
+        "G19"
+      ],
+      "blockedBy": [],
+      "wave": 18,
+      "zone": [
+        "site/assets/js/data.js",
+        "site/assets/js/lookbook-data.js",
+        "site/assets/js/lookbook.js",
+        "site/assets/js/index.js",
+        "site/index.html",
+        "site/lookbook.html",
+        "site/assets/css/index.css",
+        "lookbook.css",
+        "site/assets/img/lookbook/",
+        "site/assets/img/index/",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T12:23:03+04:00",
+      "finishedAt": "2026-10-13T12:31:08+04:00",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      },
+      "commit": "a38dbb3"
     },
     {
       "id": "F1",
@@ -772,8 +807,8 @@ window.STATE =
     }
   ],
   "tests": {
-    "passed": 91,
-    "failed": 91
+    "passed": 95,
+    "failed": 95
   },
   "debt": {
     "placeholders": [
@@ -961,9 +996,13 @@ window.STATE =
     "2026-10-13T12:13:11+04:00",
     "2026-10-13T12:14:28+04:00",
     "2026-10-13T12:16:15+04:00",
-    "2026-10-13T12:16:16+04:00"
+    "2026-10-13T12:16:16+04:00",
+    "2026-10-13T12:21:36+04:00",
+    "2026-10-13T12:23:02+04:00",
+    "2026-10-13T12:23:03+04:00",
+    "2026-10-13T12:31:08+04:00"
   ],
-  "rev": 143,
+  "rev": 149,
   "waiting": null,
   "waits": [
     {
@@ -1968,6 +2007,47 @@ window.STATE =
       "t": "2026-10-13T12:16:16+04:00",
       "k": "finish",
       "result": "Forum в заголовках и логотипе, тексты про всю мебель"
+    },
+    {
+      "t": "2026-10-13T12:21:36+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T12:23:02+04:00",
+      "k": "tickets",
+      "n": 23
+    },
+    {
+      "t": "2026-10-13T12:23:03+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T12:23:03+04:00",
+      "k": "ticket",
+      "ids": [
+        "21"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T12:31:08+04:00",
+      "k": "ticket",
+      "ids": [
+        "21"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      }
+    },
+    {
+      "t": "2026-10-13T12:31:08+04:00",
+      "k": "finish",
+      "result": "Шкафы и гардеробные: цены, блок, 10 новых фото"
     }
   ],
   "reqList": [
@@ -2176,16 +2256,26 @@ window.STATE =
       "id": "G17",
       "text": "«не кухня, а мебель . сайт не только про изготовление кухни, в всей корпусной мебели в целом»",
       "status": "done"
+    },
+    {
+      "id": "G18",
+      "text": "«добавь информацию по шкафам, гардеробным»",
+      "status": "done"
+    },
+    {
+      "id": "G19",
+      "text": "«добавь фото для разнообразия»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T12:07:33+04:00",
+      "at": "2026-10-13T12:23:03+04:00",
       "problems": 0
     }
   },
-  "result": "Forum в заголовках и логотипе, тексты про всю мебель",
+  "result": "Шкафы и гардеробные: цены, блок, 10 новых фото",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",
