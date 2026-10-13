@@ -29,6 +29,9 @@
   var SLAB = 140;                            // перекрытие и пол в разрезе
   var FONT = "'JetBrains Mono', ui-monospace, Consolas, monospace";
   var INK = '#22211E', INK2 = '#5C574F', INK3 = '#8A8378';
+  // линии и подписи на самом листе (тёмная панель, гамма Black + Gold): размеры, разрез стен, план
+  var SH = '#FFF3CC', SH2 = '#D9D0B8', SH3 = '#9C9480';
+  var PLAN_FLOOR = '#1C1A15';
   var NS = 'http://www.w3.org/2000/svg';
   var renderSeq = 0;
 
@@ -554,18 +557,18 @@
     var p = uniq(xs);
     if (p.length < 2) return;
     var dir = y > ref ? 1 : -1;
-    var o = st(INK3, 0.7);
+    var o = st(SH3, 0.7);
     p.forEach(function (x) {
       C.push(line(x, ref + dir * 3 * k, x, y + dir * 5 * k, o));
-      C.push(line(x - 4 * k, y + 4 * k, x + 4 * k, y - 4 * k, st(INK, 1.2)));
+      C.push(line(x - 4 * k, y + 4 * k, x + 4 * k, y - 4 * k, st(SH, 1.2)));
     });
-    C.push(line(p[0] - 6 * k, y, p[p.length - 1] + 6 * k, y, st(strong ? INK2 : INK3, strong ? 0.9 : 0.7)));
+    C.push(line(p[0] - 6 * k, y, p[p.length - 1] + 6 * k, y, st(strong ? SH2 : SH3, strong ? 0.9 : 0.7)));
     for (var i = 0; i < p.length - 1; i++) {
       var seg = p[i + 1] - p[i], label = group(seg);
       var tw = label.length * 0.62 * fs;
       if (tw + 5 * k > seg && !strong) continue;
       C.push(text((p[i] + p[i + 1]) / 2, y - 4 * k, label, {
-        'font-family': FONT, 'font-size': n(fs), fill: strong ? INK : INK2, 'text-anchor': 'middle', 'font-weight': strong ? 500 : null }));
+        'font-family': FONT, 'font-size': n(fs), fill: strong ? SH : SH2, 'text-anchor': 'middle', 'font-weight': strong ? 500 : null }));
     }
   }
 
@@ -576,10 +579,10 @@
     if (p.length < 2) return;
     var dir = x > ref ? 1 : -1;
     p.forEach(function (h) {
-      C.push(line(ref + dir * 3 * k, -h, x + dir * 5 * k, -h, st(INK3, 0.7)));
-      C.push(line(x - 4 * k, -h + 4 * k, x + 4 * k, -h - 4 * k, st(INK, 1.2)));
+      C.push(line(ref + dir * 3 * k, -h, x + dir * 5 * k, -h, st(SH3, 0.7)));
+      C.push(line(x - 4 * k, -h + 4 * k, x + 4 * k, -h - 4 * k, st(SH, 1.2)));
     });
-    C.push(line(x, -p[0] + 6 * k, x, -p[p.length - 1] - 6 * k, st(strong ? INK2 : INK3, strong ? 0.9 : 0.7)));
+    C.push(line(x, -p[0] + 6 * k, x, -p[p.length - 1] - 6 * k, st(strong ? SH2 : SH3, strong ? 0.9 : 0.7)));
     for (var i = 0; i < p.length - 1; i++) {
       var seg = p[i + 1] - p[i], label = group(seg);
       var tw = label.length * 0.62 * fs;
@@ -588,7 +591,7 @@
         if (strong) { /* общий размер пишем всегда */ } else continue;
       }
       C.push(text(tx, ty, label, {
-        'font-family': FONT, 'font-size': n(fs), fill: strong ? INK : INK2, 'text-anchor': 'middle',
+        'font-family': FONT, 'font-size': n(fs), fill: strong ? SH : SH2, 'text-anchor': 'middle',
         transform: 'rotate(-90 ' + n(tx) + ' ' + n(ty) + ')', 'font-weight': strong ? 500 : null }));
     }
   }
@@ -703,13 +706,13 @@
     }
 
     /* разрез: пол, потолок, стены по краям */
-    var hz = hatch(C, 'cut', INK, 0.5);
+    var hz = hatch(C, 'cut', SH3, 0.6);
     C.push(rect(-WALL_T, 0, L + 2 * WALL_T, SLAB, { fill: hz }));
     C.push(rect(-WALL_T, -(ceiling + SLAB), L + 2 * WALL_T, SLAB, { fill: hz }));
     C.push(rect(-WALL_T, -ceiling, WALL_T, ceiling, { fill: hz }));
     C.push(rect(L, -ceiling, WALL_T, ceiling, { fill: hz }));
     C.push(path('M' + n(-WALL_T) + ' 0H' + n(L + WALL_T) + 'M' + n(-WALL_T) + ' ' + n(-ceiling) + 'H' + n(L + WALL_T) +
-      'M0 0V' + n(-ceiling) + 'M' + n(L) + ' 0V' + n(-ceiling), Object.assign({ fill: 'none' }, st(INK, 1.4))));
+      'M0 0V' + n(-ceiling) + 'M' + n(L) + ' 0V' + n(-ceiling), Object.assign({ fill: 'none' }, st(SH, 1.4))));
 
     /* цоколь */
     runs(lower.map(function (m) { return [m.x, m.x + m.width]; }).concat(fillers.map(function (f) { return [f.x, f.x + f.width]; }), sideLow))
@@ -926,14 +929,14 @@
     var k = fitScale(extW, extH, 110, 90, cw, maxH);
     var C = new Ctx(style, opts.colorId, k);
     var T = C.T;
-    var hz = hatch(C, 'cut', INK, 0.55);
+    var hz = hatch(C, 'cut', SH3, 0.65);
 
     // пол
-    C.push(rect(0, 0, LA, roomD, { fill: '#F3EEE5' }));
+    C.push(rect(0, 0, LA, roomD, { fill: PLAN_FLOOR }));
     if (!walls.B) {
       // стены по бокам продолжаются: тонкие линии
-      C.push(line(0, 0, 0, roomD, st(INK3, 0.8, { 'stroke-dasharray': '6 5' })));
-      C.push(line(LA, 0, LA, roomD, st(INK3, 0.8, { 'stroke-dasharray': '6 5' })));
+      C.push(line(0, 0, 0, roomD, st(SH3, 0.8, { 'stroke-dasharray': '6 5' })));
+      C.push(line(LA, 0, LA, roomD, st(SH3, 0.8, { 'stroke-dasharray': '6 5' })));
     }
 
     // стены с проёмами
@@ -944,7 +947,7 @@
       gaps.concat([[L + WALL_T, L + WALL_T, null]]).forEach(function (g) {
         if (g[0] > s) {
           C.push(poly(quad(w.id, s, g[0], -WALL_T, 0), { fill: hz }));
-          C.push(poly(quad(w.id, s, g[0], -WALL_T, 0), Object.assign({ fill: 'none' }, st(INK, 1.3))));
+          C.push(poly(quad(w.id, s, g[0], -WALL_T, 0), Object.assign({ fill: 'none' }, st(SH, 1.3))));
         }
         var o = g[2];
         if (o && o.type === 'window') {
@@ -958,9 +961,9 @@
           C.push(poly([c1, c2, c3, c4], Object.assign({ fill: '#FBFAF6' }, st(INK3, 0.7))));
         } else if (o && o.type === 'door') {
           var hinge = map(w.id, g[0], 0), leaf = map(w.id, g[0], o.width), free = map(w.id, g[1], 0);
-          C.push(line(hinge[0], hinge[1], leaf[0], leaf[1], st(INK, 1.2)));
+          C.push(line(hinge[0], hinge[1], leaf[0], leaf[1], st(SH, 1.2)));
           C.push(path('M' + n(free[0]) + ' ' + n(free[1]) + 'A' + n(o.width) + ' ' + n(o.width) + ' 0 0 1 ' + n(leaf[0]) + ' ' + n(leaf[1]),
-            Object.assign({ fill: 'none' }, st(INK3, 0.8, { 'stroke-dasharray': '5 4' }))));
+            Object.assign({ fill: 'none' }, st(SH3, 0.8, { 'stroke-dasharray': '5 4' }))));
         }
         s = Math.max(s, g[1]);
       });
@@ -972,20 +975,21 @@
       var p = map(id, (x1 + x2) / 2, d);
       var fs = 9 * k;
       if (s.length * 0.62 * fs > (x2 - x1) - 6 * k) return;
-      C.push(text(p[0], p[1] + fs * 0.35, s, { 'font-family': FONT, 'font-size': n(fs), fill: INK2, 'text-anchor': 'middle' }));
+      // подпись перед столешницей стоит на тёмном полу, на столешнице: тёмная
+      C.push(text(p[0], p[1] + fs * 0.35, s, { 'font-family': FONT, 'font-size': n(fs), fill: d > WORKTOP_D ? SH2 : INK2, 'text-anchor': 'middle' }));
     }
     layout.walls.forEach(function (w) {
       var spans = w.lower.filter(function (m) { return m.kind !== 'tall'; }).map(function (m) { return [m.x, m.x + m.width]; })
         .concat((w.fillers || []).map(function (f) { return [f.x, f.x + f.width]; }));
       runs(spans).forEach(function (r) {
-        C.push(poly(counterQuad(w.id, r[0], r[1]), Object.assign({ fill: T.counter }, st(INK, 1))));
+        C.push(poly(counterQuad(w.id, r[0], r[1]), Object.assign({ fill: T.counter }, st(SH2, 1))));
       });
       w.lower.forEach(function (m) {
         var a = map(w.id, m.x, 0), b = map(w.id, m.x, BASE_D);
         if (m.x > 0) C.push(line(a[0], a[1], b[0], b[1], st(INK3, 0.6, { 'stroke-opacity': 0.7 })));
         if (m.kind === 'tall') {
           var q = quad(w.id, m.x, m.x + m.width, 0, WORKTOP_D);
-          C.push(poly(q, Object.assign({ fill: T.tall }, st(INK, 1))));
+          C.push(poly(q, Object.assign({ fill: T.tall }, st(SH2, 1))));
           C.push(line(q[0][0], q[0][1], q[2][0], q[2][1], st(INK2, 0.7)));
           C.push(line(q[1][0], q[1][1], q[3][0], q[3][1], st(INK2, 0.7)));
           label(w.id, m.x, m.x + m.width, WORKTOP_D + 70, 'пенал');
@@ -1021,7 +1025,7 @@
     // остров
     if (island) {
       var ix = Math.round((LA - island.length) / 2), iy = ISL_D;
-      C.push(rect(ix, iy, island.length, island.depth, Object.assign({ fill: T.counter }, st(INK, 1))));
+      C.push(rect(ix, iy, island.length, island.depth, Object.assign({ fill: T.counter }, st(SH2, 1))));
       island.lower.forEach(function (m) {
         if (m.x > 0) C.push(line(ix + m.x, iy, ix + m.x, iy + BASE_D, st(INK3, 0.6)));
       });
@@ -1036,14 +1040,14 @@
       var p1 = map(id, 0, -gap), p2 = map(id, L, -gap);
       var e1 = map(id, 0, -WALL_T - 3 * k), e2 = map(id, L, -WALL_T - 3 * k);
       var f1 = map(id, 0, -gap - 5 * k), f2 = map(id, L, -gap - 5 * k);
-      C.push(line(e1[0], e1[1], f1[0], f1[1], st(INK3, 0.7)));
-      C.push(line(e2[0], e2[1], f2[0], f2[1], st(INK3, 0.7)));
-      C.push(line(p1[0], p1[1], p2[0], p2[1], st(INK2, 0.9)));
-      [p1, p2].forEach(function (p) { C.push(line(p[0] - 4 * k, p[1] + 4 * k, p[0] + 4 * k, p[1] - 4 * k, st(INK, 1.2))); });
+      C.push(line(e1[0], e1[1], f1[0], f1[1], st(SH3, 0.7)));
+      C.push(line(e2[0], e2[1], f2[0], f2[1], st(SH3, 0.7)));
+      C.push(line(p1[0], p1[1], p2[0], p2[1], st(SH2, 0.9)));
+      [p1, p2].forEach(function (p) { C.push(line(p[0] - 4 * k, p[1] + 4 * k, p[0] + 4 * k, p[1] - 4 * k, st(SH, 1.2))); });
       var m = map(id, L / 2, -gap - 4 * k);
       var vertical = id === 'B';
       var s = 'стена ' + id + '  ' + group(L);
-      var o = { 'font-family': FONT, 'font-size': n(fs), fill: INK, 'text-anchor': 'middle', 'font-weight': 500 };
+      var o = { 'font-family': FONT, 'font-size': n(fs), fill: SH, 'text-anchor': 'middle', 'font-weight': 500 };
       if (vertical) {
         var tx = m[0] + fs * 0.9, ty = m[1];
         o.transform = 'rotate(90 ' + n(tx) + ' ' + n(ty) + ')';

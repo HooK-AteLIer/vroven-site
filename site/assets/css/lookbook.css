@@ -30,8 +30,8 @@
 .lookbook__shot:hover img { transform: scale(1.025); }
 .lookbook__caption {
   position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px;
-  background: linear-gradient(to top, rgba(34, 33, 30, .72), transparent);
-  color: var(--on-ink);
+  background: linear-gradient(to top, rgba(8, 8, 8, .86) 0%, rgba(8, 8, 8, .55) 55%, transparent 100%);
+  color: var(--on-ink); text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
 }
 .lookbook__title { font: 500 1rem/1.25 var(--f-display); letter-spacing: .005em; }
 
@@ -52,7 +52,7 @@ html.viewer-open { overflow: hidden; }
 .viewer {
   position: fixed; inset: 0; z-index: 90;
   display: grid; grid-template-rows: minmax(0, 1fr) auto;
-  background: rgba(24, 23, 20, .94); color: var(--on-ink);
+  background: rgba(8, 8, 8, .95); color: var(--on-ink);
   animation: viewer-in .25s var(--ease);
 }
 .viewer[hidden] { display: none; }
@@ -81,12 +81,14 @@ html.viewer-open { overflow: hidden; }
 .viewer__btn {
   position: absolute; display: grid; place-items: center;
   width: var(--tap); height: var(--tap); padding: 0;
-  border: 1px solid rgba(238, 231, 220, .28); border-radius: 50%;
-  background: rgba(34, 33, 30, .55); color: var(--on-ink); cursor: pointer;
-  transition: background-color .2s, border-color .2s;
+  border: 1.5px solid var(--glass-rim); border-radius: 50%;
+  background: var(--glass-bg), rgba(13, 13, 13, .55); color: var(--on-ink); cursor: pointer;
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  transition: border-color .2s;
 }
-.viewer__btn:hover { background: rgba(238, 231, 220, .16); border-color: var(--on-ink); }
-.viewer__btn:focus-visible, .viewer__act:focus-visible { outline-color: var(--on-ink); }
+.viewer__btn:hover { background: var(--glass-bg-hover), rgba(13, 13, 13, .55); border-color: rgba(255, 255, 255, .45); }
+.viewer__btn:focus-visible, .viewer__act:focus-visible { outline-color: var(--accent-hover); }
 .viewer__btn svg { width: 22px; height: 22px; }
 .viewer__btn[hidden] { display: none; }
 .viewer__close { top: 12px; right: 12px; }
@@ -98,7 +100,7 @@ html.viewer-open { overflow: hidden; }
   .viewer__stage { padding-inline: 8px; }
   .viewer__bar { flex-direction: column; align-items: stretch; }
   .viewer__act { width: 100%; }
-  .viewer__prev, .viewer__next { top: auto; bottom: 96px; background: rgba(34, 33, 30, .75); }
+  .viewer__prev, .viewer__next { top: auto; bottom: 96px; background: var(--glass-bg), rgba(13, 13, 13, .75); }
 }
 
 @media (prefers-reduced-motion: reduce) {

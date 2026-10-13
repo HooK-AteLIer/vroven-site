@@ -37,32 +37,35 @@
 
 .kd-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
 .kd-fields--one { max-width: 320px; }
-.kd .field select { appearance: none; -webkit-appearance: none; padding-right: 36px;
-  background: var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235C574F' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 14px center; }
+.kd .field select { appearance: none; -webkit-appearance: none; padding-right: 40px;
+  background: var(--field-bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23D9D0B8' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 16px center; }
 .kd .field input::placeholder { color: var(--ink-3); font-family: var(--f-body); font-size: .9rem; }
 .kd-opening { display: grid; gap: 12px; }
 .kd-opening + .kd-opening { margin-top: 6px; }
-.kd-opening.is-invalid input { border-color: #A3361F; }
+.kd-opening.is-invalid input { border-color: var(--danger); }
 
 .kd-check {
   display: flex; align-items: center; gap: 12px; min-height: var(--tap); cursor: pointer;
   font-size: .95rem; color: var(--ink);
 }
-.kd-check input { width: 22px; height: 22px; margin: 0; flex: none; accent-color: var(--ink); cursor: pointer; }
+.kd-check input { width: 22px; height: 22px; margin: 0; flex: none; accent-color: var(--accent); cursor: pointer; }
 
 /* форма кухни: четыре плитки */
 .kd-shapes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+/* матовое стекло; выбранная форма: золотая стеклянная плитка */
 .kd-shape {
   display: grid; justify-items: center; gap: 6px; padding: 10px 4px 8px; min-height: 76px;
-  border: 1px solid var(--line-strong); border-radius: var(--radius); cursor: pointer;
+  border: 1.5px solid var(--glass-rim); border-radius: 14px; cursor: pointer;
+  background: var(--glass-bg); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
   font-size: .8rem; line-height: 1.15; text-align: center; color: var(--ink-2);
-  transition: border-color .2s, background-color .2s, color .2s;
+  transition: border-color .2s, color .2s, box-shadow .2s;
 }
 .kd-shape svg { width: 44px; height: 33px; fill: none; stroke: currentColor; stroke-width: 1.4; }
 .kd-shape svg path:first-child { stroke-width: 2.6; }
-.kd-shape:hover { border-color: var(--ink); color: var(--ink); }
-.kd-shape:has(input:checked) { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
-.kd-shape:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 3px; }
+.kd-shape:hover { background: var(--glass-bg-hover); border-color: rgba(255, 255, 255, .45); color: var(--ink); }
+.kd-shape:has(input:checked) { background: var(--glass-gold-bg); border-color: var(--glass-gold-rim); color: var(--on-accent); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .9), inset 0 -2px 5px rgba(0, 0, 0, .2), 0 6px 16px -6px rgba(212, 175, 55, .7); }
+.kd-shape:has(input:focus-visible) { outline: 2px solid var(--accent-hover); outline-offset: 3px; }
 
 /* ---------- стиль и цвет ---------- */
 
@@ -85,13 +88,13 @@
   width: var(--fan-card-w); margin-left: calc(var(--fan-card-w) / -2);
   aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: var(--radius-lg);
   background: var(--panel-2); cursor: pointer; overflow: hidden;
-  box-shadow: 0 2px 6px rgba(50, 38, 22, .12), 0 22px 44px -22px rgba(50, 38, 22, .55);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .4), 0 22px 44px -22px rgba(0, 0, 0, .85), 0 0 0 1px rgba(212, 175, 55, .18);
   opacity: 0; will-change: transform; -webkit-tap-highlight-color: transparent;
 }
 .kd-fan.is-ready .kd-fan__card { opacity: 1; }
 .kd-fan__card::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35); background: rgba(34, 33, 30, .1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); background: rgba(8, 8, 8, .18);
   transition: background-color .3s var(--ease);
 }
 .kd-fan__card:hover::after, .kd-fan__card.is-center::after { background: transparent; }
@@ -103,12 +106,13 @@
 .kd-fan__nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
 .kd-fan__arrow {
   display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0;
-  border: 1px solid var(--line-strong); border-radius: 50%; background: rgba(247, 242, 234, .6);
-  color: var(--ink); cursor: pointer; transition: background-color .2s, border-color .2s;
+  border: 1.5px solid var(--glass-rim); border-radius: 50%; background: var(--glass-bg);
+  box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  color: var(--ink); cursor: pointer; transition: border-color .2s;
 }
 .kd-fan__arrow--next svg { transform: scaleX(-1); }
-.kd-fan__arrow:hover { background: var(--panel); border-color: var(--ink); }
-.kd-fan__arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.kd-fan__arrow:hover { background: var(--glass-bg-hover); border-color: rgba(255, 255, 255, .45); }
+.kd-fan__arrow:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 3px; }
 .kd-fan__dots { display: flex; align-items: center; gap: 2px; }
 .kd-fan__dot { width: 18px; height: var(--tap); padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
 .kd-fan__dot::before {
@@ -119,11 +123,11 @@
 .kd-fan__dot.is-active::before { width: 18px; background: var(--accent); }
 
 /* Раскрытая кухня: фото всей кухни стиля поверх веера, размер и место задаёт kitchen-fan.js. */
-.kd-fan__stage.is-revealing .kd-fan__card::after { background: rgba(34, 33, 30, .32); }
+.kd-fan__stage.is-revealing .kd-fan__card::after { background: rgba(8, 8, 8, .45); }
 .kd-reveal {
   position: fixed; z-index: 40; left: 0; top: 0; width: 0; height: 0;
   border-radius: var(--radius-lg); overflow: hidden; background: var(--panel-2);
-  box-shadow: 0 2px 8px rgba(50, 38, 22, .2), 0 24px 44px -18px rgba(34, 33, 30, .55);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .45), 0 24px 44px -18px rgba(0, 0, 0, .85), 0 0 0 1px rgba(212, 175, 55, .22);
   pointer-events: none; transform-origin: 0 0;
 }
 /* FLIP: анимируются только transform и opacity, слой поднимается на время анимации */
@@ -140,7 +144,7 @@
 .kd-reveal__name {
   position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 36px 20px 14px;
   font: 500 clamp(1rem, 1.6vw, 1.25rem)/1.2 var(--f-display); color: var(--on-ink);
-  background: linear-gradient(rgba(34, 33, 30, 0), rgba(34, 33, 30, .62));
+  background: linear-gradient(rgba(8, 8, 8, 0), rgba(8, 8, 8, .78));
 }
 @media (max-width: 400px) {
   .kd-fan__nav { gap: 6px; }
@@ -150,20 +154,22 @@
 .kd-colors { display: flex; flex-wrap: wrap; gap: 8px; }
 .kd-color {
   display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 6px 16px 6px 8px;
-  border: 1px solid var(--line-strong); border-radius: 999px; cursor: pointer; font-size: .9rem;
-  transition: border-color .2s, background-color .2s;
+  border: 1.5px solid var(--glass-rim); border-radius: 999px; cursor: pointer; font-size: .9rem;
+  background: var(--glass-bg); box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+  transition: border-color .2s, box-shadow .2s;
 }
-.kd-color__dot { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(34, 33, 30, .25); flex: none; }
-.kd-color:hover { border-color: var(--ink); }
-.kd-color:has(input:checked) { border-color: var(--ink); background: var(--panel); box-shadow: inset 0 0 0 1px var(--ink); }
-.kd-color:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: 3px; }
+.kd-color__dot { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .35); flex: none; }
+.kd-color:hover { background: var(--glass-bg-hover); border-color: rgba(255, 255, 255, .45); }
+.kd-color:has(input:checked) { border-color: var(--accent-hover); box-shadow: var(--glass-shadow), 0 0 0 1px var(--accent), 0 6px 16px -6px rgba(212, 175, 55, .7); }
+.kd-color:has(input:focus-visible) { outline: 2px solid var(--accent-hover); outline-offset: 3px; }
 
 /* ---------- лист чертежа ---------- */
 
 .kd-sheet {
   margin: 0; position: relative;
-  background: #FBF9F4;
-  background-image: linear-gradient(rgba(34, 33, 30, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(34, 33, 30, .035) 1px, transparent 1px);
+  background: #121212;
+  background-image: linear-gradient(rgba(255, 243, 204, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 243, 204, .04) 1px, transparent 1px);
   background-size: 24px 24px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-lg);
@@ -186,13 +192,13 @@
 
 .kd-stale {
   position: relative; margin: 0 0 10px; padding: 10px 14px; border-radius: var(--radius);
-  background: rgba(163, 54, 31, .07); border: 1px solid rgba(163, 54, 31, .25); color: #8A2E1A; font-size: .9rem;
+  background: rgba(242, 135, 106, .1); border: 1px solid rgba(242, 135, 106, .4); color: #F6B3A0; font-size: .9rem;
 }
 .kd-empty { position: relative; margin: 24px 0; text-align: center; color: var(--ink-3); }
 
 .kd-warnings {
   list-style: none; margin: 0; padding: 14px 18px; display: grid; gap: 8px;
-  border-left: 2px solid var(--accent); background: rgba(190, 143, 69, .08); border-radius: 0 var(--radius) var(--radius) 0;
+  border-left: 2px solid var(--accent); background: rgba(212, 175, 55, .08); border-radius: 0 var(--radius) var(--radius) 0;
   font-size: .92rem; color: var(--ink-2);
 }
 .kd-warnings li::before { content: 'Внимание: '; font: 500 .72rem var(--f-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--oak-deep); }
@@ -201,7 +207,8 @@
 
 .kd-price {
   display: grid; gap: 22px;
-  background: var(--ink); color: var(--on-ink);
+  background: var(--deep-card); color: var(--on-ink);
+  border: 1px solid var(--deep-line); box-shadow: var(--shadow);
   border-radius: var(--radius-lg);
   padding: clamp(20px, 3vw, 36px);
 }
@@ -213,16 +220,13 @@
 }
 .kd-price fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .kd-price .kd-h--sm { margin-bottom: 12px; color: var(--on-ink); }
-.kd-mat .chip { color: var(--on-ink); border-color: rgba(238, 231, 220, .3); }
-.kd-mat .chip:hover { border-color: var(--on-ink); }
-.kd-mat:has(input:checked) .chip { background: var(--on-ink); border-color: var(--on-ink); color: var(--ink); }
+.kd-mat:has(input:checked) .chip { background: var(--glass-gold-bg); border-color: var(--glass-gold-rim); color: var(--on-accent); box-shadow: inset 0 1px 1px rgba(255, 255, 255, .9), inset 0 -2px 5px rgba(0, 0, 0, .2), 0 6px 16px -6px rgba(212, 175, 55, .7); }
 .kd-mat:has(input:focus-visible) .chip { outline: 2px solid var(--laser); outline-offset: 3px; }
 .kd-price__repair { display: grid; gap: 10px; }
 .kd-price .kd-check { color: var(--on-ink); }
 .kd-price .kd-check input { accent-color: var(--accent); }
 .kd-price .field > label { color: var(--on-ink-2); }
-.kd-price .field select { background-color: #2B2A26; color: var(--on-ink); border-color: rgba(238, 231, 220, .25);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23B9B0A2' stroke-width='1.5'/%3E%3C/svg%3E"); }
+.kd-price .field select { color: var(--on-ink); }
 
 .kd-price__sum { display: grid; align-content: start; gap: 6px; padding-top: 4px; }
 .kd-price__label { margin: 0; font: 500 .72rem/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-ink-2); }
@@ -232,16 +236,14 @@
 .kd-price__save { margin: 0; color: var(--laser); font-size: .95rem; }
 .kd-price__note { margin: 6px 0 0; color: var(--on-ink-2); font-size: .8rem; }
 .kd-offer {
-  margin: 12px 0 0; padding: 12px 14px; border: 1px dashed rgba(190, 143, 69, .6); border-radius: var(--radius);
-  color: var(--on-ink); font-size: .92rem; background: rgba(190, 143, 69, .08);
+  margin: 12px 0 0; padding: 12px 14px; border: 1px dashed rgba(212, 175, 55, .6); border-radius: var(--radius);
+  color: var(--on-ink); font-size: .92rem; background: rgba(212, 175, 55, .08);
 }
 .kd-offer::before { content: 'Акция. '; color: var(--accent); font-weight: 500; }
 
 .kd-send { display: grid; gap: 10px; }
 .kd-send__alt { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .kd-send .btn { white-space: normal; text-align: center; }
-.kd-send .btn--ghost { --btn-fg: var(--on-ink); border-color: rgba(238, 231, 220, .3); }
-.kd-send .btn--ghost:hover { --btn-bg: rgba(238, 231, 220, .08); border-color: var(--on-ink); }
 .kd-send .btn-note { color: var(--on-ink-2); margin: 0; }
 .kd-send .btn-note:empty { display: none; }
 @media (min-width: 640px) {
