@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T23:02:10+04:00",
-  "finishedAt": "2026-10-13T23:02:10+04:00",
+  "updatedAt": "2026-10-13T23:58:53+04:00",
+  "finishedAt": "2026-10-13T23:58:53+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T22:51:47+04:00",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "startedAt": "2026-10-13T23:34:28+04:00",
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T23:02:10+04:00",
-      "startedAt": "2026-10-13T23:02:10+04:00"
+      "finishedAt": "2026-10-13T23:58:53+04:00",
+      "startedAt": "2026-10-13T23:58:53+04:00"
     }
   ],
   "requirements": {
-    "total": 52,
-    "done": 50,
+    "total": 53,
+    "done": 51,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -959,15 +959,47 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
-      "retries": 0,
-      "repairs": 0,
       "startedAt": "2026-10-13T22:51:49+04:00",
       "finishedAt": "2026-10-13T23:02:09+04:00",
+      "retries": 0,
+      "repairs": 0,
       "tests": {
         "passed": 116,
         "failed": 116
       },
       "commit": "3b7bc18"
+    },
+    {
+      "id": "29",
+      "title": "Блок «Доверяйте замеры профессионалам» перед контактами",
+      "requirements": [
+        "G29"
+      ],
+      "blockedBy": [],
+      "wave": 25,
+      "zone": [
+        "site/index.html",
+        "#jobs",
+        "#contacts",
+        "site/assets/js/measure-clip.js",
+        "site/assets/js/lead.js",
+        "site/assets/css/index.css",
+        "site/assets/video/measure-clip.mp4",
+        "site/assets/img/index/measure-poster.jpg",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T23:53:17+04:00",
+      "finishedAt": "2026-10-13T23:58:52+04:00",
+      "tests": {
+        "passed": 121,
+        "failed": 121
+      },
+      "commit": "f43400f"
     },
     {
       "id": "F1",
@@ -1034,8 +1066,8 @@ window.STATE =
     }
   ],
   "tests": {
-    "passed": 116,
-    "failed": 116
+    "passed": 121,
+    "failed": 121
   },
   "debt": {
     "placeholders": [
@@ -1252,9 +1284,13 @@ window.STATE =
     "2026-10-13T22:51:48+04:00",
     "2026-10-13T22:51:49+04:00",
     "2026-10-13T23:02:09+04:00",
-    "2026-10-13T23:02:10+04:00"
+    "2026-10-13T23:02:10+04:00",
+    "2026-10-13T23:34:28+04:00",
+    "2026-10-13T23:53:17+04:00",
+    "2026-10-13T23:58:52+04:00",
+    "2026-10-13T23:58:53+04:00"
   ],
-  "rev": 184,
+  "rev": 190,
   "waiting": null,
   "waits": [
     {
@@ -2548,6 +2584,47 @@ window.STATE =
       "t": "2026-10-13T23:02:10+04:00",
       "k": "finish",
       "result": "Конструктор: гармошка стилей вместо веера"
+    },
+    {
+      "t": "2026-10-13T23:34:28+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T23:53:17+04:00",
+      "k": "tickets",
+      "n": 31
+    },
+    {
+      "t": "2026-10-13T23:53:17+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T23:53:17+04:00",
+      "k": "ticket",
+      "ids": [
+        "29"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T23:58:52+04:00",
+      "k": "ticket",
+      "ids": [
+        "29"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 121,
+        "failed": 121
+      }
+    },
+    {
+      "t": "2026-10-13T23:58:53+04:00",
+      "k": "finish",
+      "result": "Блок «Доверяйте замеры профессионалам»"
     }
   ],
   "reqList": [
@@ -2811,16 +2888,21 @@ window.STATE =
       "id": "G28",
       "text": "«мне не нравится эта карусель» → «гармошку»",
       "status": "done"
+    },
+    {
+      "id": "G29",
+      "text": "«вставил это в конце сайта перед контактами. И фраза типа Доверяйте замеры профессионалам!» + «Оставь Мистер Бина, мне разрешили»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T22:51:48+04:00",
+      "at": "2026-10-13T23:53:17+04:00",
       "problems": 0
     }
   },
-  "result": "Конструктор: гармошка стилей вместо веера",
+  "result": "Блок «Доверяйте замеры профессионалам»",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",
