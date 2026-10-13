@@ -30,7 +30,7 @@
 - Ролик героя `hero-scrub.mp4` перекодирован с частыми ключевыми кадрами; при замене поправить `VIDEO_BYTES` в `hero-scrub.js` и перенарезать кадры телефона (`site/assets/img/hero/frames/`, рецепт в `site/README.md`). Режим героя выбирает `chooseMode` в `hero-frames.js`: десктоп — видео, телефон — кадры на canvas, телефон с Save-Data/медленной сетью — три картинки, file:// и reduced-motion — статичная кухня.
 - `media-raw/` (сырьё AI-картинок и ролика) не в git: источника для перекодирования в репозитории нет.
 - Edge в headless возвращается раньше, чем записан файл; ожидание файла в `brand/build/render.py`, не убирать.
-- `og:image` относительный, пока не опубликовано: комментарий `DEPLOY STEP` в `<head>` каждой страницы.
+- Сайт публикуется на GitHub Pages workflow `.github/workflows/pages.yml` при пуше в `main` (сначала `node --test`): https://shatskihton-boop.github.io/vroven-site/. `og:image` и `og:url` абсолютные на этот адрес; при смене домена поправить в четырёх страницах.
 
 ## Как здесь работает Autopilot
 

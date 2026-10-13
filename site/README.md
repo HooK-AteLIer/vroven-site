@@ -33,11 +33,11 @@ python -m http.server 8130 --directory site
 
 Публикуем только после «да» заказчика.
 
-### Вариант 1. GitHub Pages (бесплатно)
+### Вариант 1. GitHub Pages (так опубликовано сейчас)
 
-1. Создайте репозиторий на GitHub и загрузите в него **содержимое** папки `site/` (чтобы `index.html` лежал в корне репозитория).
-2. В репозитории: Settings → Pages → Source: Deploy from a branch → ветка `main`, папка `/ (root)` → Save.
-3. Через минуту-две сайт откроется по адресу `https://<логин>.github.io/<репозиторий>/`. Свой домен подключается там же, в поле Custom domain.
+Репозиторий: https://github.com/shatskihton-boop/vroven-site, сайт: https://shatskihton-boop.github.io/vroven-site/
+
+Публикует workflow `.github/workflows/pages.yml`: при каждом пуше в `main` он прогоняет `node --test` и выкладывает папку `site/`. Если тесты упали, сайт не обновится. Ход публикации виден на вкладке Actions репозитория.
 
 ### Вариант 2. Любой хостинг (Hostinger, Beget, Timeweb и другие)
 
@@ -47,14 +47,9 @@ python -m http.server 8130 --directory site
 
 Ролик загружается целиком одним файлом (Blob), поэтому скраб работает и на хостингах без поддержки частичной загрузки (HTTP Range).
 
-### После публикации (DEPLOY STEP)
+### Адрес сайта в превью ссылок
 
-Превью ссылки в Telegram, WhatsApp и VK требует абсолютного адреса картинки. В `<head>` каждой из четырёх страниц найдите комментарий `DEPLOY STEP` и:
-
-1. замените `content="assets/img/hero/og-image.jpg"` на `content="https://ВАШ-ДОМЕН/assets/img/hero/og-image.jpg"`;
-2. добавьте строку `<meta property="og:url" content="https://ВАШ-ДОМЕН/имя-страницы.html">`.
-
-Потом проверьте: откройте сайт на компьютере и на телефоне, прокрутите героя вверх и вниз, отправьте ссылку себе в мессенджер.
+В `<head>` четырёх страниц `og:image` и `og:url` указаны абсолютными адресами `https://shatskihton-boop.github.io/vroven-site/…`: так превью ссылки работает в Telegram, WhatsApp и VK. При переезде на свой домен замените этот адрес во всех четырёх страницах.
 
 ## Ролик героя
 
