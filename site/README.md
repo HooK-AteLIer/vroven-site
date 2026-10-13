@@ -58,14 +58,24 @@ python -m http.server 8130 --directory site
 
 ## Ролик героя
 
-Сырьё лежит вне сайта: `media-raw/hero/hero-raw-v1.mp4`. Если ролик заменят, перекодируйте его с коротким интервалом ключевых кадров, иначе прокрутка будет дёргаться:
+Ролик показывает ремонт по прокрутке: черновые бетонные стены, чистовая отделка, затем появляется кухня. Сырьё лежит вне сайта, в `media-raw/hero2/`: `seg1.mp4` (черновая → чистовая, 6 с) и `seg2.mp4` (чистовая → мебель, 6 с), оба 1912×1080, 24 fps. Склейка: первый кадр держится 1 с (бренд на черновых стенах), `seg2` берётся с 1-й секунды (пустая чистовая и так долго стоит), стык закрыт кроссфейдом 0,25 с. Получается 11,8 с, 284 кадра.
 
 ```
-ffmpeg -i media-raw/hero/hero-raw-v1.mp4 -c:v libx264 -crf 18 -preset slow -g 8 -keyint_min 8 -pix_fmt yuv420p -movflags +faststart -an site/assets/video/hero-scrub.mp4
+ffmpeg -i media-raw/hero2/seg1.mp4 -ss 1.0 -i media-raw/hero2/seg2.mp4 -filter_complex "[0:v]settb=1/24,tpad=start_duration=1:start_mode=clone,fps=24,setpts=PTS-STARTPTS[a];[1:v]fps=24,setpts=PTS-STARTPTS[b];[a][b]xfade=transition=fade:duration=0.25:offset=6.79,format=yuv420p[v]" -map "[v]" -an -r 24 -c:v libx264 -crf 12 -preset slow media-raw/hero2/hero-raw-v2.mp4
+```
+
+Перекодируйте склейку с коротким интервалом ключевых кадров, иначе прокрутка будет дёргаться. CRF 22 держит файл около 7 МБ (CRF 18 даёт 12 МБ, это много для первого экрана):
+
+```
+ffmpeg -i media-raw/hero2/hero-raw-v2.mp4 -c:v libx264 -crf 22 -preset slow -g 8 -keyint_min 8 -pix_fmt yuv420p -movflags +faststart -an site/assets/video/hero-scrub.mp4
 ffmpeg -i site/assets/video/hero-scrub.mp4 -frames:v 1 -q:v 3 site/assets/img/hero/hero-start.jpg
 ffmpeg -sseof -0.1 -i site/assets/video/hero-scrub.mp4 -update 1 -frames:v 1 -q:v 3 site/assets/img/hero/hero-final.jpg
 ffmpeg -sseof -0.1 -i site/assets/video/hero-scrub.mp4 -update 1 -frames:v 1 -vf scale=960:-2 -q:v 3 site/assets/img/hero/hero-final-sm.jpg
 ffmpeg -sseof -0.1 -i site/assets/video/hero-scrub.mp4 -update 1 -frames:v 1 -vf "scale=1200:-2,crop=1200:630" -q:v 3 site/assets/img/hero/og-image.jpg
 ```
+
+`hero-start.jpg` (черновые стены) служит постером скраба, `hero-final*.jpg` (кухня) показывает статичный герой на телефоне, с file:// и при reduced motion, `og-image.jpg` тоже кухня.
+
+Полосы подписей (`data-band` в `index.html`, доли прокрутки героя) привязаны к фазам ролика: бренд 0–0,14 (черновые стены, штукатурка пошла с 0,15), «01 · ремонт» 0,17–0,6 (отделка до 0,3, дальше пустая чистовая), «02 · мебель» 0,64–0,88 (мебель появляется с 0,64), финальный блок 0,9–1 (кухня собрана). Если ролик поменяется, сверьте кадры и сдвиньте полосы.
 
 После замены поправьте `VIDEO_BYTES` в `assets/js/hero-scrub.js` на новый размер файла в байтах.

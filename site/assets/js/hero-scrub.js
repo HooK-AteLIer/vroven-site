@@ -13,7 +13,7 @@
   if (!hero) return;
 
   var VIDEO_URL = 'assets/video/hero-scrub.mp4';
-  var VIDEO_BYTES = 5547394;           // запасной размер, если хостинг не отдаёт Content-Length
+  var VIDEO_BYTES = 7060510;           // запасной размер, если хостинг не отдаёт Content-Length
   var POSTER_URL = 'assets/img/hero/hero-start.jpg';
   var RING_LEN = 126;
 
