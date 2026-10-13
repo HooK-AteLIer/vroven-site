@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T22:32:57+04:00",
-  "finishedAt": "2026-10-13T22:32:57+04:00",
+  "updatedAt": "2026-10-13T22:45:27+04:00",
+  "finishedAt": "2026-10-13T22:45:27+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T22:19:25+04:00",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "startedAt": "2026-10-13T22:37:32+04:00",
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T22:32:57+04:00",
-      "startedAt": "2026-10-13T22:32:57+04:00"
+      "finishedAt": "2026-10-13T22:45:27+04:00",
+      "startedAt": "2026-10-13T22:45:27+04:00"
     }
   ],
   "requirements": {
-    "total": 50,
-    "done": 48,
+    "total": 51,
+    "done": 49,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -890,15 +890,48 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
-      "retries": 0,
-      "repairs": 0,
       "startedAt": "2026-10-13T22:19:26+04:00",
       "finishedAt": "2026-10-13T22:32:56+04:00",
+      "retries": 0,
+      "repairs": 0,
       "tests": {
         "passed": 113,
         "failed": 113
       },
       "commit": "e7398df"
+    },
+    {
+      "id": "27",
+      "title": "Вакансии: три фото вместо яркого плаката",
+      "requirements": [
+        "G27"
+      ],
+      "blockedBy": [],
+      "wave": 23,
+      "zone": [
+        "site/index.html",
+        "#jobs",
+        "site/assets/js/jobs.js",
+        "site/assets/css/index.css",
+        "jobs.css",
+        "site/assets/img/jobs/",
+        "site/assets/img/index/",
+        "site/assets/js/data.js",
+        "photo",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T22:37:33+04:00",
+      "finishedAt": "2026-10-13T22:45:27+04:00",
+      "tests": {
+        "passed": 116,
+        "failed": 116
+      },
+      "commit": "a306126"
     },
     {
       "id": "F1",
@@ -965,8 +998,8 @@ window.STATE =
     }
   ],
   "tests": {
-    "passed": 113,
-    "failed": 113
+    "passed": 116,
+    "failed": 116
   },
   "debt": {
     "placeholders": [
@@ -1175,9 +1208,12 @@ window.STATE =
     "2026-10-13T22:19:25+04:00",
     "2026-10-13T22:19:26+04:00",
     "2026-10-13T22:32:56+04:00",
-    "2026-10-13T22:32:57+04:00"
+    "2026-10-13T22:32:57+04:00",
+    "2026-10-13T22:37:32+04:00",
+    "2026-10-13T22:37:33+04:00",
+    "2026-10-13T22:45:27+04:00"
   ],
-  "rev": 172,
+  "rev": 178,
   "waiting": null,
   "waits": [
     {
@@ -2389,6 +2425,47 @@ window.STATE =
       "t": "2026-10-13T22:32:57+04:00",
       "k": "finish",
       "result": "Блок «Дизайн-проект» с переключателями слоёв"
+    },
+    {
+      "t": "2026-10-13T22:37:32+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T22:37:32+04:00",
+      "k": "tickets",
+      "n": 29
+    },
+    {
+      "t": "2026-10-13T22:37:33+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T22:37:33+04:00",
+      "k": "ticket",
+      "ids": [
+        "27"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T22:45:27+04:00",
+      "k": "ticket",
+      "ids": [
+        "27"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 116,
+        "failed": 116
+      }
+    },
+    {
+      "t": "2026-10-13T22:45:27+04:00",
+      "k": "finish",
+      "result": "Вакансии: три фото вместо плаката"
     }
   ],
   "reqList": [
@@ -2642,16 +2719,21 @@ window.STATE =
       "id": "G26",
       "text": "эффект с пина 1131740581423114707 (переключатели слоёв визуализации) → «да»",
       "status": "done"
+    },
+    {
+      "id": "G27",
+      "text": "«замени это фото, оно слишком выделяется в этом сайте» → «все три можно?»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T22:19:26+04:00",
+      "at": "2026-10-13T22:37:33+04:00",
       "problems": 0
     }
   },
-  "result": "Блок «Дизайн-проект» с переключателями слоёв",
+  "result": "Вакансии: три фото вместо плаката",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",
