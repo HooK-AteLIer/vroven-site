@@ -29,6 +29,7 @@
   <script defer src="assets/js/pricing.js"></script>
   <script defer src="assets/js/index.js"></script>
   <script defer src="assets/js/before-after.js"></script>
+  <script defer src="assets/js/design-layers.js"></script>
   <script defer src="assets/js/hero-frames.js"></script>
   <script defer src="assets/js/hero-scrub.js"></script>
 </head>
@@ -545,7 +546,7 @@
             <span class="step__dot" aria-hidden="true"></span>
             <span class="step__num mono">03</span>
             <h3>Смета и проект</h3>
-            <p>Расписываем смету по пунктам, без строки «прочие работы». Подписываем договор со сроком и этапами оплаты.</p>
+            <p>Расписываем смету по пунктам, без строки «прочие работы». Подписываем договор со сроком и этапами оплаты. <a class="step__link" href="#design">Как выглядит проект</a></p>
           </li>
           <li class="step">
             <span class="step__dot" aria-hidden="true"></span>
@@ -566,6 +567,30 @@
             <p>Собираем мебель, убираем за собой и сдаём объект по акту. Вы проверяете каждый пункт.</p>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <!-- Дизайн-проект: слои визуализации -->
+    <section class="section" id="design" aria-labelledby="design-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Дизайн-проект</p>
+          <h2 id="design-title">Видите комнату до&nbsp;начала работ</h2>
+          <p class="lead-text">Сначала строим 3D-модель по вашим замерам, потом добавляем материалы, свет и мебель. Включайте слои и смотрите, как макет становится интерьером.</p>
+        </div>
+        <figure class="layers" data-layers data-reveal>
+          <div class="layers__stage">
+            <div class="layers__view" data-layers-view>
+              <img class="layers__img is-on" data-v="111" src="assets/img/index/layers/v111.webp" srcset="assets/img/index/layers/v111-sm.webp 640w, assets/img/index/layers/v111.webp 1024w" sizes="(min-width: 1140px) 1040px, calc(100vw - 32px)" width="1024" height="688" loading="lazy" decoding="async" alt="Гостиная: материалы, вечерний свет и подсветка, с мебелью и декором">
+            </div>
+            <div class="layers__toggles" role="group" aria-label="Слои визуализации" data-layers-toggles hidden>
+              <label class="layers__toggle"><span class="layers__name">Материалы</span><input type="checkbox" role="switch" data-bit="0" checked><span class="layers__switch" aria-hidden="true"></span></label>
+              <label class="layers__toggle"><span class="layers__name">Свет</span><input type="checkbox" role="switch" data-bit="1" checked><span class="layers__switch" aria-hidden="true"></span></label>
+              <label class="layers__toggle"><span class="layers__name">Мебель и декор</span><input type="checkbox" role="switch" data-bit="2" checked><span class="layers__switch" aria-hidden="true"></span></label>
+            </div>
+          </div>
+          <figcaption class="layers__caption">Гостиная с ТВ-зоной: шкафы-колонны, ореховая тумба, полки с подсветкой. Визуализация проекта.</figcaption>
+        </figure>
       </div>
     </section>
 
