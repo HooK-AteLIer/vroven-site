@@ -1,18 +1,15 @@
-/* Вакансии: плакат и три карточки. */
+/* Вакансии: плашка звонка и три карточки с фото. */
 
-.jobs { display: grid; gap: clamp(24px, 4vw, 56px); align-items: start; }
-@media (min-width: 960px) {
-  .jobs { grid-template-columns: minmax(280px, 380px) 1fr; }
-  .jobs__poster { position: sticky; top: calc(var(--header-h) + 24px); }
-}
+.jobs { display: grid; gap: clamp(20px, 3vw, 32px); }
 
-.jobs__poster { margin: 0; max-width: 460px; }
-.jobs__poster img {
-  width: 100%; height: auto;
-  border-radius: var(--radius-lg); border: 1px solid var(--line);
-  box-shadow: var(--shadow);
+.jobs__call {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
 }
-.jobs__poster-cap { display: grid; gap: 4px; padding-top: 14px; color: var(--ink-2); font-size: .9rem; }
+.jobs__call-text { display: grid; gap: 4px; min-width: 0; }
+.jobs__call-cap { color: var(--ink-2); font-size: .9rem; }
+.jobs__call-btn { flex: 0 0 auto; }
+@media (max-width: 480px) { .jobs__call-btn { width: 100%; } }
+
 .jobs__phone {
   font: 400 clamp(1.5rem, 3vw, 1.9rem)/1.2 var(--f-display);
   color: var(--ink); text-decoration: none; letter-spacing: .01em;
@@ -20,6 +17,18 @@
 .jobs__phone:hover { color: var(--accent-hover); }
 
 .jobs__cards { display: grid; gap: clamp(16px, 2.4vw, 24px); min-width: 0; }
+@media (min-width: 1000px) { .jobs__cards { grid-template-columns: repeat(3, 1fr); } }
+
+.job-card { display: flex; flex-direction: column; }
+/* Фото на всю ширину карточки сверху: отступы гасят padding .card. */
+.job-card__photo {
+  --pad: clamp(20px, 3vw, 32px);
+  display: block; width: calc(100% + 2 * var(--pad)); max-width: none; height: auto;
+  aspect-ratio: 4 / 3; object-fit: cover; object-position: 50% 40%;
+  margin: calc(-1 * var(--pad)) calc(-1 * var(--pad)) 20px;
+  border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+  background: var(--panel-2);
+}
 
 .job-card__title { font-size: clamp(1.6rem, 3vw, 2.2rem); margin-bottom: .3em; }
 .job-card__duties { color: var(--ink-2); }
@@ -28,7 +37,7 @@
 .job-card__row {
   display: grid; gap: 4px; padding: 14px 0; border-top: 1px solid var(--line);
 }
-@media (min-width: 600px) {
+@media (min-width: 600px) and (max-width: 999px) {
   .job-card__row { grid-template-columns: 150px 1fr; gap: 16px; }
 }
 .job-card__row dt {
@@ -38,6 +47,7 @@
 .job-card__row dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
 .job-card__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 
+.job-card__btns { margin-top: auto; }
 .job-card__btns .btn { white-space: normal; }
 @media (max-width: 480px) {
   .job-card__btns .btn { width: 100%; }

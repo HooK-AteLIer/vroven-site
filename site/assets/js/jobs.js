@@ -27,9 +27,31 @@
   var PHONE = 'M5 3.5h3.2l1.6 4.2-2.1 1.4a11 11 0 0 0 7.2 7.2l1.4-2.1 4.2 1.6V19a1.6 1.6 0 0 1-1.7 1.6A16.6 16.6 0 0 1 3.4 5.2 1.6 1.6 0 0 1 5 3.5Z';
   var CHAT = 'M4 20l1.2-3.9A8.2 8.2 0 1 1 8 18.9L4 20Z';
 
+  // Фото к вакансии по id из data.js: кадр 4:3, 720 и 400 px.
+  var PHOTOS = {
+    painter: 'Штукатур выравнивает стену шпателем по зелёной линии лазерного уровня, за ним рабочий несёт ведро к окну',
+    tiler: 'Плиточник на коленях выставляет уровень на уложенной плитке, рядом клей под гребёнку и лазерный нивелир',
+    laborer: 'Инструмент на деревянном верстаке: шпатели, валик, строительный уровень, рулетка и рабочие перчатки'
+  };
+
+  function photo(id) {
+    var img = document.createElement('img');
+    var base = 'assets/img/jobs/job-' + id;
+    img.className = 'job-card__photo';
+    img.src = base + '.webp';
+    img.srcset = base + '-sm.webp 400w, ' + base + '.webp 720w';
+    img.sizes = '(min-width: 1000px) 31vw, calc(100vw - 32px)';
+    img.width = 720; img.height = 540;
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.alt = PHOTOS[id];
+    return img;
+  }
+
   function card(job) {
     var c = el('article', 'card job-card');
     c.id = 'job-' + job.id;
+    if (PHOTOS[job.id]) c.appendChild(photo(job.id));
     c.appendChild(el('p', 'eyebrow', 'Требуется'));
     c.appendChild(el('h2', 'job-card__title', job.title));
     if (job.duties) c.appendChild(el('p', 'job-card__duties', job.duties));
@@ -72,29 +94,30 @@
 
   var layout = el('div', 'container jobs');
 
-  var poster = el('figure', 'jobs__poster');
-  var img = document.createElement('img');
-  img.src = 'assets/img/jobs/vakansii-poster.webp';
-  img.width = 341; img.height = 338;
-  img.alt = 'Плакат: требуются специалисты, маляры, плиточники, разнорабочие. Звоните прямо сейчас, +7 912 410 00 01';
-  img.decoding = 'async';
-  poster.appendChild(img);
-  var phoneCap = el('figcaption', 'jobs__poster-cap');
-  phoneCap.appendChild(el('span', null, 'Звоните прямо сейчас'));
+  // Плашка звонка: подпись, номер и кнопка.
+  var callBox = el('aside', 'card jobs__call');
+  callBox.setAttribute('aria-label', 'Позвонить по вакансиям');
+  var callText = el('div', 'jobs__call-text');
+  callText.appendChild(el('span', 'jobs__call-cap', 'Звоните прямо сейчас'));
   var big = el('a', 'jobs__phone');
   big.setAttribute('data-phone', '');
   big.href = '#';
-  phoneCap.appendChild(big);
-  poster.appendChild(phoneCap);
+  callText.appendChild(big);
+  callBox.appendChild(callText);
+  var callBtn = el('a', 'btn jobs__call-btn');
+  callBtn.setAttribute('data-tel', '');
+  callBtn.href = '#';
+  callBtn.innerHTML = icon(PHONE) + 'Позвонить';
+  callBox.appendChild(callBtn);
 
   var list = el('div', 'jobs__cards');
   data.jobs.forEach(function (j) { list.appendChild(card(j)); });
 
   var note = el('p', 'jobs__note', 'Условия обсуждаем по телефону или в WhatsApp. Работаем в Тюмени и Нижневартовске.');
-  list.appendChild(note);
 
-  layout.appendChild(poster);
+  layout.appendChild(callBox);
   layout.appendChild(list);
+  layout.appendChild(note);
   host.appendChild(layout);
 
   // core.js уже отработал на DOMContentLoaded: подставим телефон и ссылки новым элементам.
