@@ -76,81 +76,89 @@
 .kd-look__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; }
 .kd-look__blurb { margin: 0; color: var(--ink-2); font-size: .95rem; flex: 1 1 260px; min-height: 1.6em; }
 
-/* Веер карточек стилей (kitchen-fan.js): позиции задаёт скрипт, здесь вид. */
-.kd-fan { display: grid; justify-items: center; gap: 4px; min-width: 0; }
-.kd-fan__stage {
-  position: relative; width: 100%; min-height: 240px;
-  container-type: inline-size; overflow-x: clip;
-  --fan-card-w: clamp(112px, 34cqi, 210px);
+/*
+ * Гармошка стилей (kitchen-accordion.js): 8 полос, раскрытая = выбранный стиль или предпросмотр.
+ * Анимируются только flex-grow (десктоп) и height (телефон). Фото и текст раскрытой полосы
+ * имеют постоянный размер (ширина раскрытой полосы), полоса их только обрезает:
+ * при смене ширины картинка не масштабируется и текст не переносится заново.
+ */
+.kd-look { container-type: inline-size; }
+.kd-acc {
+  --acc-gap: 8px;
+  --acc-grow: 8;
+  --acc-open-w: calc((100cqi - 7 * var(--acc-gap)) * var(--acc-grow) / (7 + var(--acc-grow)));
+  display: flex; gap: var(--acc-gap); min-width: 0;
+  height: clamp(320px, 56cqi, 520px);
 }
-.kd-fan__card {
-  position: absolute; top: var(--fan-top, 48px); left: 50%;
-  width: var(--fan-card-w); margin-left: calc(var(--fan-card-w) / -2);
-  aspect-ratio: 4 / 5; padding: 0; border: 0; border-radius: var(--radius-lg);
-  background: var(--panel-2); cursor: pointer; overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .4), 0 22px 44px -22px rgba(0, 0, 0, .85), 0 0 0 1px rgba(212, 175, 55, .18);
-  opacity: 0; will-change: transform; -webkit-tap-highlight-color: transparent;
+.kd-acc__item {
+  position: relative; flex: 1 1 0; min-width: 0; padding: 0; border: 0; overflow: hidden;
+  border-radius: 16px; background: var(--panel-2); color: var(--ink); font: inherit; text-align: left;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 18px 36px -24px rgba(0, 0, 0, .9);
+  transition: flex-grow .6s var(--ease);
 }
-.kd-fan.is-ready .kd-fan__card { opacity: 1; }
-.kd-fan__card::after {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); background: rgba(8, 8, 8, .18);
-  transition: background-color .3s var(--ease);
+.kd-acc__item.is-open { flex-grow: var(--acc-grow); }
+.kd-acc__img {
+  position: absolute; top: 0; left: 50%; width: var(--acc-open-w); height: 100%; max-width: none;
+  transform: translateX(-50%); object-fit: cover; pointer-events: none; user-select: none;
 }
-.kd-fan__card:hover::after, .kd-fan__card.is-center::after { background: transparent; }
-.kd-fan__card.is-center { cursor: default; }
-.kd-fan__card:focus-visible { outline: 2px solid var(--laser); outline-offset: 3px; }
-.kd-fan__media { display: block; width: 100%; height: 100%; pointer-events: none; }
-.kd-fan__media img, .kd-fan__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
-.kd-fan__name { margin: 2px 0 0; font: 400 clamp(1.1rem, 1.8vw, 1.3rem)/1.2 var(--f-display); text-align: center; }
-.kd-fan__nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
-.kd-fan__arrow {
-  display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0;
-  border: 1.5px solid var(--glass-rim); border-radius: 50%; background: var(--glass-bg);
-  box-shadow: var(--glass-shadow); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
-  color: var(--ink); cursor: pointer; transition: border-color .2s;
+.kd-acc__item.is-nophoto .kd-acc__img { visibility: hidden; }
+/* затемнение снизу под подписью; у узких полос чуть сильнее, при наведении светлеет */
+.kd-acc__item::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(8, 8, 8, .12) 35%, rgba(8, 8, 8, .78));
+  transition: opacity .3s var(--ease);
 }
-.kd-fan__arrow--next svg { transform: scaleX(-1); }
-.kd-fan__arrow:hover { background: var(--glass-bg-hover); border-color: rgba(255, 255, 255, .45); }
-.kd-fan__arrow:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 3px; }
-.kd-fan__dots { display: flex; align-items: center; gap: 2px; }
-.kd-fan__dot { width: 18px; height: var(--tap); padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; }
-.kd-fan__dot::before {
-  content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--line-strong);
-  transition: width .3s var(--ease), background-color .3s;
+.kd-acc__item:not(.is-open):hover::after { opacity: .7; }
+/* золотая рамка выбранного стиля */
+.kd-acc__item::before {
+  content: ""; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
 }
-.kd-fan__dot:hover::before { background: var(--ink-3); }
-.kd-fan__dot.is-active::before { width: 18px; background: var(--accent); }
+.kd-acc__item.is-selected::before { box-shadow: inset 0 0 0 1.5px var(--accent), inset 0 0 0 3px rgba(212, 175, 55, .18); }
+.kd-acc__item:focus-visible { outline: 2px solid var(--accent-hover); outline-offset: 3px; }
 
-/* Раскрытая кухня: фото всей кухни стиля поверх веера, размер и место задаёт kitchen-fan.js. */
-.kd-fan__stage.is-revealing .kd-fan__card::after { background: rgba(8, 8, 8, .45); }
-.kd-reveal {
-  position: fixed; z-index: 40; left: 0; top: 0; width: 0; height: 0;
-  border-radius: var(--radius-lg); overflow: hidden; background: var(--panel-2);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .45), 0 24px 44px -18px rgba(0, 0, 0, .85), 0 0 0 1px rgba(212, 175, 55, .22);
-  pointer-events: none; transform-origin: 0 0;
+.kd-acc__name {
+  position: absolute; z-index: 1; left: 50%; bottom: 20px;
+  transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; white-space: nowrap;
+  font: 400 1.1rem/1 var(--f-display); letter-spacing: .05em; color: var(--ink);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, .6);
+  transition: opacity .3s var(--ease);
 }
-/* FLIP: анимируются только transform и opacity, слой поднимается на время анимации */
-.kd-reveal.is-animating { will-change: transform, opacity; }
-.kd-reveal[hidden] { display: none; }
-.kd-reveal.is-pinned { pointer-events: auto; cursor: zoom-out; }
-.kd-reveal__frame { position: absolute; inset: 0; }
-.kd-reveal__poster, .kd-reveal__img {
-  position: absolute; inset: 0; display: block; width: 100%; height: 100%;
+.kd-acc__item.is-open .kd-acc__name { opacity: 0; }
+.kd-acc__body {
+  position: absolute; z-index: 1; left: 22px; bottom: 20px; width: calc(var(--acc-open-w) - 44px);
+  display: grid; justify-items: start; gap: 6px;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity .25s var(--ease), transform .25s var(--ease);
 }
-.kd-reveal__poster { object-fit: cover; }
-.kd-reveal__img { object-fit: contain; opacity: 0; transition: opacity .25s var(--ease); }
-.kd-reveal.is-loaded .kd-reveal__img { opacity: 1; }
-.kd-reveal__name {
-  position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 36px 20px 14px;
-  font: 400 clamp(1rem, 1.6vw, 1.25rem)/1.2 var(--f-display); color: var(--on-ink);
-  background: linear-gradient(rgba(8, 8, 8, 0), rgba(8, 8, 8, .78));
+.kd-acc__item.is-open .kd-acc__body { opacity: 1; transform: none; transition-delay: .2s; }
+.kd-acc__title { font: 400 clamp(1.4rem, 2.4vw, 1.8rem)/1.1 var(--f-display); color: var(--ink); }
+.kd-acc__text { max-width: 46ch; font-size: .92rem; line-height: 1.45; color: var(--ink-2); text-shadow: 0 1px 4px rgba(0, 0, 0, .5); }
+.kd-acc__mark {
+  display: none; margin-top: 4px; padding: 6px 14px; border-radius: 999px;
+  font: 500 .72rem/1.2 var(--f-mono); letter-spacing: .1em; text-transform: uppercase;
 }
-@media (max-width: 400px) {
-  .kd-fan__nav { gap: 6px; }
-  .kd-fan__dot { width: 14px; }
+.kd-acc__item.is-selected .kd-acc__mark--on {
+  display: inline-block; color: var(--on-accent); background: var(--glass-gold-bg);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .8), 0 0 0 1px var(--glass-gold-rim);
+}
+.kd-acc__item:not(.is-selected) .kd-acc__mark--off {
+  display: inline-block; color: var(--ink); background: rgba(8, 8, 8, .45);
+  box-shadow: inset 0 0 0 1px var(--glass-rim);
 }
 
+/* Телефон: вертикальный список, выбранная крупно (вся кухня 3:2), остальные строками 64 px. */
+@media (max-width: 720px) {
+  .kd-acc { --acc-open-h: min(calc(100cqi / 1.5), 460px); flex-direction: column; height: auto; }
+  .kd-acc__item { flex: none; height: 64px; border-radius: 14px; transition: height .6s var(--ease); }
+  .kd-acc__item.is-open { height: var(--acc-open-h); }
+  .kd-acc__img { top: 50%; left: 0; width: 100%; height: var(--acc-open-h); transform: translateY(-50%); }
+  .kd-acc__item:not(.is-open)::after { background: linear-gradient(90deg, rgba(8, 8, 8, .72), rgba(8, 8, 8, .2)); }
+  .kd-acc__name { left: 18px; bottom: 50%; transform: translateY(50%); writing-mode: horizontal-tb; font-size: 1.15rem; }
+  .kd-acc__body { left: 16px; right: 16px; bottom: 14px; width: auto; }
+  .kd-acc__text { font-size: .85rem; }
+}
 .kd-colors { display: flex; flex-wrap: wrap; gap: 8px; }
 .kd-color {
   display: inline-flex; align-items: center; gap: 10px; min-height: var(--tap); padding: 6px 16px 6px 8px;
@@ -253,5 +261,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .kd-ghost { display: none; }
-  .kd-fan__card, .kd-fan__card::after, .kd-fan__dot::before, .kd-reveal__img { transition: none; }
+  .kd-acc__item, .kd-acc__item::after, .kd-acc__name, .kd-acc__body { transition: none !important; }
 }

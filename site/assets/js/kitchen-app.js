@@ -418,53 +418,39 @@
 
   /* ----- стили и цвета ----- */
 
-  var tileImgs = {};
-
-  /* Цвет плитки: у выбранного стиля текущий, у остальных основной (первый). */
-  function tileColorId(s) {
-    return s.id === state.style ? state.color : s.colors[0].id;
-  }
-
-  function colorById(s, id) {
-    for (var i = 0; i < s.colors.length; i++) if (s.colors[i].id === id) return s.colors[i];
-    return s.colors[0];
-  }
-
-  /* Ставит на плитки фото их цвета; новое фото подменяет старое, когда загрузилось (без мигания). */
-  function syncTilePhotos() {
-    styles.forEach(function (s, i) {
-      // фото всей кухни для раскрытия: у центральной текущий цвет, у остальных основной
-      if (fan) fan.setScene(i, colorById(s, tileColorId(s)).scene || null);
-      var img = tileImgs[s.id];
-      if (!img) return;
-      var c = colorById(s, tileColorId(s));
-      if (!c.photo || img.getAttribute('data-photo') === c.photo) return;
-      img.setAttribute('data-photo', c.photo);
-      if (!img.getAttribute('src')) { img.src = c.photo; return; }
-      var pre = new root.Image();
-      pre.onload = function () { if (img.getAttribute('data-photo') === c.photo) img.src = c.photo; };
-      pre.onerror = function () { if (img.getAttribute('data-photo') === c.photo) img.src = c.photo; };
-      pre.src = c.photo;
-    });
-    // цвета выбранного стиля подгружаем заранее, остальные стили не трогаем
-    styleById(state.style).colors.forEach(function (c) { if (c.photo) (new root.Image()).src = c.photo; });
-  }
-
-  var fan = null;
+  var acc = null;
 
   function styleIndex(id) {
     for (var i = 0; i < styles.length; i++) if (styles[i].id === id) return i;
     return 0;
   }
 
-  /* Веер карточек стилей (kitchen-fan.js): центральная карточка = выбранный стиль. */
+  /* Запасной фон полосы, пока фото грузится или если не загрузилось: цвета фасадов. */
+  function stripFallback(s) {
+    var c = colorOf(s, s.id === state.style ? state.color : s.colors[0].id);
+    return 'linear-gradient(160deg, ' + c.facade + ' 0 55%, ' + (c.lower || c.tall || c.counter) + ' 55% 100%)';
+  }
+
+  /* Фото полос: у выбранного стиля текущий цвет, у остальных основной; сцены выбранного стиля — заранее. */
+  function syncStylePhotos() {
+    if (!acc) return;
+    var A = V.kitchenAccordion;
+    styles.forEach(function (s, i) {
+      acc.setPhoto(i, A.photoFor(s, state.style, state.color), stripFallback(s));
+    });
+    A.preload(A.preloadList(styleById(state.style), state.color));
+  }
+
+  /* Гармошка стилей (kitchen-accordion.js): раскрытая полоса = выбранный стиль. */
   function buildStyles() {
     var list = $('#kd-styles');
-    if (!list || !V.kitchenFan) return;
-    fan = V.kitchenFan.create(list, {
-      names: styles.map(function (s) { return s.name; }),
-      scenes: styles.map(function (s) { return colorById(s, tileColorId(s)).scene || null; }),
-      center: styleIndex(state.style),
+    if (!list || !V.kitchenAccordion) return;
+    var A = V.kitchenAccordion;
+    acc = A.create(list, {
+      items: styles.map(function (s) {
+        return { name: s.name, blurb: s.blurb, photo: A.photoFor(s, state.style, state.color), fallback: stripFallback(s) };
+      }),
+      selected: styleIndex(state.style),
       label: 'Стиль кухни',
       onSelect: function (i) {
         var st = styles[i];
@@ -473,42 +459,12 @@
         onLook();
       }
     });
-    styles.forEach(function (s, i) {
-      var tile = fan.media[i];
-      var img = doc.createElement('img');
-      img.alt = 'Фасады в стиле ' + s.name.toLowerCase();
-      img.width = 480; img.height = 600;
-      img.decoding = 'async';
-      img.draggable = false;
-      // загрузка оборвалась: до 2 повторов (kitchenFan.loadImage), и только потом SVG-свотч
-      var showSwatch = function () { tile.innerHTML = V.kitchenRender.swatch(s, tileColorId(s)); };
-      img.addEventListener('error', function () {
-        var photo = img.getAttribute('data-photo');
-        if (!photo || /[?&]r=\d+$/.test(img.getAttribute('src') || '')) { showSwatch(); return; }
-        if (img._retrying === photo) return;
-        img._retrying = photo;
-        V.kitchenFan.loadImage(photo, function (err, good) {
-          if (img._retrying === photo) img._retrying = null;
-          if (img.getAttribute('data-photo') !== photo) return;   // цвет уже сменили
-          if (err) showSwatch(); else img.src = good;
-        }, { first: 1 });
-      });
-      // фото догрузилось после свотча (повтор или смена цвета) — возвращаем его в карточку
-      img.addEventListener('load', function () {
-        if (img.parentNode !== tile) { tile.textContent = ''; tile.appendChild(img); }
-      });
-      tile.appendChild(img);
-      tileImgs[s.id] = img;
-      tile.parentNode.title = s.blurb;
-    });
   }
 
   function syncStyles() {
     var st = styleById(state.style);
-    if (fan) fan.setCenter(styleIndex(state.style), true);
-    syncTilePhotos();
-    var blurb = $('#kd-style-blurb');
-    if (blurb) blurb.textContent = st.blurb;
+    if (acc) acc.setSelected(styleIndex(state.style));
+    syncStylePhotos();
     var colors = $('#kd-colors');
     if (!colors) return;
     colors.textContent = '';
@@ -714,7 +670,7 @@
       colors.addEventListener('change', function (e) {
         if (e.target.name !== 'kd-color') return;
         state.color = e.target.value;
-        syncTilePhotos();
+        syncStylePhotos();
         draw(true);
         updateSend();
         save();

@@ -24,7 +24,7 @@ test('serve.js: страницы, фото и ролик с правильным
     const size = fs.statSync(path.join(SITE, 'assets/img/kitchens/loft--dark-oak.webp')).size;
     assert.equal((await res.arrayBuffer()).byteLength, size);
 
-    res = await fetch(base + '/assets/js/kitchen-fan.js');
+    res = await fetch(base + '/assets/js/kitchen-accordion.js');
     assert.match(res.headers.get('content-type'), /javascript/);
     await res.arrayBuffer();
 
