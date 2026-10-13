@@ -375,7 +375,7 @@ ul.chip-row { list-style: none; margin: 0; padding: 0; }
 /* ---------- тизер конструктора ---------- */
 
 .kitchen-teaser { display: grid; gap: 40px; align-items: center; }
-.kitchen-teaser__styles { margin: 8px 0 28px; }
+ul.kitchen-teaser__styles { margin: 8px 0 28px; }
 .kitchen-teaser__draw { margin: 0; color: var(--on-ink-2); }
 .kitchen-teaser__draw svg { width: 100%; height: auto; }
 .kitchen-teaser__draw .draw path { stroke-dasharray: 1400; stroke-dashoffset: 1400; transition: stroke-dashoffset 2.4s var(--ease); }
