@@ -28,6 +28,7 @@
   <script defer src="assets/js/lead.js"></script>
   <script defer src="assets/js/pricing.js"></script>
   <script defer src="assets/js/index.js"></script>
+  <script defer src="assets/js/before-after.js"></script>
   <script defer src="assets/js/hero-scrub.js"></script>
 </head>
 <body data-page="home">
@@ -167,11 +168,18 @@
           <p class="lead-text">Цена за м² ниже только за работы, без материалов. Точную сумму пишем в смете по пунктам, и она идёт приложением к договору.</p>
         </div>
         <div class="repair-layout">
-          <figure class="photo repair-layout__photo" data-reveal>
-            <video data-reveal-video muted playsinline loop preload="none" width="1280" height="850" poster="assets/img/index/repair-bathroom.webp" aria-label="Санузел с крупноформатной плиткой, душем с трапом, подвесным унитазом и дубовой тумбой: голые бетонные стены превращаются в готовый ремонт">
-              <source src="assets/video/bathroom-reveal.mp4" type="video/mp4">
-            </video>
-            <figcaption>Визуализация проекта: санузел до и после ремонта</figcaption>
+          <figure class="repair-layout__photo" data-reveal>
+            <div class="ba" data-before-after>
+              <img class="ba__after" src="assets/img/index/bathroom-after.webp" width="1280" height="850" loading="lazy" decoding="async" alt="Санузел после ремонта: крупноформатная плитка, душ с трапом, подвесной унитаз, дубовая тумба">
+              <img class="ba__before" src="assets/img/index/bathroom-before.webp" width="1280" height="850" loading="lazy" decoding="async" alt="Санузел до ремонта: бетонные стены, выводы труб, рама инсталляции">
+              <span class="ba__tag ba__tag--before" aria-hidden="true">До</span>
+              <span class="ba__tag ba__tag--after" aria-hidden="true">После</span>
+              <span class="ba__line" aria-hidden="true"></span>
+              <button class="ba__handle" type="button" role="slider" data-ba-handle aria-label="Сравнить санузел до и после ремонта" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+                <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 1 1 7l6 6M19 1l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <figcaption class="ba__caption">Потяните ручку: слева санузел до ремонта, справа после. Визуализация проекта.</figcaption>
           </figure>
           <div class="repair-types" data-repair-types></div>
         </div>
