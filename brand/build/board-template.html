@@ -8,29 +8,46 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
+  /* гамма Black + Gold, токены из site/assets/css/site.css */
   :root {
-    --canvas: #F2EDE4;
-    --panel: #E8E0D3;
-    --ink: #26241F;
-    --ink-2: #5E5950;
-    --oak: #B38755;
-    --accent: #B5852E;
-    --accent-hover: #96691F;
-    --laser: #1FBF5B;
-    --line: #D9CFC0;
+    --canvas: #0D0D0D;
+    --canvas-glow: #3A2E10;
+    --panel: #1A1A1A;
+    --panel-2: #232323;
+    --deep: #080808;
+    --ink: #FFF3CC;
+    --ink-2: #D9D0B8;
+    --ink-3: #9C9480;
+    --accent: #D4AF37;
+    --accent-hover: #FFC857;
+    --accent-deep: #A8862A;
+    --on-accent: #1A1405;
+    --laser: #2FD16B;
+    --line: rgba(255, 255, 255, .12);
+    --line-strong: rgba(255, 255, 255, .28);
+    --gold-line: rgba(212, 175, 55, .28);
+    /* светлая плашка: логотипы для печати на бумаге */
+    --paper: #F2EDE4;
+    --paper-line: #D9CFC0;
     --f-display: 'Forum', 'Times New Roman', serif;
     --f-body: 'Onest', 'Segoe UI', sans-serif;
     --f-mono: 'JetBrains Mono', Consolas, monospace;
+    color-scheme: dark;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--canvas); color: var(--ink); font: 16px/1.55 var(--f-body); }
+  body { margin: 0; color: var(--ink); font: 16px/1.55 var(--f-body);
+         background: radial-gradient(1200px 700px at 15% -10%, var(--canvas-glow) 0%, transparent 60%) no-repeat, var(--canvas); }
+  a { color: var(--accent); }
+  a:hover { color: var(--accent-hover); }
+  ::selection { background: rgba(212, 175, 55, .35); color: var(--ink); }
   .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-  h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.15; margin: 0; }
+  h1, h2, h3 { font-family: var(--f-display); font-weight: 400; font-synthesis: none; line-height: 1.15; margin: 0; }
   h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: .01em; }
   h3 { font-size: 20px; }
   p { margin: 0 0 12px; }
-  .eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  b { color: var(--ink); }
+  .eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .eyebrow::before { content: ""; width: 40px; height: 2px; background: var(--laser); }
   section { padding: 72px 0; border-top: 1px solid var(--line); }
   .lead { font-size: 18px; max-width: 720px; color: var(--ink-2); }
@@ -40,87 +57,94 @@
   .hero { padding: 64px 0 56px; position: relative; overflow: hidden; }
   .hero .beam { position: absolute; left: 0; right: 0; height: 2px; background: var(--laser); top: var(--beam-top, 50%); opacity: .9; }
   .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; }
-  .hero img { width: 100%; max-width: 520px; display: block; position: relative; }
+  .hero img { width: 100%; max-width: 520px; display: block; position: relative; border-radius: 6px;
+              box-shadow: 0 0 0 1px var(--gold-line), 0 24px 60px -24px rgba(0, 0, 0, .9); }
   .hero h1 { font-size: clamp(32px, 5vw, 52px); margin-bottom: 16px; }
   .meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 20px; font: 13px var(--f-mono); color: var(--ink-2); }
 
   /* таблицы названий */
-  .names { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 15px; }
+  .names { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 15px; color: var(--ink-2); }
   .names th, .names td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
-  .names th { font: 500 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
-  .names td:first-child { font-family: var(--f-display); font-weight: 400; font-size: 18px; white-space: nowrap; }
-  .names tr.chosen { background: #fff8; }
+  .names th { font: 500 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+  .names td:first-child { font-family: var(--f-display); font-weight: 400; font-size: 18px; white-space: nowrap; color: var(--ink); }
+  .names tr.chosen { background: rgba(212, 175, 55, .1); }
+  .names tr.chosen td { color: var(--ink); }
   .names tr.chosen td:first-child { box-shadow: inset 4px 0 0 var(--laser); }
-  .tag { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; background: var(--ink); color: var(--canvas); margin-left: 8px; vertical-align: middle; }
+  .tag { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; background: var(--accent); color: var(--on-accent); margin-left: 8px; vertical-align: middle; }
   .muted { color: var(--ink-2); }
   .table-scroll { overflow-x: auto; }
 
   /* поиски */
   .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
-  .concept { background: var(--panel); border-radius: 6px; padding: 16px; position: relative; }
+  .concept { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; position: relative; }
   .concept img { width: 100%; display: block; border-radius: 4px; }
   .concept h3 { margin: 14px 0 6px; }
   .concept p { font-size: 14px; color: var(--ink-2); margin: 0; }
-  .concept.win { outline: 2px solid var(--ink); }
-  .verdict { margin-top: 28px; padding: 20px 24px; background: var(--ink); color: var(--canvas); border-radius: 6px; font-size: 18px; position: relative; overflow: hidden; }
+  .concept.win { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 18px 40px -20px rgba(212, 175, 55, .45); }
+  .verdict { margin-top: 28px; padding: 20px 24px; color: var(--ink); border-radius: 6px; font-size: 18px; position: relative; overflow: hidden;
+             background: linear-gradient(160deg, #241D0B 0%, #141414 55%, #101010 100%); border: 1px solid var(--gold-line); }
   .verdict::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--laser); }
 
-  /* построение */
+  /* построение: схема на светлой плашке, как на бумаге */
   .build { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-top: 28px; }
-  .build svg { width: 100%; height: auto; background: #fff6; border-radius: 6px; }
-  .rules { list-style: none; padding: 0; margin: 0; }
+  .build svg { width: 100%; height: auto; background: var(--paper); border-radius: 6px; }
+  .rules { list-style: none; padding: 0; margin: 0; color: var(--ink-2); }
   .rules li { padding: 12px 0; border-bottom: 1px solid var(--line); }
-  .rules b { font-family: var(--f-display); font-weight: 400; }
-  .sizes { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-top: 24px; }
-  .sizes figure { margin: 0; text-align: center; font: 12px var(--f-mono); color: var(--ink-2); }
+  .rules b { font-family: var(--f-display); font-weight: 400; color: var(--accent); }
+  .sizes { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-top: 24px; padding: 24px; background: var(--paper); border-radius: 6px; }
+  .sizes figure { margin: 0; text-align: center; font: 12px var(--f-mono); color: #5E5950; }
   .sizes img { display: block; margin: 0 auto 8px; }
-  .pix { image-rendering: pixelated; width: 192px; height: 192px; border: 1px solid var(--line); }
+  .pix { image-rendering: pixelated; width: 192px; height: 192px; border: 1px solid var(--paper-line); }
 
-  /* версии */
+  /* версии: светлые на бумаге, инверсии на своём тёмном фоне */
   .versions { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 28px; }
-  .ver { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: #fff5; }
-  .ver .pic { aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 28px; }
+  .ver { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--panel); }
+  .ver .pic { aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 28px; background: var(--paper); }
   .ver .pic img { max-width: 100%; max-height: 100%; }
-  .ver .pic.dark { background: var(--ink); }
-  .ver .cap { padding: 14px 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .ver a { color: var(--ink); font: 13px var(--f-mono); }
+  .ver .pic.dark { background: #26241F; }
+  .ver .cap { padding: 14px 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; color: var(--ink-2); }
+  .ver a { color: var(--accent); font: 13px var(--f-mono); }
+  .ver a:hover { color: var(--accent-hover); }
 
   /* палитра */
   .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; margin-top: 28px; }
-  .sw { border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: #fff6; }
-  .sw .chip { height: 96px; }
+  .sw { border-radius: 6px; overflow: hidden; border: 1px solid var(--line); background: var(--panel); }
+  .sw .chip { height: 96px; border-bottom: 1px solid var(--line); }
   .sw .txt { padding: 12px 14px; font-size: 14px; }
-  .sw code { font: 500 13px var(--f-mono); display: block; }
+  .sw code { font: 500 13px var(--f-mono); display: block; color: var(--accent); }
   .sw small { color: var(--ink-2); display: block; line-height: 1.4; margin-top: 4px; }
 
   /* шрифты */
   .fonts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 28px; }
-  .font { background: var(--panel); border-radius: 6px; padding: 22px; }
-  .font .big { font-size: 56px; line-height: 1; margin: 12px 0 14px; }
+  .font { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 22px; }
+  .font .mono { color: var(--accent); }
+  .font .big { font-size: 56px; line-height: 1; margin: 12px 0 14px; color: var(--ink); }
   .font p { font-size: 14px; color: var(--ink-2); }
 
   /* визитка */
   .mock { margin-top: 28px; border-radius: 8px; padding: clamp(28px, 6vw, 72px); display: flex; gap: clamp(20px, 4vw, 48px); justify-content: center; flex-wrap: wrap;
-          background: radial-gradient(120% 90% at 30% 20%, #c79a68 0%, #a77a4a 55%, #8a6239 100%); }
-  .card-trim { width: 360px; max-width: 100%; aspect-ratio: 90 / 50; overflow: hidden; border-radius: 3px; box-shadow: 0 1px 1px #0003, 0 14px 30px -8px #0007; position: relative; }
+          background: radial-gradient(120% 90% at 30% 20%, #3A2E10 0%, #1A1A1A 55%, #080808 100%); border: 1px solid var(--gold-line); }
+  .card-trim { width: 360px; max-width: 100%; aspect-ratio: 90 / 50; overflow: hidden; border-radius: 3px; box-shadow: 0 1px 1px #0006, 0 18px 36px -8px #000c; position: relative; }
   .card-trim svg { position: absolute; width: 104.444%; height: 108%; left: -2.222%; top: -4%; }
   .card-trim.f { transform: rotate(-4deg) translateY(6px); }
   .card-trim.b { transform: rotate(3deg); }
   .specs { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
   .flat { position: relative; width: 100%; max-width: 470px; aspect-ratio: 94 / 54; }
   .flat svg { width: 100%; height: 100%; display: block; }
-  .flat > svg:first-child { box-shadow: 0 0 0 1px var(--line); }
+  .flat > svg:first-child { box-shadow: 0 0 0 1px var(--line-strong); }
   .guides { position: absolute; inset: 0; pointer-events: none; }
   .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 12px var(--f-mono); color: var(--ink-2); margin-top: 10px; }
   .legend i { display: inline-block; width: 18px; height: 0; border-top: 1.5px dashed; vertical-align: middle; margin-right: 6px; }
   .downloads { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 4px; background: var(--accent); color: #fff; text-decoration: none; font: 500 14px var(--f-body); }
-  .btn:hover { background: var(--accent-hover); }
-  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 4px; background: var(--accent); color: var(--on-accent); text-decoration: none; font: 500 14px var(--f-body); }
+  .btn:hover { background: var(--accent-hover); color: var(--on-accent); }
+  .btn.ghost { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1px var(--accent); }
+  .btn.ghost:hover { background: rgba(212, 175, 55, .12); color: var(--ink); }
 
-  .todo { columns: 2; gap: 40px; padding-left: 20px; }
+  .todo { columns: 2; gap: 40px; padding-left: 20px; color: var(--ink-2); }
   .todo li { margin-bottom: 8px; break-inside: avoid; }
-  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font: 12px var(--f-mono); color: var(--ink-2); }
+  .todo li::marker { color: var(--accent); }
+  footer { padding: 32px 0 48px; border-top: 1px solid var(--line); font: 12px var(--f-mono); color: var(--ink-3); }
 
   @media (max-width: 860px) {
     .hero-grid, .build, .specs { grid-template-columns: 1fr; }
@@ -147,7 +171,7 @@
       <p class="lead">Мебель встаёт вровень со стенами, которые выровняла эта же команда. Один договор, один прораб, кухня по замеру после ремонта. Здесь всё для запуска бренда: имя, логотип, цвета, шрифты и визитка в печать.</p>
       <div class="meta"><span>логотип в кривых</span><span>SVG · PNG 1024 px</span><span>визитка 90 × 50 мм, PDF</span></div>
     </div>
-    <img src="logo/vroven-primary.svg" alt="Логотип ВРОВЕНЬ: знак, слово и подпись «Ремонт и мебель под ключ»">
+    <img src="logo/vroven-inverse.svg" alt="Логотип ВРОВЕНЬ: знак, слово и подпись «Ремонт и мебель под ключ»">
   </div>
 </header>
 
@@ -255,23 +279,24 @@
       <div class="ver"><div class="pic"><img src="logo/vroven-mono.svg" alt="Монохром"></div><div class="cap"><b>Монохром</b><span><a href="logo/vroven-mono.svg">SVG</a> · <a href="logo/png/vroven-mono.png">PNG</a></span></div></div>
       <div class="ver"><div class="pic dark"><img src="logo/vroven-horizontal-inverse.svg" alt="Горизонтальный на графите"></div><div class="cap"><b>Горизонтальный на графите</b><span><a href="logo/vroven-horizontal-inverse.svg">SVG</a> · <a href="logo/png/vroven-horizontal-inverse.png">PNG</a></span></div></div>
     </div>
-    <p class="muted" style="margin-top:16px;font-size:14px">Монохром для гравировки, штампа, плёнки и печати в одну краску. PNG шириной 1024 px с прозрачным фоном, инверсии на графитовом фоне.</p>
+    <p class="muted" style="margin-top:16px;font-size:14px">Монохром для гравировки, штампа, плёнки и печати в одну краску. PNG шириной 1024 px с прозрачным фоном, инверсии на графитовом фоне. На доске светлые версии стоят на светлой плашке, как при печати на бумаге.</p>
   </div>
 </section>
 
 <section id="palette">
   <div class="wrap">
     <div class="eyebrow">05 · Цвета</div>
-    <h2>Тёплая штукатурка, графит, дуб и луч</h2>
+    <h2>Чёрный, золото и зелёный луч</h2>
+    <p class="lead" style="margin-top:14px">Гамма сайта: чёрный холст с тёплым золотым свечением, сливочный текст, золотые акценты. Логотип и визитка печатаются на светлой бумаге и сохраняют свои цвета.</p>
     <div class="swatches">
-      <div class="sw"><div class="chip" style="background:#F2EDE4"></div><div class="txt"><b>Штукатурка</b><code>#F2EDE4</code><small>--canvas · фон сайта и визитки</small></div></div>
-      <div class="sw"><div class="chip" style="background:#E8E0D3"></div><div class="txt"><b>Панель</b><code>#E8E0D3</code><small>--panel · карточки, блоки</small></div></div>
-      <div class="sw"><div class="chip" style="background:#26241F"></div><div class="txt"><b>Графит</b><code>#26241F</code><small>--ink · текст, логотип, тёмный фон</small></div></div>
-      <div class="sw"><div class="chip" style="background:#5E5950"></div><div class="txt"><b>Графит светлый</b><code>#5E5950</code><small>--ink-2 · подписи, второстепенный текст</small></div></div>
-      <div class="sw"><div class="chip" style="background:#B38755"></div><div class="txt"><b>Дуб</b><code>#B38755</code><small>--oak · подпись на визитке, дерево</small></div></div>
-      <div class="sw"><div class="chip" style="background:#B5852E"></div><div class="txt"><b>Латунь</b><code>#B5852E</code><small>--accent · кнопки и призывы; наведение #96691F</small></div></div>
-      <div class="sw"><div class="chip" style="background:#1FBF5B"></div><div class="txt"><b>Луч уровня</b><code>#1FBF5B</code><small>--laser · тонкая линия, малыми дозами; на графите #35D873</small></div></div>
-      <div class="sw"><div class="chip" style="background:#D9CFC0"></div><div class="txt"><b>Линия</b><code>#D9CFC0</code><small>--line · разделители, рамки</small></div></div>
+      <div class="sw"><div class="chip" style="background:#0D0D0D"></div><div class="txt"><b>Чёрный</b><code>#0D0D0D</code><small>--canvas · фон сайта; свечение #3A2E10</small></div></div>
+      <div class="sw"><div class="chip" style="background:#1A1A1A"></div><div class="txt"><b>Панель</b><code>#1A1A1A</code><small>--panel · карточки, блоки</small></div></div>
+      <div class="sw"><div class="chip" style="background:#232323"></div><div class="txt"><b>Панель 2</b><code>#232323</code><small>--panel-2 · вложенные блоки, поля</small></div></div>
+      <div class="sw"><div class="chip" style="background:#FFF3CC"></div><div class="txt"><b>Сливочный текст</b><code>#FFF3CC</code><small>--ink · основной текст и заголовки</small></div></div>
+      <div class="sw"><div class="chip" style="background:#D9D0B8"></div><div class="txt"><b>Вторичный</b><code>#D9D0B8</code><small>--ink-2 · подписи, второстепенный текст; третичный #9C9480</small></div></div>
+      <div class="sw"><div class="chip" style="background:#D4AF37"></div><div class="txt"><b>Золото</b><code>#D4AF37</code><small>--accent · кнопки, акценты; текст на золоте #1A1405</small></div></div>
+      <div class="sw"><div class="chip" style="background:#FFC857"></div><div class="txt"><b>Светлое золото</b><code>#FFC857</code><small>--accent-hover · наведение, блик</small></div></div>
+      <div class="sw"><div class="chip" style="background:#2FD16B"></div><div class="txt"><b>Линия уровня</b><code>#2FD16B</code><small>--laser · тонкая линия, малыми дозами; в логотипе #1FBF5B, на графите #35D873</small></div></div>
     </div>
   </div>
 </section>
