@@ -5,8 +5,8 @@
 
 ## Команды
 
-- Тесты (86 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
-- Предпросмотр: `python -m http.server 8130 --directory site`, затем http://localhost:8130/ (сборки и npm нет; тот же сервер в `.claude/launch.json`, имя `site`).
+- Тесты (91 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
+- Предпросмотр: `node tools/serve.js 8130`, затем http://localhost:8130/ (сборки и npm нет; тот же сервер в `.claude/launch.json`, имя `site`). Не `python -m http.server`: на Windows рвёт соединения.
 - Бренд (логотипы, визитка PNG/PDF через headless Edge): `python brand/build/build_all.py`.
 
 ## Где что
