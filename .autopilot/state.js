@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T21:21:43+04:00",
-  "finishedAt": "2026-10-13T21:21:43+04:00",
+  "updatedAt": "2026-10-13T21:56:43+04:00",
+  "finishedAt": "2026-10-13T21:56:43+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T12:45:10+04:00",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "startedAt": "2026-10-13T21:41:30+04:00",
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T21:21:43+04:00",
-      "startedAt": "2026-10-13T21:21:43+04:00"
+      "finishedAt": "2026-10-13T21:56:43+04:00",
+      "startedAt": "2026-10-13T21:56:43+04:00"
     }
   ],
   "requirements": {
-    "total": 48,
-    "done": 46,
+    "total": 49,
+    "done": 47,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -764,9 +764,9 @@ window.STATE =
       "model": "обычная",
       "status": "done",
       "startedAt": "2026-10-13T21:08:56+04:00",
+      "finishedAt": "2026-10-13T21:15:21+04:00",
       "retries": 0,
       "repairs": 0,
-      "finishedAt": "2026-10-13T21:15:21+04:00",
       "tests": {
         "passed": 95,
         "failed": 95
@@ -792,9 +792,9 @@ window.STATE =
       "model": "обычная",
       "status": "done",
       "startedAt": "2026-10-13T21:08:56+04:00",
+      "finishedAt": "2026-10-13T21:14:00+04:00",
       "retries": 0,
       "repairs": 0,
-      "finishedAt": "2026-10-13T21:14:00+04:00",
       "tests": {
         "passed": 95,
         "failed": 95
@@ -829,15 +829,47 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
-      "retries": 0,
-      "repairs": 0,
       "startedAt": "2026-10-13T21:15:21+04:00",
       "finishedAt": "2026-10-13T21:21:42+04:00",
+      "retries": 0,
+      "repairs": 0,
       "tests": {
         "passed": 98,
         "failed": 98
       },
       "commit": "8a53538"
+    },
+    {
+      "id": "25",
+      "title": "Герой на телефоне: ремонт по прокрутке кадрами",
+      "requirements": [
+        "G25"
+      ],
+      "blockedBy": [],
+      "wave": 21,
+      "zone": [
+        "site/assets/js/hero-scrub.js",
+        "hero-frames.js",
+        "index.html",
+        "site/assets/css/hero.css",
+        "site/index.html",
+        "site/assets/img/hero/frames/",
+        "site/assets/img/hero/",
+        "site/README.md",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T21:42:03+04:00",
+      "finishedAt": "2026-10-13T21:56:43+04:00",
+      "tests": {
+        "passed": 109,
+        "failed": 109
+      },
+      "commit": "8dddb02"
     },
     {
       "id": "F1",
@@ -904,8 +936,8 @@ window.STATE =
     }
   ],
   "tests": {
-    "passed": 98,
-    "failed": 98
+    "passed": 109,
+    "failed": 109
   },
   "debt": {
     "placeholders": [
@@ -1106,9 +1138,13 @@ window.STATE =
     "2026-10-13T21:14:00+04:00",
     "2026-10-13T21:15:21+04:00",
     "2026-10-13T21:21:42+04:00",
-    "2026-10-13T21:21:43+04:00"
+    "2026-10-13T21:21:43+04:00",
+    "2026-10-13T21:41:30+04:00",
+    "2026-10-13T21:42:02+04:00",
+    "2026-10-13T21:42:03+04:00",
+    "2026-10-13T21:56:43+04:00"
   ],
-  "rev": 160,
+  "rev": 166,
   "waiting": null,
   "waits": [
     {
@@ -2238,6 +2274,47 @@ window.STATE =
       "t": "2026-10-13T21:21:43+04:00",
       "k": "finish",
       "result": "Герой: черновые стены → ремонт → мебель; шторка санузла; бренд-доска в Black + Gold"
+    },
+    {
+      "t": "2026-10-13T21:41:30+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T21:42:02+04:00",
+      "k": "tickets",
+      "n": 27
+    },
+    {
+      "t": "2026-10-13T21:42:03+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T21:42:03+04:00",
+      "k": "ticket",
+      "ids": [
+        "25"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T21:56:43+04:00",
+      "k": "ticket",
+      "ids": [
+        "25"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 109,
+        "failed": 109
+      }
+    },
+    {
+      "t": "2026-10-13T21:56:43+04:00",
+      "k": "finish",
+      "result": "Герой на телефоне: ремонт по прокрутке кадрами"
     }
   ],
   "reqList": [
@@ -2481,16 +2558,21 @@ window.STATE =
       "id": "G24",
       "text": "«мне не нравится что постоянно обновляется» → шторка до/после, «да»",
       "status": "done"
+    },
+    {
+      "id": "G25",
+      "text": "«как сделать на телефоне такой же эффект с главной страницей» → «да»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T21:08:55+04:00",
+      "at": "2026-10-13T21:42:03+04:00",
       "problems": 0
     }
   },
-  "result": "Герой: черновые стены → ремонт → мебель; шторка санузла; бренд-доска в Black + Gold",
+  "result": "Герой на телефоне: ремонт по прокрутке кадрами",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",

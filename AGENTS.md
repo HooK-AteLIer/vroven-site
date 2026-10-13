@@ -5,7 +5,7 @@
 
 ## Команды
 
-- Тесты (98 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
+- Тесты (109 pass): `node --test` из корня. Один файл: `node --test tests/pricing.test.js`. Не `node --test tests/` (Node 24: MODULE_NOT_FOUND); можно `node --test tests/*.test.js`.
 - Предпросмотр: `node tools/serve.js 8130`, затем http://localhost:8130/ (сборки и npm нет; тот же сервер в `.claude/launch.json`, имя `site`). Не `python -m http.server`: на Windows рвёт соединения.
 - Бренд (логотипы, визитка PNG/PDF через headless Edge): `python brand/build/build_all.py`.
 
@@ -27,7 +27,7 @@
 - `tests/publish.test.js` режет длинное тире (—), стоп-слова и канцелярит в HTML четырёх страниц.
 - Неизвестный факт: видимая заглушка `[ЧТО – уточняется]` (короткое тире), цена с `placeholder: true` получает метку «ориентировочно».
 - Размеры конструктора в мм, целые числа.
-- Ролик героя `hero-scrub.mp4` перекодирован с частыми ключевыми кадрами; при замене поправить `VIDEO_BYTES` в `hero-scrub.js`. С file:// и на мобильных герой статичный: так задумано.
+- Ролик героя `hero-scrub.mp4` перекодирован с частыми ключевыми кадрами; при замене поправить `VIDEO_BYTES` в `hero-scrub.js` и перенарезать кадры телефона (`site/assets/img/hero/frames/`, рецепт в `site/README.md`). Режим героя выбирает `chooseMode` в `hero-frames.js`: десктоп — видео, телефон — кадры на canvas, телефон с Save-Data/медленной сетью — три картинки, file:// и reduced-motion — статичная кухня.
 - `media-raw/` (сырьё AI-картинок и ролика) не в git: источника для перекодирования в репозитории нет.
 - Edge в headless возвращается раньше, чем записан файл; ожидание файла в `brand/build/render.py`, не убирать.
 - `og:image` относительный, пока не опубликовано: комментарий `DEPLOY STEP` в `<head>` каждой страницы.
