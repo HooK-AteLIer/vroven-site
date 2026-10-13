@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T12:01:00+04:00",
-  "finishedAt": "2026-10-13T12:01:00+04:00",
+  "updatedAt": "2026-10-13T12:16:16+04:00",
+  "finishedAt": "2026-10-13T12:16:16+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T11:37:02+04:00",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "startedAt": "2026-10-13T12:07:06+04:00",
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T12:01:00+04:00",
-      "startedAt": "2026-10-13T12:01:00+04:00"
+      "finishedAt": "2026-10-13T12:16:16+04:00",
+      "startedAt": "2026-10-13T12:16:16+04:00"
     }
   ],
   "requirements": {
-    "total": 38,
-    "done": 36,
+    "total": 41,
+    "done": 39,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -609,18 +609,103 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
+      "startedAt": "2026-10-13T11:37:29+04:00",
+      "finishedAt": "2026-10-13T12:01:00+04:00",
       "retries": 0,
       "repairs": 1,
-      "startedAt": "2026-10-13T11:37:29+04:00",
       "repairFindings": [
         "герой со скрабом на десктопе: светлое слово ВРОВЕНЬ и подпись почти не читаются на светлом кадре видео"
       ],
-      "finishedAt": "2026-10-13T12:01:00+04:00",
       "tests": {
         "passed": 91,
         "failed": 91
       },
       "commit": "b2e1f64"
+    },
+    {
+      "id": "18",
+      "title": "Заголовки сайта шрифтом Forum",
+      "requirements": [
+        "G15"
+      ],
+      "blockedBy": [],
+      "wave": 16,
+      "zone": [
+        "site/assets/css/*.css",
+        "site/*.html",
+        "<head>",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "startedAt": "2026-10-13T12:07:33+04:00",
+      "retries": 0,
+      "repairs": 0,
+      "finishedAt": "2026-10-13T12:14:28+04:00",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      },
+      "commit": "bd0c169"
+    },
+    {
+      "id": "19",
+      "title": "Логотип, визитка и бренд-доска шрифтом Forum",
+      "requirements": [
+        "G16"
+      ],
+      "blockedBy": [],
+      "wave": 16,
+      "zone": [
+        "brand/",
+        "site/assets/img/logo/",
+        "site/favicon.svg",
+        "docs/naming.md"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "startedAt": "2026-10-13T12:07:33+04:00",
+      "retries": 0,
+      "repairs": 0,
+      "finishedAt": "2026-10-13T12:13:11+04:00",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      },
+      "commit": "83e7fe0"
+    },
+    {
+      "id": "20",
+      "title": "Сайт про всю корпусную мебель, а не только про кухни",
+      "requirements": [
+        "G17"
+      ],
+      "blockedBy": [
+        "18"
+      ],
+      "wave": 17,
+      "zone": [
+        "site/index.html",
+        "site/lookbook.html",
+        "site/jobs.html",
+        "site/kitchen.html",
+        "site/assets/js/data.js",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T12:14:28+04:00",
+      "finishedAt": "2026-10-13T12:16:15+04:00",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      },
+      "commit": "35f653e"
     },
     {
       "id": "F1",
@@ -869,9 +954,16 @@ window.STATE =
     "2026-10-13T11:37:02+04:00",
     "2026-10-13T11:37:29+04:00",
     "2026-10-13T11:51:29+04:00",
-    "2026-10-13T12:01:00+04:00"
+    "2026-10-13T12:01:00+04:00",
+    "2026-10-13T12:07:06+04:00",
+    "2026-10-13T12:07:33+04:00",
+    "2026-10-13T12:12:02+04:00",
+    "2026-10-13T12:13:11+04:00",
+    "2026-10-13T12:14:28+04:00",
+    "2026-10-13T12:16:15+04:00",
+    "2026-10-13T12:16:16+04:00"
   ],
-  "rev": 133,
+  "rev": 143,
   "waiting": null,
   "waits": [
     {
@@ -1797,6 +1889,85 @@ window.STATE =
       "t": "2026-10-13T12:01:00+04:00",
       "k": "finish",
       "result": "Сайт в гамме Black + Gold, кнопки «жидкое стекло»"
+    },
+    {
+      "t": "2026-10-13T12:07:06+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T12:07:33+04:00",
+      "k": "tickets",
+      "n": 21
+    },
+    {
+      "t": "2026-10-13T12:07:33+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T12:07:33+04:00",
+      "k": "ticket",
+      "ids": [
+        "18",
+        "19"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T12:12:02+04:00",
+      "k": "tickets",
+      "n": 22
+    },
+    {
+      "t": "2026-10-13T12:13:11+04:00",
+      "k": "ticket",
+      "ids": [
+        "19"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      }
+    },
+    {
+      "t": "2026-10-13T12:14:28+04:00",
+      "k": "ticket",
+      "ids": [
+        "18"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      }
+    },
+    {
+      "t": "2026-10-13T12:14:28+04:00",
+      "k": "ticket",
+      "ids": [
+        "20"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T12:16:15+04:00",
+      "k": "ticket",
+      "ids": [
+        "20"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 91,
+        "failed": 91
+      }
+    },
+    {
+      "t": "2026-10-13T12:16:16+04:00",
+      "k": "finish",
+      "result": "Forum в заголовках и логотипе, тексты про всю мебель"
     }
   ],
   "reqList": [
@@ -1990,16 +2161,31 @@ window.STATE =
       "id": "G14",
       "text": "«используй форму кнопок как в ссылке» (пин 852939616972066546, «жидкое стекло»)",
       "status": "done"
+    },
+    {
+      "id": "G15",
+      "text": "«Forum ставь и меняй везде» (шрифт заголовков Forum, Google Fonts, OFL; аналог Novelist с пина 14636767537386726)",
+      "status": "done"
+    },
+    {
+      "id": "G16",
+      "text": "«меняй везде» → бренд",
+      "status": "done"
+    },
+    {
+      "id": "G17",
+      "text": "«не кухня, а мебель . сайт не только про изготовление кухни, в всей корпусной мебели в целом»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T11:37:29+04:00",
+      "at": "2026-10-13T12:07:33+04:00",
       "problems": 0
     }
   },
-  "result": "Сайт в гамме Black + Gold, кнопки «жидкое стекло»",
+  "result": "Forum в заголовках и логотипе, тексты про всю мебель",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",
