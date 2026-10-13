@@ -13,8 +13,8 @@ window.STATE =
   "skillDir": "C:/Users/Anna Shatskih/.claude/skills/autopilot",
   "baseCommit": "0db8348",
   "startedAt": "2026-10-10T23:14:47+04:00",
-  "updatedAt": "2026-10-13T12:31:08+04:00",
-  "finishedAt": "2026-10-13T12:31:08+04:00",
+  "updatedAt": "2026-10-13T21:21:43+04:00",
+  "finishedAt": "2026-10-13T21:21:43+04:00",
   "stages": [
     {
       "id": "preflight",
@@ -25,49 +25,49 @@ window.STATE =
     {
       "id": "manifest",
       "status": "done",
-      "startedAt": "2026-10-13T12:21:36+04:00",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "startedAt": "2026-10-13T12:45:10+04:00",
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "briefing",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "spec",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "plan",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "build",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "review",
       "status": "skipped",
       "note": "не понадобился",
-      "finishedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00"
     },
     {
       "id": "final",
       "status": "done",
-      "finishedAt": "2026-10-13T12:31:08+04:00",
-      "startedAt": "2026-10-13T12:31:08+04:00"
+      "finishedAt": "2026-10-13T21:21:43+04:00",
+      "startedAt": "2026-10-13T21:21:43+04:00"
     }
   ],
   "requirements": {
-    "total": 43,
-    "done": 41,
+    "total": 48,
+    "done": 46,
     "inTicket": 0,
     "inSpec": 0,
     "placeholder": 2,
@@ -732,15 +732,112 @@ window.STATE =
       "review": "да",
       "model": "обычная",
       "status": "done",
-      "retries": 0,
-      "repairs": 0,
       "startedAt": "2026-10-13T12:23:03+04:00",
       "finishedAt": "2026-10-13T12:31:08+04:00",
+      "retries": 0,
+      "repairs": 0,
       "tests": {
         "passed": 95,
         "failed": 95
       },
       "commit": "a38dbb3"
+    },
+    {
+      "id": "22",
+      "title": "Герой: от черновых стен к ремонту и мебели",
+      "requirements": [
+        "G20"
+      ],
+      "blockedBy": [],
+      "wave": 19,
+      "zone": [
+        "site/assets/video/hero-scrub.mp4",
+        "site/assets/img/hero/*",
+        "site/assets/js/hero-scrub.js",
+        "site/index.html",
+        "data-band",
+        "site/assets/css/hero.css",
+        "site/README.md",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "startedAt": "2026-10-13T21:08:56+04:00",
+      "retries": 0,
+      "repairs": 0,
+      "finishedAt": "2026-10-13T21:15:21+04:00",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      },
+      "commit": "24d3b27"
+    },
+    {
+      "id": "23",
+      "title": "Бренд-доска в гамме Black + Gold",
+      "requirements": [
+        "G22",
+        "G23"
+      ],
+      "blockedBy": [],
+      "wave": 19,
+      "zone": [
+        "brand/build/board-template.html",
+        "brand/build/build_all.py",
+        "brand/index.html",
+        "brand/logo/*"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "startedAt": "2026-10-13T21:08:56+04:00",
+      "retries": 0,
+      "repairs": 0,
+      "finishedAt": "2026-10-13T21:14:00+04:00",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      },
+      "commit": "5af4cd8"
+    },
+    {
+      "id": "24",
+      "title": "Санузел: шторка «до/после» вместо зацикленного ролика",
+      "requirements": [
+        "G24"
+      ],
+      "blockedBy": [
+        "22"
+      ],
+      "wave": 20,
+      "zone": [
+        "site/index.html",
+        "figure",
+        "#repair",
+        "site/assets/js/before-after.js",
+        "index.html",
+        "site/assets/js/index.js",
+        "data-reveal-video",
+        "site/assets/css/index.css",
+        "site.css",
+        "site/assets/img/index/bathroom-before.webp",
+        "bathroom-after.webp",
+        "site/assets/video/bathroom-reveal.mp4",
+        "tests/"
+      ],
+      "review": "да",
+      "model": "обычная",
+      "status": "done",
+      "retries": 0,
+      "repairs": 0,
+      "startedAt": "2026-10-13T21:15:21+04:00",
+      "finishedAt": "2026-10-13T21:21:42+04:00",
+      "tests": {
+        "passed": 98,
+        "failed": 98
+      },
+      "commit": "8a53538"
     },
     {
       "id": "F1",
@@ -807,8 +904,8 @@ window.STATE =
     }
   ],
   "tests": {
-    "passed": 95,
-    "failed": 95
+    "passed": 98,
+    "failed": 98
   },
   "debt": {
     "placeholders": [
@@ -1000,9 +1097,18 @@ window.STATE =
     "2026-10-13T12:21:36+04:00",
     "2026-10-13T12:23:02+04:00",
     "2026-10-13T12:23:03+04:00",
-    "2026-10-13T12:31:08+04:00"
+    "2026-10-13T12:31:08+04:00",
+    "2026-10-13T12:45:10+04:00",
+    "2026-10-13T12:48:44+04:00",
+    "2026-10-13T21:08:55+04:00",
+    "2026-10-13T21:08:56+04:00",
+    "2026-10-13T21:09:16+04:00",
+    "2026-10-13T21:14:00+04:00",
+    "2026-10-13T21:15:21+04:00",
+    "2026-10-13T21:21:42+04:00",
+    "2026-10-13T21:21:43+04:00"
   ],
-  "rev": 149,
+  "rev": 160,
   "waiting": null,
   "waits": [
     {
@@ -2048,6 +2154,90 @@ window.STATE =
       "t": "2026-10-13T12:31:08+04:00",
       "k": "finish",
       "result": "Шкафы и гардеробные: цены, блок, 10 новых фото"
+    },
+    {
+      "t": "2026-10-13T12:45:10+04:00",
+      "k": "reopen"
+    },
+    {
+      "t": "2026-10-13T12:48:44+04:00",
+      "k": "tickets",
+      "n": 24
+    },
+    {
+      "t": "2026-10-13T21:08:55+04:00",
+      "k": "tickets",
+      "n": 25
+    },
+    {
+      "t": "2026-10-13T21:08:55+04:00",
+      "k": "gate",
+      "g": "G3",
+      "ok": true,
+      "problems": 0
+    },
+    {
+      "t": "2026-10-13T21:08:56+04:00",
+      "k": "ticket",
+      "ids": [
+        "22",
+        "23"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T21:09:16+04:00",
+      "k": "tickets",
+      "n": 26
+    },
+    {
+      "t": "2026-10-13T21:14:00+04:00",
+      "k": "ticket",
+      "ids": [
+        "23"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      }
+    },
+    {
+      "t": "2026-10-13T21:15:21+04:00",
+      "k": "ticket",
+      "ids": [
+        "22"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 95,
+        "failed": 95
+      }
+    },
+    {
+      "t": "2026-10-13T21:15:21+04:00",
+      "k": "ticket",
+      "ids": [
+        "24"
+      ],
+      "act": "start"
+    },
+    {
+      "t": "2026-10-13T21:21:42+04:00",
+      "k": "ticket",
+      "ids": [
+        "24"
+      ],
+      "act": "done",
+      "tests": {
+        "passed": 98,
+        "failed": 98
+      }
+    },
+    {
+      "t": "2026-10-13T21:21:43+04:00",
+      "k": "finish",
+      "result": "Герой: черновые стены → ремонт → мебель; шторка санузла; бренд-доска в Black + Gold"
     }
   ],
   "reqList": [
@@ -2266,16 +2456,41 @@ window.STATE =
       "id": "G19",
       "text": "«добавь фото для разнообразия»",
       "status": "done"
+    },
+    {
+      "id": "G20",
+      "text": "«главный экран изначально как будто черновые стены, при промотке вниз преобразуется ремонт, сначала чистовая потом появляется мебель»",
+      "status": "done"
+    },
+    {
+      "id": "G21",
+      "text": "«напиши Один замер» (заголовок третьего пункта «почему ВРОВЕНЬ»)",
+      "status": "done"
+    },
+    {
+      "id": "G22",
+      "text": "«Бренд-доска ещё в старых цветах. Можно перекрасить в чёрный с золотом.»",
+      "status": "done"
+    },
+    {
+      "id": "G23",
+      "text": "«Зелёная линия остается»",
+      "status": "done"
+    },
+    {
+      "id": "G24",
+      "text": "«мне не нравится что постоянно обновляется» → шторка до/после, «да»",
+      "status": "done"
     }
   ],
   "gates": {
     "G3": {
       "ok": true,
-      "at": "2026-10-13T12:23:03+04:00",
+      "at": "2026-10-13T21:08:55+04:00",
       "problems": 0
     }
   },
-  "result": "Шкафы и гардеробные: цены, блок, 10 новых фото",
+  "result": "Герой: черновые стены → ремонт → мебель; шторка санузла; бренд-доска в Black + Gold",
   "report": [
     "Маленькая угловая кухня 1,5×2 м: конструктор не ставит мойку и плиту, хотя на стене 2 м они помещаются — уточним на замере",
     "Окно у самого угла соседней стены: угловой верхний шкаф на чертеже заходит на окно",
