@@ -30,7 +30,7 @@
 .kd-step:first-child { padding-top: 0; }
 .kd-step__title {
   display: flex; align-items: baseline; gap: 10px; padding: 0; margin-bottom: 14px;
-  font: 500 1.15rem/1.2 var(--f-display); color: var(--ink);
+  font: 400 1.15rem/1.2 var(--f-display); color: var(--ink);
 }
 .kd-step__num { font: 500 .72rem/1 var(--f-mono); letter-spacing: .1em; color: var(--oak-deep); }
 .kd-step__hint { margin-top: -6px; }
@@ -70,7 +70,7 @@
 /* ---------- стиль и цвет ---------- */
 
 .kd-stage { display: grid; gap: clamp(18px, 2.4vw, 28px); min-width: 0; }
-.kd-h { font: 500 clamp(1.5rem, 2.6vw, 2rem)/1.1 var(--f-display); margin: 0; }
+.kd-h { font: 400 clamp(1.5rem, 2.6vw, 2rem)/1.1 var(--f-display); margin: 0; }
 .kd-h--sm { font-size: 1.1rem; }
 .kd-look { display: grid; gap: 16px; }
 .kd-look__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; }
@@ -102,7 +102,7 @@
 .kd-fan__card:focus-visible { outline: 2px solid var(--laser); outline-offset: 3px; }
 .kd-fan__media { display: block; width: 100%; height: 100%; pointer-events: none; }
 .kd-fan__media img, .kd-fan__media svg { display: block; width: 100%; height: 100%; object-fit: cover; }
-.kd-fan__name { margin: 2px 0 0; font: 500 clamp(1.1rem, 1.8vw, 1.3rem)/1.2 var(--f-display); text-align: center; }
+.kd-fan__name { margin: 2px 0 0; font: 400 clamp(1.1rem, 1.8vw, 1.3rem)/1.2 var(--f-display); text-align: center; }
 .kd-fan__nav { display: flex; align-items: center; justify-content: center; gap: 14px; }
 .kd-fan__arrow {
   display: grid; place-items: center; width: var(--tap); height: var(--tap); padding: 0;
@@ -143,7 +143,7 @@
 .kd-reveal.is-loaded .kd-reveal__img { opacity: 1; }
 .kd-reveal__name {
   position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 36px 20px 14px;
-  font: 500 clamp(1rem, 1.6vw, 1.25rem)/1.2 var(--f-display); color: var(--on-ink);
+  font: 400 clamp(1rem, 1.6vw, 1.25rem)/1.2 var(--f-display); color: var(--on-ink);
   background: linear-gradient(rgba(8, 8, 8, 0), rgba(8, 8, 8, .78));
 }
 @media (max-width: 400px) {
@@ -230,7 +230,7 @@
 
 .kd-price__sum { display: grid; align-content: start; gap: 6px; padding-top: 4px; }
 .kd-price__label { margin: 0; font: 500 .72rem/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--on-ink-2); }
-.kd-price__value { margin: 4px 0 0; font: 500 clamp(2rem, 4.6vw, 3.1rem)/1.05 var(--f-display); letter-spacing: -.02em; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.kd-price__value { margin: 4px 0 0; font: 400 clamp(2rem, 4.6vw, 3.1rem)/1.05 var(--f-display); letter-spacing: -.02em; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .kd-price__value .badge-placeholder { color: var(--accent); margin-left: 0; font-size: .62rem; }
 .kd-price__old { margin: 0; color: var(--on-ink-2); text-decoration: line-through; font-family: var(--f-mono); font-size: .9rem; }
 .kd-price__save { margin: 0; color: var(--laser); font-size: .95rem; }

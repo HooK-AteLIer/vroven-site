@@ -14,7 +14,7 @@
 }
 .jobs__poster-cap { display: grid; gap: 4px; padding-top: 14px; color: var(--ink-2); font-size: .9rem; }
 .jobs__phone {
-  font: 500 clamp(1.5rem, 3vw, 1.9rem)/1.2 var(--f-display);
+  font: 400 clamp(1.5rem, 3vw, 1.9rem)/1.2 var(--f-display);
   color: var(--ink); text-decoration: none; letter-spacing: .01em;
 }
 .jobs__phone:hover { color: var(--accent-hover); }
