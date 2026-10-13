@@ -16,25 +16,12 @@
     { id: 'other', name: 'Другая мебель' },
     { id: 'repair', name: 'Ремонт' }
   ];
-  var STYLES = [
-    { id: 'classic', name: 'Классика' },
-    { id: 'neoclassic', name: 'Неоклассика' },
-    { id: 'modern', name: 'Модерн' },
-    { id: 'minimal', name: 'Минимализм' },
-    { id: 'hitech', name: 'Хай-тек' },
-    { id: 'loft', name: 'Лофт' },
-    { id: 'scandi', name: 'Скандинавский' },
-    { id: 'provence', name: 'Прованс' }
-  ];
-  var styleName = {};
-  STYLES.forEach(function (s) { styleName[s.id] = s.name; });
-
   // категория из адреса: lookbook.html#wardrobe открывает сразу шкафы
   function hashCategory() {
     var h = (window.location.hash || '').replace(/^#/, '');
     return CATEGORIES.some(function (c) { return c.id === h; }) ? h : 'all';
   }
-  var state = { category: hashCategory(), style: '' };
+  var state = { category: hashCategory() };
   var visible = [];
   var current = -1;
   var opener = null;
@@ -61,13 +48,8 @@
   var catGroup = el('div', 'chip-row');
   catGroup.setAttribute('role', 'group');
   catGroup.setAttribute('aria-label', 'Категория');
-  var styleGroup = el('div', 'chip-row');
-  styleGroup.setAttribute('role', 'group');
-  styleGroup.setAttribute('aria-label', 'Стиль кухни');
   var catCap = el('p', 'lookbook__cap', 'Категория');
-  var styleCap = el('p', 'lookbook__cap', 'Стиль кухни');
   filters.appendChild(catCap); filters.appendChild(catGroup);
-  filters.appendChild(styleCap); filters.appendChild(styleGroup);
 
   var status = el('p', 'lookbook__count');
   status.setAttribute('role', 'status');
@@ -76,10 +58,10 @@
   var empty = el('div', 'lookbook__empty');
   empty.hidden = true;
   empty.appendChild(el('p', 'lookbook__empty-title', 'Таких работ пока нет'));
-  empty.appendChild(el('p', null, 'Попробуйте другой стиль или категорию. Или расскажите, что нужно вам, посмотрим и посчитаем.'));
+  empty.appendChild(el('p', null, 'Попробуйте другую категорию. Или расскажите, что нужно вам, посмотрим и посчитаем.'));
   var reset = el('button', 'btn btn--ghost', 'Сбросить фильтры');
   reset.type = 'button';
-  reset.addEventListener('click', function () { state.category = 'all'; state.style = ''; render(); });
+  reset.addEventListener('click', function () { state.category = 'all'; render(); });
   empty.appendChild(reset);
   var note = el('p', 'lookbook__note', 'Это визуализации, а не фотографии с объектов. Реальные работы заменят их в этом разделе.');
 
@@ -90,7 +72,6 @@
 
   function matches(s) {
     if (state.category !== 'all' && s.category !== state.category) return false;
-    if (state.style && s.style !== state.style) return false;
     return true;
   }
 
@@ -106,14 +87,6 @@
     CATEGORIES.forEach(function (c) {
       catGroup.appendChild(chip(c.name, state.category === c.id, function () {
         state.category = c.id;
-        render();
-      }));
-    });
-    styleGroup.textContent = '';
-    styleGroup.appendChild(chip('Любой', !state.style, function () { state.style = ''; render(); }));
-    STYLES.forEach(function (s) {
-      styleGroup.appendChild(chip(s.name, state.style === s.id, function () {
-        state.style = state.style === s.id ? '' : s.id;
         render();
       }));
     });
