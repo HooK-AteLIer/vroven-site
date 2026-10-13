@@ -8,6 +8,7 @@
  *   bundle:  { repairName, area, furniture:[{ name, meters }], discountPct, savings, total, name, phone }
  *   kitchen: { shapeName, walls:{A,B,C}, ceiling, styleName, colorName, materialName, runMeters, price, withRepair, link, name, phone }
  *   job:     { position, name, phone, experience }
+ *   measure: { name, phone }
  * Пустые, нулевые и нечисловые значения в текст не попадают.
  */
 (function (root) {
@@ -58,7 +59,8 @@
     repair: 'Здравствуйте! Хочу рассчитать ремонт.',
     bundle: 'Здравствуйте! Хочу ремонт и мебель комплектом.',
     kitchen: 'Здравствуйте! Хочу кухню по своим размерам, прошу замер.',
-    job: 'Здравствуйте! Хочу работать у вас.'
+    job: 'Здравствуйте! Хочу работать у вас.',
+    measure: 'Здравствуйте! Хочу вызвать замерщика.'
   };
 
   function contact(lines, p) {
@@ -109,6 +111,9 @@
       l.text('Вакансия', p.position);
       contact(l, p);
       l.text('Опыт', p.experience);
+    },
+    measure: function (l, p) {
+      contact(l, p);
     }
   };
 

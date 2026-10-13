@@ -1,0 +1,106 @@
+/*
+ * ВРОВЕНЬ: ролик «Доверяйте замеры профессионалам» на главной (#measure).
+ * Играет сам один раз, когда блок заметно на экране, и замирает на последнем кадре.
+ * Повтор по кнопке «Посмотреть ещё раз». Reduced-motion и Save-Data: только постер и кнопка.
+ * Без JS у <video> остаются штатные controls.
+ * Чистая часть (shouldAutoplay, buttonLabel) тестируется в Node.
+ */
+(function (root) {
+  'use strict';
+
+  var VISIBLE_RATIO = 0.6;
+
+  function shouldAutoplay(s) {
+    if (!s || typeof s !== 'object') return false;
+    return s.visible === true && s.played !== true && s.reducedMotion !== true && s.saveData !== true;
+  }
+
+  var LABELS = { idle: 'Смотреть видео', ended: 'Посмотреть ещё раз', playing: null };
+
+  function buttonLabel(state) {
+    return Object.prototype.hasOwnProperty.call(LABELS, state) ? LABELS[state] : LABELS.idle;
+  }
+
+  var api = { shouldAutoplay: shouldAutoplay, buttonLabel: buttonLabel, VISIBLE_RATIO: VISIBLE_RATIO };
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = api;
+    return;
+  }
+  root.VROVEN = root.VROVEN || {};
+  root.VROVEN.measureClip = api;
+
+  var doc = root.document;
+
+  function mount(box) {
+    var video = box.querySelector('video');
+    var btn = box.querySelector('[data-measure-play]');
+    var label = btn && btn.querySelector('[data-measure-label]');
+    if (!video || !btn || !label) return;
+
+    var mq = root.matchMedia ? root.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var conn = root.navigator && root.navigator.connection;
+    var played = false;
+
+    video.removeAttribute('controls');
+    video.loop = false;
+    video.muted = true;
+
+    function setState(state) {
+      var text = buttonLabel(state);
+      box.setAttribute('data-state', state);
+      btn.hidden = text === null;
+      if (text !== null) label.textContent = text;
+    }
+
+    function start() {
+      played = true;
+      if (video.ended) video.currentTime = 0;
+      setState('playing');
+      var p = video.play();
+      // автозапуск запрещён браузером: остаётся постер и кнопка
+      if (p && typeof p.catch === 'function') p.catch(function () { setState('idle'); });
+    }
+
+    btn.addEventListener('click', function () {
+      video.currentTime = 0;
+      start();
+    });
+    video.addEventListener('ended', function () { setState('ended'); });
+    video.addEventListener('pause', function () { if (!video.ended) setState(played ? 'ended' : 'idle'); });
+
+    setState('idle');
+
+    if (!('IntersectionObserver' in root)) return;
+
+    // заранее подгрузить метаданные, когда до блока остался экран
+    var near = new IntersectionObserver(function (entries) {
+      if (!entries.some(function (en) { return en.isIntersecting; })) return;
+      near.disconnect();
+      if (video.preload === 'none') video.preload = 'metadata';
+    }, { rootMargin: '600px 0px' });
+    near.observe(box);
+
+    var seen = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var ok = shouldAutoplay({
+          visible: en.isIntersecting && en.intersectionRatio >= VISIBLE_RATIO,
+          played: played,
+          reducedMotion: !!(mq && mq.matches),
+          saveData: !!(conn && conn.saveData)
+        });
+        if (!ok) return;
+        seen.disconnect();
+        start();
+      });
+    }, { threshold: [0, VISIBLE_RATIO] });
+    seen.observe(video);
+  }
+
+  function init() {
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-measure-clip]'), mount);
+  }
+
+  if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);
+  else init();
+})(typeof window !== 'undefined' ? window : this);

@@ -4,7 +4,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const lead = require('../site/assets/js/lead.js');
 
-const KINDS = ['general', 'repair', 'bundle', 'kitchen', 'job'];
+const KINDS = ['general', 'repair', 'bundle', 'kitchen', 'job', 'measure'];
 
 function assertClean(text) {
   assert.equal(typeof text, 'string');
@@ -128,4 +128,16 @@ test('пустые и нулевые числа не попадают в тек�
 
 test('неизвестный kind даёт общую заявку', () => {
   assert.equal(lead.buildMessage('???', { name: 'Ольга' }, 'Тюмень'), lead.buildMessage('general', { name: 'Ольга' }, 'Тюмень'));
+});
+
+test('measure: «вызвать замерщика», город, имя и телефон, без лишних строк', () => {
+  const bare = lead.buildMessage('measure', {}, 'Тюмень');
+  assertClean(bare);
+  assert.equal(bare, 'Здравствуйте! Хочу вызвать замерщика.\nГород: Тюмень');
+  const text = lead.buildMessage('measure', { name: 'Ольга', phone: '+7 900 000 00 00' }, 'Нижневартовск');
+  assertClean(text);
+  assert.match(text, /^Здравствуйте! Хочу вызвать замерщика\./);
+  assert.match(text, /Город: Нижневартовск/);
+  assert.match(text, /Имя: Ольга/);
+  assert.match(text, /Телефон: \+7 900 000 00 00/);
 });

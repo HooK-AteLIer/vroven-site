@@ -32,6 +32,7 @@
   <script defer src="assets/js/design-layers.js"></script>
   <script defer src="assets/js/hero-frames.js"></script>
   <script defer src="assets/js/hero-scrub.js"></script>
+  <script defer src="assets/js/measure-clip.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">К содержанию</a>
@@ -726,6 +727,28 @@
             <a class="footer-phone jobs-teaser__phone" data-phone href="tel:+79124100001">+7 912 410 00 01</a>
             <a class="btn btn--block" data-tel href="tel:+79124100001">Позвонить</a>
           </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Замеры: мем перед контактами -->
+    <section class="section" id="measure" aria-labelledby="measure-title">
+      <div class="container measure">
+        <figure class="measure__media" data-measure-clip data-reveal>
+          <p class="measure__meme">Когда клиент решает сам сделать замеры <span aria-hidden="true">😅</span></p>
+          <div class="measure__frame">
+            <video class="measure__video" controls muted playsinline preload="none" poster="assets/img/index/measure-poster.jpg" width="960" height="532" aria-label="Шутливое видео: человек меряет стену пальцами">
+              <source src="assets/video/measure-clip.mp4" type="video/mp4">
+            </video>
+            <button class="btn btn--ghost measure__play" type="button" data-measure-play hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5L8 5.5Z"/></svg><span data-measure-label>Смотреть видео</span></button>
+          </div>
+        </figure>
+        <div class="measure__text" data-reveal>
+          <p class="eyebrow">Замер</p>
+          <h2 id="measure-title">Доверяйте замеры профессионалам!</h2>
+          <p class="lead-text">Ошибка в пару сантиметров, и шкаф не встанет в нишу, а кухня упрётся в трубу. Замерщик приезжает с лазерным уровнем, проверяет углы и перепады стен и снимает размеры, по которым потом делают проект и мебель.</p>
+          <p class="measure__offer"><span data-fact="kitchenOffer"></span>.</p>
+          <a class="btn" data-lead="measure" href="#lead">Вызвать замерщика</a>
         </div>
       </div>
     </section>
