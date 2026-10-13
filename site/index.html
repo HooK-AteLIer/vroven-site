@@ -29,6 +29,7 @@
   <script defer src="assets/js/pricing.js"></script>
   <script defer src="assets/js/index.js"></script>
   <script defer src="assets/js/before-after.js"></script>
+  <script defer src="assets/js/hero-frames.js"></script>
   <script defer src="assets/js/hero-scrub.js"></script>
 </head>
 <body data-page="home">
@@ -69,12 +70,13 @@
   </header>
 
   <main id="main">
-    <!-- Герой: ролик прокручивается скроллом (hero-scrub.js); на телефоне, при reduced motion и без видео статичный кадр -->
+    <!-- Герой: на десктопе ролик прокручивается скроллом (hero-scrub.js), на телефоне кадры на canvas или три картинки при экономии трафика (hero-frames.js); при reduced motion, с file:// и без видео статичный кадр -->
     <section class="hero" id="hero" aria-label="Ремонт и мебель одной командой" data-hero>
       <div class="hero__stage">
         <div class="hero__media" aria-hidden="true">
           <div class="hero__still"></div>
           <div class="hero__poster" data-hero-poster></div>
+          <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
           <video class="hero__video" data-hero-video preload="none" muted playsinline disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
           <div class="hero__scrim"></div>
         </div>

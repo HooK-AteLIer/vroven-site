@@ -2,7 +2,11 @@
  * ВРОВЕНЬ: герой главной, ролик прокручивается скроллом.
  * Стандарт 10k (scrub-pipeline): видео целиком в Blob с кольцом загрузки, rAF-цикл с lerp,
  * который засыпает, seek без наложений, запись в DOM только при изменении,
- * полосы подписей по прогрессу скролла, статичный герой по пяти условиям (решается вживую).
+ * полосы подписей по прогрессу скролла. Режим решается вживую (hero-frames.js, chooseMode):
+ *   video  — десктоп: ролик скраббится;
+ *   frames — телефон (первые четыре условия GATES): 72 кадра на canvas, тот же прогресс и подписи;
+ *   light  — телефон с Save-Data или медленной сетью: три картинки с кроссфейдом;
+ *   static — reduced motion, file://, ошибка загрузки: готовая кухня.
  * Цена «от» в финальной посадке берётся из VROVEN.data по выбранному городу.
  */
 (function (root, doc) {
@@ -17,7 +21,7 @@
   var POSTER_URL = 'assets/img/hero/hero-start.jpg';
   var RING_LEN = 126;
 
-  // Пять условий статичного героя. Первое по таску: ширина < 768 px.
+  // Условия «телефона» (первые четыре): там вместо ролика кадры. Пятое — reduced motion, статичный герой.
   var GATES = [
     '(max-width: 767px)',
     '(orientation: portrait) and (max-width: 1024px)',
@@ -28,6 +32,11 @@
 
   var stage = hero.querySelector('.hero__stage');
   var video = hero.querySelector('[data-hero-video]');
+  var canvas = hero.querySelector('[data-hero-canvas]');
+  var HF = V.heroFrames || null;
+  var mode = 'static';         // текущий режим: static | video | frames | light
+  var player = null;           // отрисовка кадров на телефоне
+  var mobileFailed = false;
   var posterLayer = hero.querySelector('[data-hero-poster]');
   var cue = hero.querySelector('.hero__cue');
   var cueText = hero.querySelector('.hero__cue-text');
@@ -193,7 +202,8 @@
     shown += (target - shown) * (1 - Math.pow(1 - kk, dt / 16.667));
     var converged = Math.abs(target - shown) < 0.0005;
     if (converged) shown = target;
-    requestSeek(shown * (video.duration || 0));
+    if (mode === 'video') requestSeek(shown * (video.duration || 0));
+    else if (player) player.render(shown);
     updateCaptions(shown);
     if (converged && loadK >= 1) {
       rafId = null;
@@ -315,15 +325,53 @@
     setTimeout(startBlobFetch, 4000);
   }
 
+  /* ---------- телефон: кадры или три картинки на canvas ---------- */
+
+  function failMobile() {
+    if (mobileFailed) return;
+    mobileFailed = true;
+    applyHeroMode();
+  }
+
+  function startPlayer(kind) {
+    if (!HF || !canvas || !canvas.getContext) { failMobile(); return; }
+    hero.classList.remove('is-video-ready');
+    if (cueText) cueText.textContent = 'загрузка';
+    setRing(0);
+    player = HF.createPlayer({
+      canvas: canvas,
+      mode: kind,
+      onProgress: function (frac) { setRing(frac); },
+      onReady: function () {
+        hero.classList.add('is-video-ready');
+        if (cueText) cueText.textContent = 'листайте';
+      },
+      onFail: failMobile
+    });
+    player.start();
+    player.render(shown);
+  }
+
+  function onResize() {
+    if (player) player.resize();
+    onScroll();
+  }
+
   /* ---------- статичный герой или скраб: решается вживую ---------- */
 
-  function enableScrub() {
-    if (scrubOn || failed) return;
+  function enableScrub(next) {
+    if (scrubOn) return;
+    mode = next;
     scrubOn = true;
     hero.classList.add('hero--scrub');
-    initHeroOnce();
+    if (next === 'video') {
+      initHeroOnce();
+    } else {
+      hero.classList.add('hero--mobile', 'hero--' + next);
+      startPlayer(next);
+    }
     root.addEventListener('scroll', onScroll, { passive: true });
-    root.addEventListener('resize', onScroll, { passive: true });
+    root.addEventListener('resize', onResize, { passive: true });
     bands.forEach(function (bd) { bd.op = -1; bd.k = -1; bd.live = null; });
     target = shown = heroProgress();
     updateCaptions(shown);
@@ -334,27 +382,53 @@
     if (!scrubOn) return;
     scrubOn = false;
     root.removeEventListener('scroll', onScroll);
-    root.removeEventListener('resize', onScroll);
+    root.removeEventListener('resize', onResize);
     if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; lastTick = 0; }
-    hero.classList.remove('hero--scrub');
+    if (player) { player.stop(); player = null; }
+    if (mode !== 'video') hero.classList.remove('is-video-ready');
+    hero.classList.remove('hero--scrub', 'hero--mobile', 'hero--frames', 'hero--light');
+    mode = 'static';
     unpinBands();
   }
 
   var MQLS = GATES.map(function (q) { return root.matchMedia(q); });
+  var PHONE = MQLS.slice(0, 4);
+  var REDUCED = MQLS[4];
+  var conn = root.navigator && (navigator.connection || navigator.mozConnection || navigator.webkitConnection);
+
+  function pickMode() {
+    var mobile = PHONE.some(function (m) { return m.matches; });
+    var flags = {
+      file: root.location && root.location.protocol === 'file:',
+      reducedMotion: REDUCED.matches,
+      mobile: mobile,
+      saveData: !!(conn && conn.saveData),
+      effectiveType: conn && conn.effectiveType,
+      failed: mobile ? mobileFailed : failed
+    };
+    if (HF) return HF.chooseMode(flags);
+    // без hero-frames.js: прежнее поведение, телефон статичный
+    return flags.failed || flags.reducedMotion || mobile ? 'static' : 'video';
+  }
+
   function applyHeroMode() {
-    if (failed || MQLS.some(function (m) { return m.matches; })) disableScrub();
-    else enableScrub();
+    var next = pickMode();
+    if (next === mode) return;
+    disableScrub();
+    if (next !== 'static') enableScrub(next);
   }
   MQLS.forEach(function (m) {
     if (m.addEventListener) m.addEventListener('change', applyHeroMode);
     else if (m.addListener) m.addListener(applyHeroMode);
   });
+  if (conn && conn.addEventListener) conn.addEventListener('change', applyHeroMode);
   applyHeroMode();
 
   // для проверки и отладки
   V.hero = {
     progress: function () { return shown; },
     isScrub: function () { return scrubOn; },
+    mode: function () { return mode; },
     gates: GATES.slice()
   };
 })(window, document);
