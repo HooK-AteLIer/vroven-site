@@ -480,9 +480,22 @@
       img.width = 480; img.height = 600;
       img.decoding = 'async';
       img.draggable = false;
+      // загрузка оборвалась: до 2 повторов (kitchenFan.loadImage), и только потом SVG-свотч
+      var showSwatch = function () { tile.innerHTML = V.kitchenRender.swatch(s, tileColorId(s)); };
       img.addEventListener('error', function () {
-        tile.innerHTML = V.kitchenRender.swatch(s, tileColorId(s));
-        tileImgs[s.id] = null;
+        var photo = img.getAttribute('data-photo');
+        if (!photo || /[?&]r=\d+$/.test(img.getAttribute('src') || '')) { showSwatch(); return; }
+        if (img._retrying === photo) return;
+        img._retrying = photo;
+        V.kitchenFan.loadImage(photo, function (err, good) {
+          if (img._retrying === photo) img._retrying = null;
+          if (img.getAttribute('data-photo') !== photo) return;   // цвет уже сменили
+          if (err) showSwatch(); else img.src = good;
+        }, { first: 1 });
+      });
+      // фото догрузилось после свотча (повтор или смена цвета) — возвращаем его в карточку
+      img.addEventListener('load', function () {
+        if (img.parentNode !== tile) { tile.textContent = ''; tile.appendChild(img); }
       });
       tile.appendChild(img);
       tileImgs[s.id] = img;

@@ -133,3 +133,40 @@ test('FLIP: transform переводит итоговый бокс раскры�
   assert.ok(Math.abs(t.sy - 225 / 484) < 1e-9);
   assert.equal(fan.flipTransform(box, box).x, 0, 'на месте — без сдвига');
 });
+
+// ---- повтор загрузки фото (таск 16) ----------------------------------------------
+
+test('retryUrl: ?r=N против кеша ошибки, с уже имеющимся параметром — через &', () => {
+  assert.equal(fan.retryUrl('a.webp', 0), 'a.webp');
+  assert.equal(fan.retryUrl('a.webp', 2), 'a.webp?r=2');
+  assert.equal(fan.retryUrl('a.webp?v=1', 1), 'a.webp?v=1&r=1');
+});
+
+function fakeRun(results, opts) {
+  const calls = [], waits = [];
+  let out = null;
+  const load = (url, cb) => { calls.push(url); cb(results[calls.length - 1] ? null : new Error('reset')); };
+  const wait = (fn, ms) => { waits.push(ms); fn(); };
+  fan.loadWithRetry('s.webp', load, (err, url) => { out = { err, url }; }, Object.assign({ wait }, opts));
+  return { calls, waits, out };
+}
+
+test('loadWithRetry: 2 повтора с паузами 400 и 1200 мс, затем ошибка', () => {
+  const r = fakeRun([false, false, false, true]);
+  assert.deepEqual(r.calls, ['s.webp', 's.webp?r=1', 's.webp?r=2']);
+  assert.deepEqual(r.waits, [400, 1200]);
+  assert.ok(r.out.err instanceof Error);
+});
+
+test('loadWithRetry: успех со 2-й попытки отдаёт рабочий адрес', () => {
+  const r = fakeRun([false, true]);
+  assert.deepEqual(r.calls, ['s.webp', 's.webp?r=1']);
+  assert.deepEqual(r.out, { err: null, url: 's.webp?r=1' });
+});
+
+test('loadWithRetry: после уже случившейся ошибки (first: 1) — сразу повторы', () => {
+  const r = fakeRun([false, false], { first: 1 });
+  assert.deepEqual(r.calls, ['s.webp?r=1', 's.webp?r=2']);
+  assert.deepEqual(r.waits, [400, 1200]);
+  assert.ok(r.out.err);
+});

@@ -105,7 +105,39 @@
     };
   }
 
+  /* Повтор загрузки фото: локальный сервер или сеть иногда рвут соединение. */
+  var RETRY_DELAYS = [400, 1200];
+
+  /* Адрес попытки N: ?r=N, чтобы браузер не отдал закешированную ошибку. */
+  function retryUrl(url, attempt) {
+    if (!attempt) return url;
+    return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'r=' + attempt;
+  }
+
+  /*
+   * loadWithRetry(url, load(url, cb(err)), done(err, goodUrl), { delays, wait, first })
+   * Пробует url, при ошибке ждёт delays[k-1] и пробует retryUrl(url, k), пока повторы не кончатся.
+   * first: 1 — первая загрузка уже упала (событие error), начинаем с повтора.
+   */
+  function loadWithRetry(url, load, done, o) {
+    o = o || {};
+    var delays = o.delays || RETRY_DELAYS;
+    var wait = o.wait || function (fn, ms) { setTimeout(fn, ms); };
+    function attempt(k) {
+      var u = retryUrl(url, k);
+      load(u, function (err) {
+        if (!err) { done(null, u); return; }
+        if (k >= delays.length) { done(err, u); return; }
+        wait(function () { attempt(k + 1); }, delays[k]);
+      });
+    }
+    var first = o.first || 0;
+    if (first > 0) wait(function () { attempt(first); }, delays[first - 1]);
+    else attempt(0);
+  }
+
   var api = {
+    retryUrl: retryUrl, loadWithRetry: loadWithRetry, RETRY_DELAYS: RETRY_DELAYS,
     SLOTS: SLOTS, CENTER: CENTER,
     widthFactor: widthFactor, heightFactor: heightFactor,
     visibleMap: visibleMap, circularDelta: circularDelta, hoverOffsets: hoverOffsets,
@@ -233,9 +265,21 @@
         e.ready = true;
         if (revealUrl === url) reveal.classList.add('is-loaded');
       };
+      var decode = function () {
+        if (img.decode) return img.decode();
+        return new Promise(function (ok, fail) { img.onload = ok; img.onerror = fail; });
+      };
+      var failed = function () {
+        if (img.complete && img.naturalWidth) { done(); return; }
+        // загрузка оборвалась: до 2 повторов с ?r=N; не вышло — забываем, следующее наведение попробует снова
+        loadImage(url, function (err, good) {
+          if (err) { if (sceneCache[url] === e) delete sceneCache[url]; return; }
+          img.src = good;
+          decode().then(done, function () { if (img.complete && img.naturalWidth) done(); });
+        }, { first: 1 });
+      };
       img.src = url;
-      if (img.decode) img.decode().then(done, function () { if (img.complete && img.naturalWidth) done(); });
-      else img.onload = done;
+      decode().then(done, failed);
       return e;
     }
 
@@ -668,5 +712,16 @@
     };
   }
 
+  /* Загрузка картинки с повторами (браузер): done(err, адрес, который загрузился). */
+  function loadImage(url, done, o) {
+    loadWithRetry(url, function (u, cb) {
+      var probe = new root.Image();
+      probe.onload = function () { cb(null); };
+      probe.onerror = function () { cb(new Error('Не загрузилось: ' + u)); };
+      probe.src = u;
+    }, done, o);
+  }
+
   api.create = create;
+  api.loadImage = loadImage;
 })(typeof window !== 'undefined' ? window : this);
