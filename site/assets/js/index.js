@@ -149,8 +149,25 @@
     $$('[data-furniture-price]').forEach(function (n) {
       var it = byId(data.furnitureItems, n.getAttribute('data-furniture-price'));
       var pm = it && it.perMeter;
-      n.textContent = pm ? 'от ' + rub(pm.value) + ' за п.м.' + (pm.placeholder ? ' · ориентировочно' : '') : BY_SURVEY;
+      n.textContent = pm ? 'от ' + rub(pm.value) + ' за п.м.' + (pm.placeholder ? ' · ориентировочно' : '') : ((it && it.priceNote) || BY_SURVEY);
     });
+
+    // блок «Шкафы и гардеробные»: ориентиры за п.м.
+    var wp = $('[data-wardrobe-prices]');
+    if (wp) {
+      wp.textContent = '';
+      ['wardrobe', 'walkin', 'hallway', 'kids'].forEach(function (id) {
+        var it = byId(data.furnitureItems, id);
+        if (!it) return;
+        var pm = it.perMeter;
+        var li = el('li', 'wardrobes__price');
+        li.appendChild(el('span', 'wardrobes__price-name', it.name));
+        var val = el('span', 'wardrobes__price-value mono', pm ? 'от ' + rub(pm.value) + ' за п.м.' : (it.priceNote || BY_SURVEY));
+        li.appendChild(val);
+        if (pm && pm.placeholder) li.appendChild(el('span', 'badge-placeholder', 'ориентировочно'));
+        wp.appendChild(li);
+      });
+    }
 
     var mat = $('[data-materials]');
     if (mat) {
@@ -169,6 +186,12 @@
   }
 
   /* ---------- комплект ---------- */
+
+  // подпись позиции без ставки: «по проекту» для детской, иначе «по смете»
+  function noPriceText(it) {
+    if (it.perMeter) return '';
+    return it.priceNote ? it.priceNote.split(' после')[0] : 'по смете';
+  }
 
   var DEFAULT_METERS = { kitchen: 3.6, wardrobe: 2.4, walkin: 4, hallway: 1.8, kids: 2.4 };
 
@@ -209,7 +232,7 @@
       m.setAttribute('aria-label', it.name + ', погонных метров');
       unit.appendChild(m);
       li.appendChild(unit);
-      li.appendChild(el('span', 'bundle-item__price mono', it.perMeter ? '' : 'по смете'));
+      li.appendChild(el('span', 'bundle-item__price mono', noPriceText(it)));
       itemsBox.appendChild(li);
       cb.addEventListener('change', function () {
         m.disabled = !cb.checked;
@@ -251,7 +274,7 @@
         var found = r.items.filter(function (x) { return x.id === id; })[0];
         var meta = byId(data.furnitureItems, id);
         if (found && found.price) priceEl.textContent = rub(found.price);
-        else priceEl.textContent = meta.perMeter ? '' : 'по смете';
+        else priceEl.textContent = noPriceText(meta);
       });
       var hasFurniture = r.items.length > 0;
       if (!hasFurniture) out.furniture.textContent = 'ничего не отмечено';

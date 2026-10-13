@@ -13,6 +13,7 @@
     { id: 'wardrobe', name: 'Шкафы и детские' },
     { id: 'walkin', name: 'Гардеробные' },
     { id: 'hallway', name: 'Прихожие' },
+    { id: 'other', name: 'Другая мебель' },
     { id: 'repair', name: 'Ремонт' }
   ];
   var STYLES = [
@@ -28,7 +29,12 @@
   var styleName = {};
   STYLES.forEach(function (s) { styleName[s.id] = s.name; });
 
-  var state = { category: 'all', style: '' };
+  // категория из адреса: lookbook.html#wardrobe открывает сразу шкафы
+  function hashCategory() {
+    var h = (window.location.hash || '').replace(/^#/, '');
+    return CATEGORIES.some(function (c) { return c.id === h; }) ? h : 'all';
+  }
+  var state = { category: hashCategory(), style: '' };
   var visible = [];
   var current = -1;
   var opener = null;

@@ -18,7 +18,10 @@
     remontoff: 'https://remontoff72.ru/',
     proffRemont: 'https://nizhnevartovsk.proff-remont.ru/kapitalnyj_remont/',
     exclusiveDesign: 'https://xn----7sbeobbvkoce8b2a.xn--p1ai/kuxni-na-zakaz-tyumen-ceny/',
-    mebellin: 'https://tumen.mebellin.com/kitchen'
+    mebellin: 'https://tumen.mebellin.com/kitchen',
+    vsevdomCloset: 'https://tumen.vsevdom.info/furniture/closet',
+    mebellinDressing: 'https://tumen.mebellin.com/dressing-room',
+    modulmebelHallway: 'https://modulmebel72.ru/catalog/prikhozhie/'
   };
 
   // Коммерция: подробных прайсов по нашим городам нет, считаем по смете после замера.
@@ -129,14 +132,22 @@
       { id: 'veneer', name: 'Шпон', perMeter: price(70000, SRC.exclusiveDesign) }
     ],
 
-    // perMeter: ориентир ₽ за п.м. или null (цен в наших городах не нашли)
+    // perMeter: ориентир ₽ за п.м. (рынок Тюмени, высота до 2,7 м) или null; priceNote: что писать вместо цены.
+    // Прихожая: у modulmebel72 24 138 ₽, округлено до сотен.
     furnitureItems: [
       { id: 'kitchen', name: 'Кухня', perMeter: price(27200, SRC.mebellin) },
-      { id: 'wardrobe', name: 'Шкаф-купе', perMeter: null },
-      { id: 'walkin', name: 'Гардеробная', perMeter: null },
-      { id: 'hallway', name: 'Прихожая', perMeter: null },
-      { id: 'kids', name: 'Детская', perMeter: null }
+      { id: 'wardrobe', name: 'Шкаф-купе', perMeter: price(24470, SRC.vsevdomCloset) },
+      { id: 'walkin', name: 'Гардеробная', perMeter: price(25700, SRC.mebellinDressing) },
+      { id: 'hallway', name: 'Прихожая', perMeter: price(24100, SRC.modulmebelHallway) },
+      { id: 'kids', name: 'Детская', perMeter: null, priceNote: 'по проекту после замера' }
     ],
+
+    // Блок «Шкафы и гардеробные» на главной: до какой высоты считается погонный метр.
+    // Фурнитура та же, что в гарантиях (guarantees.furnitureYears).
+    wardrobeInfo: {
+      maxHeight: { value: 2.7, text: 'до 2,7 м', placeholder: false },
+      hardware: { text: 'Blum и Hettich', placeholder: false }
+    },
 
     // Гарантии и сроки по практике фирм из исследования (решение заказчика 2026-10-11, G01):
     // ремонт 2 года (Профф-Ремонт: 24 мес.; c-b-c: до 5 лет), корпус мебели 3 года (Любимая кухня),
