@@ -9,7 +9,7 @@
 
 .hero {
   --hero-wash: 13, 13, 13;                /* --canvas в rgb для скримов */
-  --hero-halo: 0 1px 2px rgba(13, 13, 13, .95), 0 2px 12px rgba(13, 13, 13, .8), 0 8px 36px rgba(13, 13, 13, .75);
+  --hero-halo: 0 0 1px rgba(13, 13, 13, .9), 0 1px 2px rgba(13, 13, 13, .95), 0 2px 12px rgba(13, 13, 13, .85), 0 8px 36px rgba(13, 13, 13, .8);
   position: relative;
   background: var(--canvas);
 }
@@ -144,15 +144,17 @@
 .hero--scrub .hero__band:focus-within { opacity: 1 !important; pointer-events: auto; }
 .hero--scrub .hero__band .btn { text-shadow: none; }
 
-/* скрим полосы: светлый эллипс под текстом, гуще по мере сборки текста */
+/* скрим полосы: тёмный эллипс под текстом. Светлый текст на светлом кадре не читается
+   даже наполовину собранным, поэтому скрим плотный с первого кадра полосы и не зависит от --k
+   (появляется вместе с полосой через её opacity) */
 .hero--scrub .hero__band::before {
-  content: ''; position: absolute; z-index: -1; inset: -34% -26%;
+  content: ''; position: absolute; z-index: -1; inset: -36% -28%;
   pointer-events: none;
-  opacity: calc(.35 + .65 * var(--k, 1));
+  opacity: calc(.85 + .15 * var(--k, 1));
   background: radial-gradient(ellipse 50% 50% at 50% var(--scrim-y, 50%),
-    rgba(var(--hero-wash), var(--scrim-a, .84)) 0%,
-    rgba(var(--hero-wash), var(--scrim-a, .84)) 46%,
-    rgba(var(--hero-wash), calc(var(--scrim-a, .84) * .55)) 74%,
+    rgba(var(--hero-wash), var(--scrim-a, .86)) 0%,
+    rgba(var(--hero-wash), var(--scrim-a, .86)) 56%,
+    rgba(var(--hero-wash), calc(var(--scrim-a, .86) * .6)) 78%,
     rgba(var(--hero-wash), 0) 100%);
 }
 
@@ -160,7 +162,7 @@
   left: max(var(--gutter), 4vw); top: 13%;
   width: min(38vw, 520px);
   aspect-ratio: auto; background: none; display: block;
-  --scrim-a: .8;
+  --scrim-a: .84;
 }
 .hero--scrub .hero__brand { font-size: clamp(3.2rem, 7.4vw, 7rem); letter-spacing: .05em; }
 .hero--scrub .hero__eyebrow { margin-bottom: 14px; }
@@ -171,6 +173,7 @@
   left: max(var(--gutter), 4vw); top: 16%;
   width: min(36vw, 480px);
   --scrim-a: .9;
+  --scrim-y: 46%;
 }
 .hero--scrub .hero__band--beat::before { inset: -34% -32%; }
 .hero--scrub .hero__band--beat::after { display: none; }
