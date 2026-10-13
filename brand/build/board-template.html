@@ -6,7 +6,7 @@
 <title>ВРОВЕНЬ: бренд-доска</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
   :root {
     --canvas: #F2EDE4;
@@ -18,7 +18,7 @@
     --accent-hover: #96691F;
     --laser: #1FBF5B;
     --line: #D9CFC0;
-    --f-display: 'Jost', 'Century Gothic', sans-serif;
+    --f-display: 'Forum', 'Times New Roman', serif;
     --f-body: 'Onest', 'Segoe UI', sans-serif;
     --f-mono: 'JetBrains Mono', Consolas, monospace;
   }
@@ -26,7 +26,7 @@
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--canvas); color: var(--ink); font: 16px/1.55 var(--f-body); }
   .wrap { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-  h1, h2, h3 { font-family: var(--f-display); font-weight: 500; line-height: 1.15; margin: 0; }
+  h1, h2, h3 { font-family: var(--f-display); font-weight: 400; line-height: 1.15; margin: 0; }
   h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: .01em; }
   h3 { font-size: 20px; }
   p { margin: 0 0 12px; }
@@ -48,7 +48,7 @@
   .names { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 15px; }
   .names th, .names td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
   .names th { font: 500 12px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-2); }
-  .names td:first-child { font-family: var(--f-display); font-weight: 500; font-size: 18px; white-space: nowrap; }
+  .names td:first-child { font-family: var(--f-display); font-weight: 400; font-size: 18px; white-space: nowrap; }
   .names tr.chosen { background: #fff8; }
   .names tr.chosen td:first-child { box-shadow: inset 4px 0 0 var(--laser); }
   .tag { display: inline-block; font: 500 11px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 99px; background: var(--ink); color: var(--canvas); margin-left: 8px; vertical-align: middle; }
@@ -70,7 +70,7 @@
   .build svg { width: 100%; height: auto; background: #fff6; border-radius: 6px; }
   .rules { list-style: none; padding: 0; margin: 0; }
   .rules li { padding: 12px 0; border-bottom: 1px solid var(--line); }
-  .rules b { font-family: var(--f-display); font-weight: 500; }
+  .rules b { font-family: var(--f-display); font-weight: 400; }
   .sizes { display: flex; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-top: 24px; }
   .sizes figure { margin: 0; text-align: center; font: 12px var(--f-mono); color: var(--ink-2); }
   .sizes img { display: block; margin: 0 auto 8px; }
@@ -227,7 +227,7 @@
         <li><b>Верхний шкаф</b> · 8 × 8, стенка 2 модуля. Он мельче нижнего, как навесные шкафы мельче напольных (300 и 560 мм).</li>
         <li><b>Нижний шкаф</b> · 11 × 9, стенка 2 модуля.</li>
         <li><b>Луч уровня</b> · 1 модуль, выходит за знак на 3 модуля влево и на 4 вправо. Просвет до шкафов 1 модуль. В цвете он зелёный, в монохроме того же цвета, что знак.</li>
-        <li><b>Слово</b> · геометрический гротеск в духе Jost, построен из прямых и дуг, переведён в кривые. Шрифт для логотипа не нужен.</li>
+        <li><b>Слово</b> · Forum прописными с разрядкой, подпись тем же шрифтом с большей разрядкой и ровно по ширине слова. Всё переведено в кривые, шрифт для логотипа не нужен.</li>
         <li><b>Охранное поле</b> · 2 модуля знака со всех сторон (пунктир на схеме). В горизонтальной версии луч знака стоит на высоте средних черт букв.</li>
         <li><b>Минимальный размер</b> · знак 16 px на экране, 6 мм в печати; при 24 px сетка ложится в пиксели один к одному.</li>
       </ul>
@@ -281,7 +281,7 @@
     <div class="eyebrow">06 · Шрифты</div>
     <h2>Три гарнитуры с кириллицей, все из Google Fonts</h2>
     <div class="fonts">
-      <div class="font"><span class="mono">Jost · заголовки</span><div class="big" style="font-family:var(--f-display);font-weight:500">Вровень</div><p>Геометрический гротеск. Заголовки, имя на визитке. Логотип нарисован в его духе и шрифта не требует.</p></div>
+      <div class="font"><span class="mono">Forum · заголовки</span><div class="big" style="font-family:var(--f-display);font-weight:400">Вровень</div><p>Антиква с римскими прописными (Denis Masharov, OFL). Заголовки, слово логотипа, имя на визитке.</p></div>
       <div class="font"><span class="mono">Onest · текст</span><div class="big" style="font-family:var(--f-body)">Ремонт</div><p>Спокойный текстовый шрифт для абзацев, кнопок и форм. Хорошо читается на телефоне.</p></div>
       <div class="font"><span class="mono">JetBrains Mono · размеры</span><div class="big" style="font-family:var(--f-mono);font-size:44px">2 400 мм</div><p>Размеры в миллиметрах, цены, телефон, технические подписи. Цифры одной ширины.</p></div>
     </div>
@@ -307,7 +307,7 @@
       </div>
     </div>
     <div class="legend"><span><i style="color:#e2483d"></i>обрез 90 × 50 мм</span><span><i style="color:#3b7de0"></i>безопасное поле 3 мм</span><span>файл 94 × 54 мм, вылеты 2 мм</span></div>
-    <p class="muted" style="margin-top:14px;font-size:14px">Луч уровня на лице уходит в вылеты с обеих сторон: после резки он идёт от края до края. Логотип в кривых, текст набран Jost, Onest и JetBrains Mono, в PDF шрифты встроены. Имя, должность, сайт и почту нужно вписать.</p>
+    <p class="muted" style="margin-top:14px;font-size:14px">Луч уровня на лице уходит в вылеты с обеих сторон: после резки он идёт от края до края. Логотип в кривых, имя набрано Forum, остальной текст Onest и JetBrains Mono, в PDF шрифты встроены. Имя, должность, сайт и почту нужно вписать.</p>
     <div class="downloads">
       <a class="btn" href="card/card-front.pdf">Лицо, PDF</a>
       <a class="btn" href="card/card-back.pdf">Оборот, PDF</a>

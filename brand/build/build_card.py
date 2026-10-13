@@ -1,6 +1,7 @@
 """Визитка ВРОВЕНЬ: лицо и оборот 94 × 54 мм (обрез 90 × 50, вылеты 2 мм,
-безопасное поле 3 мм от обреза). Логотип в кривых, текст набран Jost, Onest
-и JetBrains Mono (Google Fonts); в PDF шрифты встраиваются при печати из Edge.
+безопасное поле 3 мм от обреза). Логотип в кривых Forum, имя набрано Forum,
+остальной текст Onest и JetBrains Mono (Google Fonts); в PDF шрифты встраиваются
+при печати из Edge.
 
 Запуск из корня проекта: python brand/build/build_card.py
 """
@@ -11,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from glyphs import fmt  # noqa: E402
 from build_logo import (CANVAS, INK, OAK, LASER, LASER_ON_DARK, WORD_D, WORD_W,  # noqa: E402
-                        TAG_D, TAG_W, mark_main, g, write, ROOT)
+                        TAG_D, TAG_W, PRIMARY_MARK_S, mark_main, g, write, ROOT)
 
 CARD = os.path.join(ROOT, "card")
 W, H = 94, 54            # с вылетами
@@ -19,7 +20,7 @@ BLEED = 2
 SAFE = BLEED + 3         # от края файла до безопасной зоны
 INK_2 = "#5E5950"
 
-FONTS_URL = ("https://fonts.googleapis.com/css2?family=Jost:wght@500&"
+FONTS_URL = ("https://fonts.googleapis.com/css2?family=Forum&"
              "family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=block")
 
 CONTACT = {
@@ -34,7 +35,7 @@ CONTACT = {
 
 def card_svg(inner, bg):
     style = (f"<style>@import url('{FONTS_URL.replace('&', '&amp;')}');"
-             ".n{font-family:Jost,sans-serif;font-weight:500}"
+             ".n{font-family:Forum,serif;font-weight:400}"
              ".b{font-family:Onest,sans-serif;font-weight:400}"
              ".m{font-family:'JetBrains Mono',monospace;font-weight:500}</style>")
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{H}mm" '
@@ -45,8 +46,9 @@ def card_svg(inner, bg):
 def front():
     """Лицо: графит в край, основной логотип, луч уровня проходит через всю карту."""
     s = 0.064                            # 1 единица кегля логотипа в мм
-    mark_s = 7.5
-    total_h = (24 * mark_s + 34 + 100 + 34 + 20) * s
+    mark_s = PRIMARY_MARK_S
+    tag_s = WORD_W / TAG_W               # подпись ровно по ширине слова
+    total_h = (24 * mark_s + 44 - 2 * mark_s + 100 + 34 + 100 * tag_s) * s
     top = (H - total_h) / 2
     cx = W / 2
     mark_x = cx - 12 * mark_s * s
@@ -55,11 +57,10 @@ def front():
     beam_h = 1 * mark_s * s
     out = g(mark_main(CANVAS, "none"), mark_x, top, mark_s * s)
     out += f'<rect x="0" y="{fmt(beam_y)}" width="{W}" height="{fmt(beam_h)}" fill="{LASER_ON_DARK}"/>'
-    y = top + (24 * mark_s + 34) * s
+    y = top + (22 * mark_s + 44) * s     # низ стены знака + зазор, как в основном логотипе
     out += g(WORD_D, cx - WORD_W * s / 2, y, s, CANVAS)
     y += (100 + 34) * s
-    tag_s = s * 0.24
-    out += g(TAG_D, cx - TAG_W * tag_s / 2, y, tag_s, OAK)
+    out += g(TAG_D, cx - WORD_W * s / 2, y, tag_s * s, OAK)
     return card_svg(out, INK)
 
 

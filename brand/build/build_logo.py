@@ -1,4 +1,6 @@
-"""Собирает логотип ВРОВЕНЬ: поиски знака, 5 версий логотипа в SVG.
+"""Собирает логотип ВРОВЕНЬ: поиски знака, версии логотипа в SVG и логотипы сайта.
+
+Слово и подпись: кривые шрифта Forum (glyphs.py, fonts/Forum-Regular.ttf).
 
 Запуск из корня проекта: python brand/build/build_logo.py
 PNG делает render.sh (headless Microsoft Edge).
@@ -11,6 +13,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from glyphs import text_path, fmt  # noqa: E402
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+SITE_LOGO = os.path.abspath(os.path.join(ROOT, "..", "site", "assets", "img", "logo"))
 LOGO = os.path.join(ROOT, "logo")
 EXPL = os.path.join(LOGO, "explorations")
 
@@ -24,6 +27,11 @@ LASER_ON_DARK = "#35D873"
 
 WORD = "ВРОВЕНЬ"
 TAGLINE = "РЕМОНТ И МЕБЕЛЬ ПОД КЛЮЧ"
+
+# Разрядка в единицах кегля (прописная Forum = 100)
+WORD_TRACK = 20
+TAG_TRACK = 40
+TAG_SPACE = 60
 
 
 # ---------- знак: сетка 24 × 24, всё на целых модулях ----------
@@ -73,43 +81,69 @@ def g(inner, x, y, s=1.0, fill=None):
     return f'<g transform="translate({fmt(x)} {fmt(y)}) scale({s:.6g})"{f}>{inner}</g>'
 
 
-WORD_D, WORD_W = text_path(WORD, w=14, tracking=30)
-TAG_D, TAG_W = text_path(TAGLINE, w=10, tracking=34, space=110)
+WORD_D, WORD_W = text_path(WORD, tracking=WORD_TRACK)
+TAG_D, TAG_W = text_path(TAGLINE, tracking=TAG_TRACK, space=TAG_SPACE)
 
 
 def primary(ink, laser, bg=None):
-    """Основной: знак сверху, слово, подпись."""
-    mark_s = 7.5                         # знак 180 по высоте модуля 24
+    """Основной: знак сверху, слово, подпись ровно по ширине слова."""
+    mark_s = PRIMARY_MARK_S
     pad = 60
-    word_s = 1.0
-    tag_s = 0.2
-    width = max(WORD_W * word_s, TAG_W * tag_s) + pad * 2
+    tag_s = WORD_W / TAG_W
+    width = WORD_W + pad * 2
     cx = width / 2
     y = pad
-    out = g(mark_main(ink, laser), cx - 12 * mark_s, y, mark_s)
-    y += 24 * mark_s + 34
-    out += g(WORD_D, cx - WORD_W * word_s / 2, y, word_s, ink)
-    y += 100 * word_s + 34
-    out += g(TAG_D, cx - TAG_W * tag_s / 2, y, tag_s, ink)
+    out = g(mark_main(ink, laser), cx - 12 * mark_s, y - 2 * mark_s, mark_s)
+    y += 20 * mark_s + 44             # от низа стены знака до верха прописной
+    out += g(WORD_D, cx - WORD_W / 2, y, 1.0, ink)
+    y += 100 + 34
+    out += g(TAG_D, cx - WORD_W / 2, y, tag_s, ink)
     y += 100 * tag_s + pad
     return svg(width, y, out, bg)
 
 
-def horizontal(ink, laser, bg=None, with_tag=True):
-    """Горизонтальный: знак слева, луч знака на высоте средней черты букв."""
-    pad = 40
-    mark_s = 5.0                         # ствол знака 20 модулей = прописная 100
-    word_x = pad + 24 * mark_s + 56
-    top = pad
-    out = g(mark_main(ink, laser), pad, top - 2 * mark_s, mark_s)
+# Знак относительно прописной: в основном стена знака в 1,6 прописной,
+# в горизонтальном стена чуть выше прописной и выступает поровну сверху и снизу.
+PRIMARY_MARK_S = 8.0                  # стена 20 модулей = 160
+HORIZ_MARK_S = 5.5                    # стена 20 модулей = 110 при прописной 100
+HORIZ_GAP = 50                        # от края луча знака до слова
+
+
+def _horizontal_parts(ink, laser, x, top):
+    """Знак и слово в строку; top — верх прописной. Возвращает (svg, x конца слова)."""
+    s = HORIZ_MARK_S
+    over = (20 * s - 100) / 2         # насколько стена выше прописной с каждой стороны
+    out = g(mark_main(ink, laser), x - s, top - over - 2 * s, s)
+    word_x = x - s + 23 * s + HORIZ_GAP
     out += g(WORD_D, word_x, top, 1.0, ink)
-    h = top + 100
+    return out, word_x, over
+
+
+def horizontal(ink, laser, bg=None, with_tag=True):
+    """Горизонтальный: знак слева, луч знака около середины прописной."""
+    pad = 40
+    top = pad + 10
+    out, word_x, over = _horizontal_parts(ink, laser, pad, top)
+    h = top + 100 + over
     if with_tag:
         tag_s = WORD_W / TAG_W           # подпись ровно по ширине слова
-        out += g(TAG_D, word_x, top + 100 + 26, tag_s, ink)
-        h = top + 100 + 26 + 100 * tag_s
+        out += g(TAG_D, word_x, top + 100 + 28, tag_s, ink)
+        h = top + 100 + 28 + 100 * tag_s
     width = word_x + WORD_W + pad
     return svg(width, h + pad, out, bg)
+
+
+def wordmark(ink, laser):
+    """Логотип для шапки и подвала сайта: знак и слово, поля по 6 единиц."""
+    m = 6
+    out, word_x, over = _horizontal_parts(ink, laser, m, m + over_cap())
+    width = word_x + WORD_W + m
+    height = 100 + 2 * over_cap() + 2 * m
+    return svg(width, height, out)
+
+
+def over_cap():
+    return (20 * HORIZ_MARK_S - 100) / 2
 
 
 def mark_only(ink, laser, bg=None):
@@ -143,6 +177,9 @@ def main():
     write(os.path.join(LOGO, "vroven-mono.svg"), primary(INK, INK))
     # для визитки и доски: светлые и тёмные части без фона
     write(os.path.join(LOGO, "vroven-horizontal-inverse.svg"), horizontal(CANVAS, LASER_ON_DARK, bg=INK))
+    # сайт: шапка и подвал (тёмная гамма берёт инверсный)
+    write(os.path.join(SITE_LOGO, "vroven-wordmark.svg"), wordmark(INK, LASER))
+    write(os.path.join(SITE_LOGO, "vroven-wordmark-inverse.svg"), wordmark(CANVAS, LASER_ON_DARK))
     print("word", round(WORD_W), "tag", round(TAG_W))
 
 
