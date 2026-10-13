@@ -14,7 +14,7 @@
 - `site/assets/js/data.js` — все факты и цены компании; больше нигде не хранить.
 - `site/assets/js/core.js`, `lead.js` — город, формат, заявка в WhatsApp; общие для всех страниц.
 - `site/assets/js/pricing.js`, `kitchen-layout.js` — чистая логика, покрыта `tests/`.
-- `site/assets/js/kitchen-app.js`, `kitchen-render.js`, `kitchen-styles.js` — UI конструктора, SVG, 8 стилей.
+- `site/assets/js/kitchen-app.js`, `kitchen-render.js`, `kitchen-styles.js`, `kitchen-accordion.js` — UI конструктора, SVG, 8 стилей, гармошка выбора стиля (раскрытая полоса показывает `colors[].scene`).
 - `site/assets/js/lookbook-data.js` — кадры лукбука; картинки в `site/assets/img/lookbook/`.
 - `site/README.md` — публикация, DEPLOY STEP, рецепт перекодирования ролика героя.
 - `docs/adr/` — 4 решения (статика, WhatsApp, 2D-конструктор, факты в data.js); `docs/research.md` — рынок.

@@ -17,8 +17,8 @@
 - Чистые, без DOM, тестируются в Node: `pricing.js`, `kitchen-layout.js`, `lead.js`, `data.js`. Конец файла: `if (typeof module !== 'undefined') module.exports = X;`, вне Node вешаются на `window.VROVEN.X`.
 - `kitchen-render.js` только рисует то, что дал `kitchen-layout`, расчётов раскладки в нём нет.
 - `core.js` — общее: город, `format.rub/mm/num`, `placeholderBadge`, мобильное меню, активный пункт навигации. Шапка и подвал дублируются в HTML каждой страницы, не генерируются.
-- Страничные модули: `index.js` (+ `hero-scrub.js`), `kitchen-app.js`, `lookbook.js`, `jobs.js`; страничные стили лежат отдельно (`index.css`, `hero.css`, `kitchen.css`, `lookbook.css`, `jobs.css`), общие токены и компоненты в `site.css`.
-- Вне `site/`: `tests/` (node:test, швы: pricing, kitchen-layout, lead, kitchen-app, publish), `brand/` (Python-сборка, не часть сайта), `media-raw/` (сырьё, не в git), `docs/`, `ref/`.
+- Страничные модули: `index.js` (+ `hero-scrub.js`, `hero-frames.js`, `before-after.js`, `design-layers.js`), `kitchen-app.js` (+ `kitchen-accordion.js` — гармошка выбора стиля), `lookbook.js`, `jobs.js`; страничные стили лежат отдельно (`index.css`, `hero.css`, `kitchen.css`, `lookbook.css`, `jobs.css`), общие токены и компоненты в `site.css`.
+- Вне `site/`: `tests/` (node:test, швы: pricing, kitchen-layout, lead, kitchen-app, kitchen-accordion, hero-frames, before-after, design-layers, furniture, jobs-photos, publish), `brand/` (Python-сборка, не часть сайта), `media-raw/` (сырьё, не в git), `docs/`, `ref/`.
 
 ## Соглашения
 
