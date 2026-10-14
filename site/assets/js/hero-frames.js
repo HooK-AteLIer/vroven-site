@@ -245,7 +245,10 @@
       }
     }
 
-    function loadOne(k) {
+    // сбой сети или 503 хостинга: до 2 повторов (0,4 с и 1,2 с) с ?r=N против кеша ошибки
+    var RETRY_MS = [400, 1200];
+    function loadOne(k, attempt) {
+      attempt = attempt || 0;
       inFlight++;
       var img = new Image();
       img.decoding = 'async';
@@ -267,6 +270,11 @@
       img.onerror = function () {
         inFlight--;
         if (stopped) return;
+        if (attempt < RETRY_MS.length) {
+          inFlight++;
+          root.setTimeout(function () { inFlight--; if (!stopped) loadOne(k, attempt + 1); }, RETRY_MS[attempt]);
+          return;
+        }
         if (k === order[0] || light) {
           if (!failed) { failed = true; if (opts.onFail) opts.onFail(); }
           return;
@@ -274,7 +282,7 @@
         if (isCoarse[k] && --coarseLeft === 0 && opts.onReady) opts.onReady();
         pump();
       };
-      img.src = urls[k];
+      img.src = attempt ? urls[k] + (urls[k].indexOf('?') < 0 ? '?' : '&') + 'r=' + attempt : urls[k];
     }
 
     return {

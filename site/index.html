@@ -23,6 +23,37 @@
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/index.css">
   <link rel="stylesheet" href="assets/css/hero.css">
+  <!-- диагностика первого экрана на телефоне: открыть сайт с ?debug=1 -->
+  <script>
+    (function () {
+      if (!/[?&]debug/.test(location.search)) return;
+      var errs = [];
+      addEventListener('error', function (e) { errs.push((e.message || 'ресурс') + ' ' + ((e.target && (e.target.src || e.target.href)) || e.filename || '') + ':' + (e.lineno || '')); }, true);
+      function show() {
+        var V = window.VROVEN || {}, H = V.hero, mq = function (q) { return matchMedia(q).matches ? 'да' : 'нет'; };
+        var c = navigator.connection || {};
+        var hero = document.querySelector('[data-hero]');
+        var lines = [
+          'режим: ' + (H ? H.mode() : 'скрипт героя не запустился'),
+          'классы: ' + (hero ? hero.className : '-'),
+          'уменьшение движения: ' + mq('(prefers-reduced-motion: reduce)'),
+          'телефон: ' + mq('(max-width: 767px)') + ' / касание: ' + mq('(pointer: coarse)'),
+          'экономия трафика: ' + (c.saveData ? 'да' : 'нет') + ', сеть: ' + (c.effectiveType || '?'),
+          'кадров загружено: ' + performance.getEntriesByType('resource').filter(function (r) { return /frames\//.test(r.name); }).length,
+          'ошибки: ' + (errs.length ? errs.slice(-4).join(' | ') : 'нет'),
+          navigator.userAgent
+        ];
+        var box = document.getElementById('vr-debug');
+        if (!box) {
+          box = document.createElement('pre'); box.id = 'vr-debug';
+          box.style.cssText = 'position:fixed;left:6px;right:6px;bottom:6px;z-index:99999;margin:0;padding:8px 10px;background:rgba(0,0,0,.88);color:#7CFC9A;font:11px/1.35 monospace;white-space:pre-wrap;word-break:break-all;border:1px solid #2FD16B;border-radius:8px;pointer-events:none';
+          document.body.appendChild(box);
+        }
+        box.textContent = lines.join(String.fromCharCode(10));
+      }
+      addEventListener('load', function () { show(); setInterval(show, 1500); });
+    })();
+  </script>
   <script defer src="assets/js/data.js"></script>
   <script defer src="assets/js/core.js"></script>
   <script defer src="assets/js/lead.js"></script>
