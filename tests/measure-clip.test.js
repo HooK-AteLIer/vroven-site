@@ -51,3 +51,25 @@ test('index.html: облёт офиса в #commercial по правилам «�
   assert.match(f, /<figcaption>Визуализация проекта: офис<\/figcaption>/);
   assert.ok(fs.existsSync(path.join(__dirname, '../site/assets/video/office-orbit.mp4')), 'ролик лежит в site/assets/video');
 });
+
+test('index.html: ролик «вырастает гардеробная» в .wardrobes по правилам «один раз при появлении»', () => {
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const html = fs.readFileSync(path.join(__dirname, '../site/index.html'), 'utf8');
+  const sec = html.match(/<section class="wardrobes"[\s\S]*?<\/section>/);
+  assert.ok(sec, 'секция шкафов на месте');
+  const fig = sec[0].match(/<figure class="wardrobes__clip"[\s\S]*?<\/figure>/);
+  assert.ok(fig, 'ролик внутри .wardrobes');
+  const f = fig[0];
+  assert.match(f, /data-once-clip/);
+  assert.match(f, /<video[^>]*\bcontrols\b[^>]*\bmuted\b[^>]*\bplaysinline\b[^>]*preload="none"/);
+  assert.match(f, /poster="assets\/img\/index\/wardrobe-reveal-poster\.jpg"/);
+  assert.match(f, /src="assets\/video\/wardrobe-reveal\.mp4"/);
+  assert.match(f, /aria-label="Видео: в нише по лазерному контуру собирается гардеробная"/);
+  assert.match(f, /data-once-play[\s\S]*data-once-label/);
+  for (const rel of ['../site/assets/video/wardrobe-reveal.mp4', '../site/assets/img/index/wardrobe-reveal-poster.jpg']) {
+    assert.ok(fs.existsSync(path.join(__dirname, rel)), rel + ' на месте');
+  }
+  const kb = fs.statSync(path.join(__dirname, '../site/assets/video/wardrobe-reveal.mp4')).size / 1024;
+  assert.ok(kb < 1100, 'ролик не тяжелее ~1 МБ');
+});
