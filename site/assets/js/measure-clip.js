@@ -1,9 +1,12 @@
 /*
- * ВРОВЕНЬ: ролик «Доверяйте замеры профессионалам» на главной (#measure).
- * Играет сам один раз, когда блок заметно на экране, и замирает на последнем кадре.
+ * ВРОВЕНЬ: ролики «один раз при появлении» на главной: «Доверяйте замеры» (#measure)
+ * и облёт офиса в блоке коммерции (#commercial).
+ * Разметка: обёртка [data-once-clip] с <video> и кнопкой [data-once-play] > [data-once-label];
+ * прежние имена data-measure-* тоже понимаются.
+ * Играет сам один раз, когда ролик заметно на экране, и замирает на последнем кадре.
  * Повтор по кнопке «Посмотреть ещё раз». Reduced-motion и Save-Data: только постер и кнопка.
  * Без JS у <video> остаются штатные controls.
- * Чистая часть (shouldAutoplay, buttonLabel) тестируется в Node.
+ * Чистая часть (shouldAutoplay, buttonLabel, SELECTORS) тестируется в Node.
  */
 (function (root) {
   'use strict';
@@ -21,7 +24,13 @@
     return Object.prototype.hasOwnProperty.call(LABELS, state) ? LABELS[state] : LABELS.idle;
   }
 
-  var api = { shouldAutoplay: shouldAutoplay, buttonLabel: buttonLabel, VISIBLE_RATIO: VISIBLE_RATIO };
+  var SELECTORS = {
+    clip: '[data-once-clip], [data-measure-clip]',
+    play: '[data-once-play], [data-measure-play]',
+    label: '[data-once-label], [data-measure-label]'
+  };
+
+  var api = { shouldAutoplay: shouldAutoplay, buttonLabel: buttonLabel, VISIBLE_RATIO: VISIBLE_RATIO, SELECTORS: SELECTORS };
 
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = api;
@@ -29,13 +38,14 @@
   }
   root.VROVEN = root.VROVEN || {};
   root.VROVEN.measureClip = api;
+  root.VROVEN.onceClip = api;
 
   var doc = root.document;
 
   function mount(box) {
     var video = box.querySelector('video');
-    var btn = box.querySelector('[data-measure-play]');
-    var label = btn && btn.querySelector('[data-measure-label]');
+    var btn = box.querySelector(SELECTORS.play);
+    var label = btn && btn.querySelector(SELECTORS.label);
     if (!video || !btn || !label) return;
 
     var mq = root.matchMedia ? root.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -98,7 +108,7 @@
   }
 
   function init() {
-    Array.prototype.forEach.call(doc.querySelectorAll('[data-measure-clip]'), mount);
+    Array.prototype.forEach.call(doc.querySelectorAll(SELECTORS.clip), mount);
   }
 
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);

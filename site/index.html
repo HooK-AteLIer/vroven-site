@@ -231,8 +231,11 @@
           <p class="lead-text">Делаем ремонт и сразу мебель под ваш бизнес: стойки, витрины, шкафы, стеллажи. Один подрядчик вместо бригады и мебельщика, поэтому открытие не ждёт, пока они договорятся.</p>
         </div>
         <div class="commercial-grid">
-          <figure class="photo commercial-grid__photo" data-reveal>
-            <img src="assets/img/index/repair-office.webp" width="1024" height="688" loading="lazy" decoding="async" alt="Офис с дубовой стеной хранения, стойкой ресепшена и стеклянной перегородкой">
+          <figure class="photo commercial-grid__photo" data-once-clip data-reveal>
+            <video class="commercial-grid__video" controls muted playsinline preload="none" poster="assets/img/index/repair-office.webp" width="1280" height="860" aria-label="Облёт камерой: офис со стойкой ресепшена, стеной хранения и стеклянной переговорной">
+              <source src="assets/video/office-orbit.mp4" type="video/mp4">
+            </video>
+            <button class="btn btn--ghost commercial-grid__play" type="button" data-once-play hidden><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5L8 5.5Z"/></svg><span data-once-label>Смотреть видео</span></button>
             <figcaption>Визуализация проекта: офис</figcaption>
           </figure>
           <ul class="object-list">

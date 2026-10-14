@@ -129,6 +129,13 @@ ul.chip-row { list-style: none; margin: 0; padding: 0; }
 
 .commercial-grid { display: grid; gap: 20px; }
 .commercial-grid__photo, .commercial-grid__photo2 { aspect-ratio: 3 / 2; }
+/* облёт офиса: «один раз при появлении» (measure-clip.js), постер = прежнее фото */
+.commercial-grid__video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--panel-2); }
+/* центр через inset + margin: transform занят ховером .btn; после показа кнопка в углу, подпись снизу свободна */
+.commercial-grid__play { position: absolute; top: 12px; right: 12px; white-space: nowrap; }
+.commercial-grid__play[hidden] { display: none; }
+.commercial-grid__play svg { width: 16px; height: 16px; flex: none; }
+.commercial-grid__photo[data-state="idle"] .commercial-grid__play { inset: 0; margin: auto; width: max-content; height: max-content; }
 .object-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
 .object { padding: 20px 0; border-top: 1px solid var(--line); }
 .object h3 { margin-bottom: 8px; }
