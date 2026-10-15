@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>ВРОВЕНЬ: альтернативные названия</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=block">
+<style>
+  @page { size: A4; margin: 16mm 14mm 16mm; }
+  :root { --ink:#1A1712; --ink2:#5A5246; --ink3:#8C8272; --gold:#A8862A; --gold2:#D4AF37; --line:#E4DCCB; --panel:#FAF6EE; --green:#1FA552; }
+  * { box-sizing:border-box; }
+  body { margin:0; color:var(--ink); font:10.5pt/1.5 Onest, 'Segoe UI', sans-serif; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3 { font-family:Forum, Georgia, serif; font-weight:400; margin:0; }
+  .eyebrow { font:500 7.5pt/1 'JetBrains Mono', monospace; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin:0 0 6px; }
+
+  .cover { height:262mm; display:flex; flex-direction:column; justify-content:space-between; page-break-after:always;
+           background:#0D0D0D; color:#FFF3CC; margin:0; padding:22mm 18mm; border-radius:5mm; }
+  .cover .eyebrow { color:var(--gold2); }
+  .cover h1 { font-size:44pt; line-height:1.02; letter-spacing:.02em; }
+  .cover h1 span { color:var(--gold2); }
+  .cover .laser { height:2px; width:62%; background:linear-gradient(90deg,#2FD16B,#2FD16B 80%,transparent); box-shadow:0 0 10px #2FD16B; margin:18px 0 22px; }
+  .cover p { color:#D9D0B8; max-width:120mm; font-size:11.5pt; }
+  .cover .meta { font:500 8pt/1.6 'JetBrains Mono', monospace; color:#9C9480; letter-spacing:.06em; }
+  .cover ol { margin:10px 0 0; padding-left:18px; color:#D9D0B8; }
+
+  section { margin:0 0 9mm; }
+  section.break { page-break-before:always; }
+  h2 { font-size:21pt; margin:0 0 4px; }
+  h3 { font-size:14pt; margin:14px 0 6px; }
+  .lead { color:var(--ink2); margin:0 0 10px; max-width:170mm; }
+
+  .brief { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+  .brief div { background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:9px 11px; }
+  .brief b { display:block; font:500 7.5pt/1.2 'JetBrains Mono', monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
+
+  table { width:100%; border-collapse:collapse; margin:4px 0 6px; page-break-inside:auto; }
+  tr { page-break-inside:avoid; }
+  th { text-align:left; font:500 7pt/1.2 'JetBrains Mono', monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--ink3); padding:6px 7px; border-bottom:1.5px solid var(--ink); }
+  td { padding:6px 7px; border-bottom:1px solid var(--line); vertical-align:top; font-size:9.5pt; }
+  td.name { font-family:Forum, Georgia, serif; font-size:13pt; line-height:1.15; white-space:nowrap; }
+  td.score { font:500 8.5pt/1.3 'JetBrains Mono', monospace; white-space:nowrap; color:var(--ink2); }
+  tr.top td { background:#FBF4E2; }
+  tr.top td.name { color:#7A5C10; }
+  tr.out td { color:var(--ink3); }
+  tr.out td.name { text-decoration:line-through; }
+  .tag { display:inline-block; font:500 6.5pt/1 'JetBrains Mono', monospace; letter-spacing:.08em; text-transform:uppercase; color:#fff; background:var(--gold); border-radius:999px; padding:3px 7px; margin-left:6px; vertical-align:middle; }
+
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+  .card { border:1px solid var(--line); border-radius:10px; padding:11px 12px; background:var(--panel); page-break-inside:avoid; }
+  .card.hero { background:#0D0D0D; color:#FFF3CC; border-color:#0D0D0D; }
+  .card .n { font-family:Forum, Georgia, serif; font-size:18pt; line-height:1.05; }
+  .card.hero .n { color:var(--gold2); }
+  .card .s { font-size:8.8pt; color:var(--ink2); margin-top:5px; }
+  .card.hero .s { color:#D9D0B8; }
+  .card .sub { font:500 7.5pt/1.3 'JetBrains Mono', monospace; color:var(--gold); margin-top:6px; }
+  .card.hero .sub { color:var(--gold2); }
+
+  .note { border-left:3px solid var(--gold2); background:var(--panel); padding:9px 12px; border-radius:0 8px 8px 0; margin:8px 0; font-size:9.5pt; }
+  .checks { columns:2; column-gap:10mm; padding-left:16px; margin:6px 0 0; }
+  footer { color:var(--ink3); font:500 7pt/1.4 'JetBrains Mono', monospace; letter-spacing:.06em; border-top:1px solid var(--line); padding-top:6px; margin-top:8mm; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div>
+    <p class="eyebrow">Нейминг · Тюмень · Нижневартовск</p>
+    <h1>Альтернативные<br>названия<br>для <span>ВРОВЕНЬ</span></h1>
+    <div class="laser"></div>
+    <p>Ремонт квартир и коммерческих помещений под ключ и корпусная мебель из своего цеха. Все варианты, которые мы рассмотрели, с оценками, рисками и рекомендацией.</p>
+    <ol>
+      <li>Бриф и критерии</li>
+      <li>20 кандидатов в четырёх направлениях</li>
+      <li>Шорт-лист и второй проход</li>
+      <li>Двойные названия</li>
+      <li>Новые слова из привычных корней</li>
+      <li>Итог и что проверить</li>
+    </ol>
+  </div>
+  <div class="meta">Октябрь 2026 · методика: бриф → 20 кандидатов по стратегиям → оценка → шорт-лист → второй проход с жёсткими условиями</div>
+</div>
+
+<section>
+  <p class="eyebrow">01 · Бриф</p>
+  <h2>Что должно сказать имя</h2>
+  <p class="lead">Главное отличие компании: ремонт и своё мебельное производство в одном договоре. Мебель меряем после ремонта, поэтому она встаёт ровно в размер стен.</p>
+  <div class="brief">
+    <div><b>Что делаем</b>Ремонт под ключ: квартиры, офисы, кафе. Кухни, шкафы, гардеробные, прихожие из своего цеха.</div>
+    <div><b>Для кого</b>Семьи 30–50 лет с новостройкой или вторичкой; владельцы офисов, кафе, салонов.</div>
+    <div><b>Страхи клиента</b>Смета растёт, сроки срываются, кухня не встаёт по размеру, подрядчики валят вину друг на друга.</div>
+    <div><b>Характер бренда</b>Точный, надёжный, спокойный, премиальный, тёплый.</div>
+    <div><b>Как оцениваем</b>Обе услуги в имени · звучит по телефону · отличается от рынка · премиальность. Каждый пункт от 1 до 5.</div>
+    <div><b>Исключаем</b>Варианты прошлых кругов (МЕРА, ЛАД, КАРКАС, ФУГА, ОТВЕС, КУБАТУРА и др.), слова «ремонт», «дом», «мебель», «уют», двусмысленности, тяжёлую латиницу.</div>
+  </div>
+</section>
+
+<section class="break">
+  <p class="eyebrow">02 · Кандидаты</p>
+  <h2>20 названий в четырёх направлениях</h2>
+  <p class="lead">Оценка: обе услуги · по телефону · отличие от рынка · премиум. Выделены попавшие в шорт-лист.</p>
+
+  <h3>А. Смысл «точно в размер»</h3>
+  <table>
+    <tr><th>Название</th><th>Ударение</th><th>Смысл</th><th>Оценка</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">СОРАЗМЕР</td><td>сораЗМЕР</td><td>Мебель соразмерна стенам, ремонт соразмерен бюджету</td><td class="score">4 4 5 5</td><td>Новое слово, первое время переспрашивают</td></tr>
+    <tr class="top"><td class="name">ВЫВЕРКА</td><td>вЫверка</td><td>Выверено до миллиметра</td><td class="score">4 4 4 4</td><td>Слегка технично</td></tr>
+    <tr><td class="name">ВРАЗМЕР</td><td>вразМЕР</td><td>Всё встаёт в размер</td><td class="score">4 3 3 3</td><td>Путают с «в размер», плохо ищется</td></tr>
+    <tr><td class="name">СТЫК</td><td>СТЫК</td><td>Где стена встречает шкаф</td><td class="score">3 5 4 3</td><td>Грубовато, сантехнический оттенок</td></tr>
+    <tr><td class="name">НОЛЬ ЗАЗОРОВ</td><td>—</td><td>Ни одной щели</td><td class="score">4 3 4 3</td><td>Длинно для вывески</td></tr>
+  </table>
+
+  <h3>Б. Целостность «одна команда»</h3>
+  <table>
+    <tr><th>Название</th><th>Ударение</th><th>Смысл</th><th>Оценка</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">ЦЕЛЬНО</td><td>ЦЕЛЬно</td><td>Ремонт и мебель без швов между подрядчиками</td><td class="score">4 5 4 4</td><td>Наречие, нужна подпись</td></tr>
+    <tr><td class="name">ЕДИНО</td><td>едИно</td><td>Один договор, один прораб</td><td class="score">3 4 3 3</td><td>Похоже на банк или партию</td></tr>
+    <tr><td class="name">ЗАОДНО</td><td>заоднО</td><td>И ремонт, и мебель заодно</td><td class="score">4 4 4 2</td><td>Звучит небрежно</td></tr>
+    <tr><td class="name">ПОДОГНАНО</td><td>подОгнано</td><td>Подогнано по месту</td><td class="score">4 3 4 3</td><td>Длинно, двусмысленно</td></tr>
+    <tr><td class="name">СОСТЫКОВКА</td><td>—</td><td>Стыкуем стены и мебель</td><td class="score">3 2 4 2</td><td>Длинно, космический оттенок</td></tr>
+  </table>
+
+  <h3>В. Образ инструмента и чертежа</h3>
+  <table>
+    <tr><th>Название</th><th>Ударение</th><th>Смысл</th><th>Оценка</th><th>Риск</th></tr>
+    <tr><td class="name">ОСЬ</td><td>ОСЬ</td><td>Осевая линия, от которой строится помещение</td><td class="score">3 5 4 5</td><td>Домены заняты, нужна приставка</td></tr>
+    <tr class="top"><td class="name">НИВЕЛИР</td><td>нивелИр</td><td>Лазерный нивелир, продолжение нашего логотипа</td><td class="score">3 4 5 4</td><td>Многие знают только как инструмент</td></tr>
+    <tr><td class="name">ГОРИЗОНТ</td><td>горизОнт</td><td>Лазерная линия горизонта</td><td class="score">2 5 2 4</td><td>Очень много компаний с этим именем</td></tr>
+    <tr><td class="name">ЧЕРТЁЖ</td><td>черТЁЖ</td><td>Всё по чертежу</td><td class="score">3 4 3 3</td><td>Сухо, как бюро</td></tr>
+    <tr><td class="name">ПРОЁМ</td><td>проЁМ</td><td>Проём, в который встаёт шкаф</td><td class="score">2 4 4 2</td><td>Ассоциация с дверями и окнами</td></tr>
+  </table>
+
+  <h3>Г. Международные</h3>
+  <table>
+    <tr><th>Название</th><th>Как читать</th><th>Смысл</th><th>Оценка</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">МОДУЛОР</td><td>модулОр</td><td>Система пропорций Ле Корбюзье: дом и мебель в одной мере</td><td class="score">4 3 5 5</td><td>Нужна проверка знака, имя любят архитекторы</td></tr>
+    <tr><td class="name">НИВО / NIVO</td><td>НИво</td><td>От фр. niveau, «уровень»</td><td class="score">3 3 4 4</td><td>Звучит как «нива» или «пиво»</td></tr>
+    <tr><td class="name">LEVEL ONE</td><td>лЕвел уАн</td><td>«Первый уровень»</td><td class="score">2 3 2 3</td><td>«Левел» у сотни компаний</td></tr>
+    <tr><td class="name">ZAPODLICO</td><td>заподлицО</td><td>Мебель заподлицо со стеной</td><td class="score">4 2 5 3</td><td>Транслит тяжело читать</td></tr>
+    <tr class="out"><td class="name">FLUSH</td><td>флаш</td><td>«Заподлицо» по-английски</td><td class="score">—</td><td>Отброшено: по-английски ещё и «смыв унитаза»</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">03 · Шорт-лист</p>
+  <h2>Пять лучших из двадцати</h2>
+  <div class="cards">
+    <div class="card"><div class="n">СОРАЗМЕР</div><div class="s">Самый сильный по смыслу: про размер, про обе услуги, звучит дорого.</div><div class="sub">«Ремонт и мебель в одной мере»</div></div>
+    <div class="card"><div class="n">ЦЕЛЬНО</div><div class="s">Лучше всех передаёт «один подрядчик вместо двух».</div><div class="sub">«Ремонт и мебель одним договором»</div></div>
+    <div class="card"><div class="n">ВЫВЕРКА</div><div class="s">«Выверено до миллиметра», понятно на слух.</div><div class="sub">«Выверено до миллиметра»</div></div>
+    <div class="card"><div class="n">НИВЕЛИР</div><div class="s">Прямо продолжает логотип с лазерной линией.</div><div class="sub">«Ремонт и мебель по одной линии»</div></div>
+    <div class="card"><div class="n">МОДУЛОР</div><div class="s">Самый премиальный, но его надо объяснять.</div><div class="sub">«Дом и мебель в одной пропорции»</div></div>
+  </div>
+
+  <h3>Второй проход с жёсткими условиями</h3>
+  <p class="lead">Одно русское слово, 2–3 слога, про точность и обе услуги, без пояснений.</p>
+  <table>
+    <tr><th>Название</th><th>Смысл</th><th>Почему прошло</th></tr>
+    <tr class="top"><td class="name">ВПОРУ</td><td>Мебель села, как сшитая по мерке</td><td>Тёплое, понятное, у конкурентов нет</td></tr>
+    <tr><td class="name">ВПРИТЫК</td><td>Впритык к стене, без щелей</td><td>Наглядно, но звучит тесновато</td></tr>
+    <tr><td class="name">ПОМЕРКЕ</td><td>«По мерке», как у портного</td><td>Близко к «сшито на заказ»</td></tr>
+    <tr><td class="name">ЛЕКАЛО</td><td>Шаблон для точного кроя</td><td>Мастеровое, с оттенком премиума</td></tr>
+    <tr class="top"><td class="name">ВРОВЕНЬ<span class="tag">текущее</span></td><td>Мебель вровень со стенами</td><td>Проходит все условия, одно из самых сильных</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">04 · Двойные названия</p>
+  <h2>Два слова: ремонт и мебель</h2>
+
+  <h3>Пара образов «стена» и «мебель»</h3>
+  <table>
+    <tr><th>Название</th><th>Смысл</th><th>Плюсы</th><th>Риск</th></tr>
+    <tr><td class="name">Стена и Шкаф</td><td>Обе услуги буквально</td><td>Сразу понятно, легко запомнить</td><td>Простовато</td></tr>
+    <tr><td class="name">Отвес и Лекало</td><td>Инструмент строителя и шаблон мебельщика</td><td>Мастеровое, как ателье</td><td>Нужна подпись</td></tr>
+    <tr><td class="name">Шпатель и Фасад</td><td>Отделка и фасады мебели</td><td>Наглядно</td><td>Как магазин инструмента</td></tr>
+    <tr><td class="name">Уровень и Мера</td><td>Ровные стены и мебель по мерке</td><td>Про точность</td><td>Слова общие, слабо ищутся</td></tr>
+    <tr><td class="name">Мастерок и Рубанок</td><td>Каменщик и столяр</td><td>Тёплое, ремесленное</td><td>Старомодно</td></tr>
+  </table>
+
+  <h3>«X и Y» как вывеска мастерской</h3>
+  <table>
+    <tr><th>Название</th><th>Смысл</th><th>Плюсы</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">Вровень и Впору</td><td>Стены вровень, мебель впору</td><td>Рифма, точность, сохраняет бренд</td><td>Два наречия, нужна подпись</td></tr>
+    <tr><td class="name">Ровно и Впору</td><td>То же, проще</td><td>Легко по телефону</td><td>«Ровно» общее</td></tr>
+    <tr><td class="name">Мера и Линия</td><td>Замер и лазерная линия</td><td>Подходит к знаку</td><td>Абстрактно</td></tr>
+  </table>
+
+  <h3>Слияние в одно слово</h3>
+  <table>
+    <tr><th>Название</th><th>Смысл</th><th>Вывод</th></tr>
+    <tr class="out"><td class="name">СтенаШкаф</td><td>Две части в одном</td><td>Тяжело читается</td></tr>
+    <tr class="out"><td class="name">РемМебель</td><td>Ремонт и мебель</td><td>Звучит как советский завод</td></tr>
+  </table>
+
+  <h3>Основной бренд и два направления</h3>
+  <div class="note"><b>ВРОВЕНЬ · Ремонт</b> и <b>ВРОВЕНЬ · Мебель</b>, вместе: «ВРОВЕНЬ — ремонт и мебель под ключ». Логотип, визитка и сайт остаются, каждое направление можно продвигать отдельно, все работают на одно имя.</div>
+</section>
+
+<section class="break">
+  <p class="eyebrow">05 · Новые слова из привычных корней</p>
+  <h2>Новое, но знакомое на слух</h2>
+  <p class="lead">Имя собрано из обычных слов, поэтому его сразу «слышат», а при виде вызывает и ремонт, и мебель.</p>
+
+  <table>
+    <tr><th>Название</th><th>Как устроено</th><th>Подпись</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">СТРОЙ И КРОЙ</td><td>«Строй» — ремонт, «крой» — раскрой плит в цехе, мебель по мерке. Звучит как поговорка</td><td>«Ремонт и мебель из одних рук»</td><td>«Крой» сначала вспоминают в шитье, но это работает на «по мерке»</td></tr>
+    <tr><td class="name">КЛАДКА И КРОЙ</td><td>То же, грубее</td><td>—</td><td>Ближе к стройке, чем к отделке</td></tr>
+    <tr class="top"><td class="name">КВАРТИРНЫЙ ЦЕХ</td><td>«Квартирный» — ремонт квартир, «цех» — своё производство</td><td>«Ремонт и мебель под ключ»</td><td>—</td></tr>
+    <tr><td class="name">ДОМАШНИЙ ЦЕХ</td><td>Теплее</td><td>—</td><td>«Домашний» звучит как кустарный</td></tr>
+    <tr class="top"><td class="name">РЕМОНТАЖ</td><td>Ремонт + монтаж; монтаж — и отделка, и сборка мебели</td><td>«Ремонт и монтаж мебели под ключ»</td><td>Технично, меньше премиума</td></tr>
+    <tr><td class="name">ОБСТАНОВКА</td><td>И мебель квартиры, и атмосфера дома</td><td>«Ремонт и обстановка под ключ»</td><td>Общее слово, хуже ищется</td></tr>
+    <tr><td class="name">ОТ ПОЛА ДО ПОТОЛКА</td><td>Пол и потолок ремонта, шкафы до потолка</td><td>—</td><td>Длинно для вывески</td></tr>
+  </table>
+
+  <h3>Слово с двойным смыслом: и в ремонте, и в мебели</h3>
+  <table>
+    <tr><th>Название</th><th>В ремонте</th><th>В мебели</th><th>Риск</th></tr>
+    <tr class="top"><td class="name">ЦОКОЛЬ</td><td>Основание, цокольный этаж</td><td>Планка под кухонными шкафами</td><td>Мебельный смысл знают не все</td></tr>
+    <tr><td class="name">КАРНИЗ</td><td>Карниз потолка и штор</td><td>Верхняя планка шкафа</td><td>Похоже на магазин штор</td></tr>
+    <tr><td class="name">ФАСАД</td><td>Фасад дома</td><td>Фасад шкафа</td><td>Много кухонных фабрик с этим именем</td></tr>
+    <tr class="out"><td class="name">ПЛИНТУС</td><td>Плинтус пола</td><td>Плинтус столешницы</td><td>Шутка «ниже плинтуса»</td></tr>
+  </table>
+</section>
+
+<section class="break">
+  <p class="eyebrow">06 · Итог</p>
+  <h2>Что выбрать</h2>
+  <div class="cards">
+    <div class="card hero"><div class="n">СТРОЙ И КРОЙ</div><div class="s">Самое запоминающееся: обе услуги в двух коротких словах, звучит как поговорка.</div><div class="sub">«Ремонт и мебель из одних рук»</div></div>
+    <div class="card hero"><div class="n">КВАРТИРНЫЙ ЦЕХ</div><div class="s">Самое понятное: ремонт квартир и своё производство.</div><div class="sub">«Ремонт и мебель под ключ»</div></div>
+    <div class="card hero"><div class="n">РЕМОНТАЖ</div><div class="s">Одно новое слово, которое звучит привычно.</div><div class="sub">«Ремонт и монтаж мебели»</div></div>
+    <div class="card"><div class="n">СОРАЗМЕР</div><div class="s">Премиальный и про точность.</div></div>
+    <div class="card"><div class="n">ВПОРУ</div><div class="s">Тёплый и человечный.</div></div>
+    <div class="card"><div class="n">ВРОВЕНЬ</div><div class="s">Текущее имя. Уже построены логотип, визитка, сайт. Смена имени — переделка бренда.</div></div>
+  </div>
+
+  <h3>Что проверить перед решением</h3>
+  <ul class="checks">
+    <li>Реестр товарных знаков Роспатента, классы 37 (ремонт) и 20 (мебель)</li>
+    <li>Свободный домен .ru и .рф</li>
+    <li>2ГИС и Яндекс Карты: нет ли компаний с таким именем в Тюмени и Нижневартовске</li>
+    <li>Поиск Яндекса и ВКонтакте по названию</li>
+    <li>Как звучит по телефону: «Здравствуйте, компания …»</li>
+    <li>Как ложится на текущий знак с линией уровня</li>
+  </ul>
+
+  <footer>ВРОВЕНЬ · альтернативные названия · октябрь 2026 · проверка доменов и знаков ещё не проводилась</footer>
+</section>
+
+</body>
+</html>
