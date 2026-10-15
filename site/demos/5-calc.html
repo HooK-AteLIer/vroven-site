@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 5 · собери квартиру за 10 секунд</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --ink3:#9C9480; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; }
+  .hero { min-height:100svh; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr); gap:clamp(20px,3vw,48px); align-items:center;
+          padding:clamp(70px,9vh,110px) clamp(16px,5vw,72px) 40px; background:radial-gradient(1000px 600px at 10% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:12px 0 22px; font:400 clamp(34px,4.4vw,66px)/1.04 Forum,serif; letter-spacing:.02em; }
+  .q { font:500 11px/1 'JetBrains Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3); margin:18px 0 9px; }
+  .q b { color:var(--gold); font-weight:500; margin-right:8px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { padding:10px 16px; border-radius:999px; font:500 14.5px/1 Onest,sans-serif; color:var(--ink); cursor:pointer; border:1.5px solid rgba(255,255,255,.3);
+          background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.03)); transition:all .2s; }
+  .chip:hover { border-color:rgba(255,200,87,.7); }
+  .chip[aria-pressed="true"] { color:#1A1405; border-color:rgba(255,255,255,.6);
+          background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
+          box-shadow:0 8px 20px -8px rgba(212,175,55,.7); }
+  .chip small { opacity:.7; margin-left:4px; font-weight:400; }
+  .pic { position:relative; aspect-ratio:3/2; border-radius:20px; overflow:hidden; box-shadow:0 30px 60px -30px rgba(0,0,0,.9); background:#1A1A1A; }
+  .pic img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:opacity .6s; }
+  .pic .cap { position:absolute; left:16px; top:16px; font:500 11px/1 'JetBrains Mono',monospace; letter-spacing:.12em; text-transform:uppercase; padding:8px 12px; border-radius:999px; background:rgba(13,13,13,.6); border:1px solid rgba(255,255,255,.2); }
+  .sum { position:absolute; left:14px; right:14px; bottom:14px; padding:16px 18px; border-radius:16px; background:rgba(13,13,13,.72); border:1px solid rgba(255,255,255,.18);
+         -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); display:grid; grid-template-columns:1fr auto; gap:4px 16px; align-items:end; }
+  .sum .lbl { font:500 10.5px/1.3 'JetBrains Mono',monospace; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); }
+  .sum .total { font:400 clamp(30px,3.6vw,50px)/1 Forum,serif; color:var(--gold-hi); white-space:nowrap; }
+  .sum .rows { font-size:13px; color:var(--ink2); }
+  .sum .save { color:var(--laser); font-weight:500; }
+  .btn { display:inline-block; padding:13px 22px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6); white-space:nowrap;
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A); box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .note { margin-top:16px; font-size:12px; color:var(--ink3); }
+  .tag { display:inline-block; font:500 9.5px/1 'JetBrains Mono',monospace; letter-spacing:.08em; text-transform:uppercase; color:var(--gold); border:1px dashed rgba(212,175,55,.6); border-radius:999px; padding:4px 8px; margin-left:6px; vertical-align:middle; }
+  @media (max-width:900px) { .hero { grid-template-columns:1fr; } .pic { order:-1; } .sum { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<section class="hero">
+  <div>
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <h1>Сколько стоит квартира под ключ с кухней?</h1>
+    <div class="q"><b>01</b>Квартира</div>
+    <div class="chips" data-g="flat"></div>
+    <div class="q"><b>02</b>Ремонт</div>
+    <div class="chips" data-g="rep"></div>
+    <div class="q"><b>03</b>Стиль кухни</div>
+    <div class="chips" data-g="style"></div>
+    <div class="note">Три нажатия — и видно итог. Точную сумму пишем в смете после замера.</div>
+  </div>
+  <div class="pic" id="pic">
+    <img id="img1" alt=""><img id="img2" alt="" style="opacity:0">
+    <div class="cap" id="cap"></div>
+    <div class="sum">
+      <div>
+        <div class="lbl">Ремонт и кухня под ключ <span class="tag">ориентировочно</span></div>
+        <div class="total" id="total">—</div>
+        <div class="rows" id="rows"></div>
+      </div>
+      <a class="btn" href="#">Получить смету</a>
+    </div>
+  </div>
+</section>
+<script>
+(function () {
+  var FLATS = [ { id:'st', name:'Студия', m2:28, kitchen:2.4 }, { id:'1', name:'1 комната', m2:38, kitchen:3.0 },
+                { id:'2', name:'2 комнаты', m2:54, kitchen:3.4 }, { id:'3', name:'3 комнаты', m2:75, kitchen:3.8 } ];
+  var REPS = [ { id:'c', name:'Косметический', rate:8900, disc:5 }, { id:'k', name:'Капитальный', rate:14000, disc:10 }, { id:'d', name:'Дизайнерский', rate:16000, disc:15 } ];
+  var STYLES = [ ['neoclassic','Неоклассика','sage'], ['modern','Модерн','sand-oak'], ['minimal','Минимализм','light-grey'], ['loft','Лофт','concrete-oak'],
+                 ['scandi','Скандинавский','white-blue'], ['classic','Классика','ivory'], ['hitech','Хай-тек','white-graphite'], ['provence','Прованс','lavender'] ];
+  var KITCHEN_PM = 27200;
+  var st = { flat:'1', rep:'k', style:'neoclassic' }, shown = 0, front = 1;
+  function chips(g, items, label) {
+    var box = document.querySelector('[data-g="' + g + '"]');
+    items.forEach(function (it) {
+      var b = document.createElement('button'); b.className = 'chip'; b.type = 'button'; b.innerHTML = label(it);
+      b.setAttribute('aria-pressed', st[g] === it.id); b.dataset.id = it.id;
+      b.addEventListener('click', function () { st[g] = it.id; box.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b); }); render(); });
+      box.appendChild(b);
+    });
+  }
+  chips('flat', FLATS, function (f) { return f.name + '<small>~' + f.m2 + ' м²</small>'; });
+  chips('rep', REPS, function (r) { return r.name + '<small>−' + r.disc + '% на мебель</small>'; });
+  chips('style', STYLES.map(function (s) { return { id:s[0], name:s[1], color:s[2] }; }), function (s) { return s.name; });
+  function rub(n) { return (Math.round(n / 1000) * 1000).toLocaleString('ru-RU') + ' ₽'; }
+  function count(to) {
+    var from = shown, t0 = performance.now();
+    (function step(t) { var k = Math.min(1, (t - t0) / 600), e = 1 - Math.pow(1 - k, 3); shown = from + (to - from) * e;
+      document.getElementById('total').textContent = rub(shown); if (k < 1) requestAnimationFrame(step); })(t0);
+  }
+  function render() {
+    var f = FLATS.find(function (x) { return x.id === st.flat; }), r = REPS.find(function (x) { return x.id === st.rep; }), s = STYLES.find(function (x) { return x[0] === st.style; });
+    var rep = f.m2 * r.rate, kit = f.kitchen * KITCHEN_PM, save = kit * r.disc / 100, total = rep + kit - save;
+    count(total);
+    document.getElementById('rows').innerHTML = 'Ремонт ' + rub(rep) + ' · кухня ' + f.kitchen.toString().replace('.', ',') + ' п.м. ' + rub(kit) + '<br><span class="save">Скидка на кухню −' + r.disc + '%: экономия ' + rub(save) + '</span>';
+    document.getElementById('cap').textContent = 'Кухня · ' + s[1];
+    var src = '../assets/img/kitchens/' + s[0] + '--' + s[2] + '.webp';
+    var a = document.getElementById(front ? 'img1' : 'img2'), b = document.getElementById(front ? 'img2' : 'img1');
+    if (a.getAttribute('src') === src) return;
+    b.onload = function () { b.style.opacity = 1; a.style.opacity = 0; front = !front; };
+    b.src = src;
+  }
+  document.getElementById('img1').src = '../assets/img/kitchens/neoclassic--sage.webp';
+  render();
+})();
+</script>
+</body>
+</html>

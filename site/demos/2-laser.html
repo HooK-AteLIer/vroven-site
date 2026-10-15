@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 2 · лазер в руке клиента</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; overflow:hidden; }
+  .hero { position:relative; height:100svh; overflow:hidden; cursor:none; touch-action:none; }
+  canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(13,13,13,.78) 0%,rgba(13,13,13,.15) 38%,rgba(13,13,13,0) 60%,rgba(13,13,13,.55) 100%); }
+  .copy { position:absolute; left:clamp(16px,5vw,72px); top:clamp(70px,12vh,130px); max-width:620px; pointer-events:none; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:14px 0 10px; font:400 clamp(40px,6.4vw,92px)/1 Forum,serif; letter-spacing:.03em; }
+  .sub { font-size:clamp(15px,1.5vw,19px); color:var(--ink2); max-width:470px; }
+  .hint { position:absolute; left:50%; bottom:28px; transform:translateX(-50%); font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.14em; text-transform:uppercase;
+          color:var(--ink); background:rgba(13,13,13,.6); border:1px solid rgba(47,209,107,.6); border-radius:999px; padding:11px 18px; pointer-events:none; transition:opacity .5s; box-shadow:0 0 18px -4px rgba(47,209,107,.6); }
+  .meter { position:absolute; right:clamp(16px,4vw,48px); bottom:28px; font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.1em; color:var(--laser); pointer-events:none; }
+  .cta { position:absolute; left:clamp(16px,5vw,72px); bottom:clamp(70px,12vh,120px); display:flex; gap:12px; flex-wrap:wrap; opacity:0; transform:translateY(12px); transition:all .8s; pointer-events:none; }
+  .done .cta { opacity:1; transform:none; pointer-events:auto; }
+  .done .hint { opacity:0; }
+  .btn { padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6); cursor:pointer;
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
+         box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .btn.ghost { color:var(--ink); background:rgba(13,13,13,.55); border-color:rgba(255,255,255,.35); box-shadow:none; }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <canvas id="cv"></canvas>
+  <div class="shade"></div>
+  <div class="copy">
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <h1>Проведите лазером —<br>мы выровняем</h1>
+    <div class="sub">Ремонт и мебель под ключ одной командой. Стены ровные, мебель встаёт точно в размер.</div>
+  </div>
+  <div class="hint" id="hint">Водите мышкой или пальцем по стене</div>
+  <div class="meter" id="meter">ВЫРОВНЕНО 0%</div>
+  <div class="cta"><a class="btn" href="#">Получить смету</a><button class="btn ghost" id="again">Ещё раз</button></div>
+</section>
+<script>
+(function () {
+  var hero = document.getElementById('hero'), cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  var meter = document.getElementById('meter');
+  var rough = new Image(), final = new Image(); rough.src = 'rough.webp'; final.src = 'final.webp';
+  var mask = document.createElement('canvas'), mctx = mask.getContext('2d');
+  var W, H, dpr, pointer = null, last = null, revealed = 0, finished = false, idle = true, t0 = performance.now(), fade = 0;
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    var old = mask.width ? mctx.getImageData(0, 0, mask.width, mask.height) : null;
+    mask.width = Math.round(W / 4); mask.height = Math.round(H / 4); // маска в низком разрешении: мягкие края и быстрый подсчёт
+    if (old) mctx.putImageData(old, 0, 0);
+  }
+  function cover(img) { // object-fit: cover
+    var s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s;
+    return [(W - w) / 2, (H - h) / 2, w, h];
+  }
+  function paint(a, b) {
+    var r = Math.max(W, H) * .045;
+    mctx.globalCompositeOperation = 'source-over';
+    mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r * 2 / 4;
+    mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 3;
+    mctx.beginPath(); mctx.moveTo(a.x / 4, a.y / 4); mctx.lineTo(b.x / 4, b.y / 4); mctx.stroke();
+  }
+  function measure() {
+    var d = mctx.getImageData(0, 0, mask.width, mask.height).data, on = 0, n = 0;
+    for (var i = 3; i < d.length; i += 64) { n++; if (d[i] > 128) on++; }
+    revealed = on / n;
+    meter.textContent = 'ВЫРОВНЕНО ' + Math.min(100, Math.round(revealed / .55 * 100)) + '%';
+    if (!finished && revealed > .55) { finished = true; hero.classList.add('done'); }
+  }
+  function move(e) {
+    var r = hero.getBoundingClientRect(), p = { x: e.clientX - r.left, y: e.clientY - r.top };
+    idle = false; pointer = p;
+    if (last) paint(last, p); last = p;
+  }
+  hero.addEventListener('pointermove', move);
+  hero.addEventListener('pointerdown', function (e) { last = null; move(e); });
+  hero.addEventListener('pointerleave', function () { last = null; pointer = null; });
+  document.getElementById('again').addEventListener('click', function () {
+    mctx.clearRect(0, 0, mask.width, mask.height); finished = false; fade = 0; hero.classList.remove('done'); idle = true; t0 = performance.now(); last = null;
+  });
+  var lastMeasure = 0;
+  function frame(t) {
+    if (!rough.complete || !final.complete) { requestAnimationFrame(frame); return; }
+    // пока никто не трогает — лазер сам «подсказывает» движением
+    if (idle) {
+      var k = ((t - t0) / 2600) % 1, y = H * (.55 + .12 * Math.sin((t - t0) / 900));
+      var p = { x: W * (.18 + .64 * (k < .5 ? k * 2 : 2 - k * 2)), y: y };
+      pointer = p; if (last && (t - t0) > 600) paint(last, p); last = p;
+      if ((t - t0) > 2400) { idle = false; pointer = null; last = null; }
+    }
+    if (finished) fade = Math.min(1, fade + .02);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var a = cover(rough); ctx.drawImage(rough, a[0], a[1], a[2], a[3]);
+    // готовая кухня через маску
+    ctx.save();
+    ctx.globalAlpha = 1;
+    var tmp = frame.tmp || (frame.tmp = document.createElement('canvas')), tctx = tmp.getContext('2d');
+    if (tmp.width !== cv.width || tmp.height !== cv.height) { tmp.width = cv.width; tmp.height = cv.height; }
+    tctx.setTransform(1, 0, 0, 1, 0, 0); tctx.clearRect(0, 0, tmp.width, tmp.height);
+    tctx.globalCompositeOperation = 'source-over';
+    var b = cover(final); tctx.drawImage(final, b[0] * dpr, b[1] * dpr, b[2] * dpr, b[3] * dpr);
+    tctx.globalCompositeOperation = 'destination-in';
+    tctx.imageSmoothingEnabled = true; tctx.drawImage(mask, 0, 0, tmp.width, tmp.height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(tmp, 0, 0);
+    if (fade > 0) { ctx.globalAlpha = fade; ctx.drawImage(final, b[0] * dpr, b[1] * dpr, b[2] * dpr, b[3] * dpr); }
+    ctx.restore();
+    // крест лазерного нивелира
+    if (pointer && !finished) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.strokeStyle = 'rgba(47,209,107,.95)'; ctx.lineWidth = 1.6; ctx.shadowColor = '#2FD16B'; ctx.shadowBlur = 14;
+      ctx.beginPath(); ctx.moveTo(0, pointer.y); ctx.lineTo(W, pointer.y); ctx.moveTo(pointer.x, 0); ctx.lineTo(pointer.x, H); ctx.stroke();
+      ctx.fillStyle = '#2FD16B'; ctx.beginPath(); ctx.arc(pointer.x, pointer.y, 6, 0, 7); ctx.fill(); ctx.shadowBlur = 0;
+    }
+    if (t - lastMeasure > 250) { lastMeasure = t; measure(); }
+    requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize', size); requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

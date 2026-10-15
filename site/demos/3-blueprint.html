@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 3 · чертёж оживает</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; overflow:hidden; }
+  .hero { position:relative; height:100svh; overflow:hidden;
+          background:linear-gradient(rgba(212,175,55,.06) 1px,transparent 1px) 0 0/48px 48px, linear-gradient(90deg,rgba(212,175,55,.06) 1px,transparent 1px) 0 0/48px 48px, #0D0D0D; }
+  .photo { position:absolute; inset:0; background:url('final.webp') center/cover no-repeat; opacity:0; transition:opacity 1.8s ease; }
+  svg { position:absolute; inset:0; width:100%; height:100%; transition:opacity 1.6s ease; }
+  .d { fill:none; stroke:var(--gold-hi); stroke-width:2.2; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; vector-effect:non-scaling-stroke; }
+  .d.thin { stroke-width:1.2; stroke:rgba(255,200,87,.75); }
+  .d.laser { stroke:var(--laser); stroke-width:2; filter:drop-shadow(0 0 6px #2FD16B); }
+  .go .d { animation:draw var(--dur,1s) cubic-bezier(.5,0,.2,1) var(--del,0s) forwards; }
+  @keyframes draw { to { stroke-dashoffset:0; } }
+  .dim { font:500 26px 'JetBrains Mono',monospace; fill:var(--gold-hi); opacity:0; transition:opacity .6s; letter-spacing:.06em; }
+  .go .dim { opacity:1; transition-delay:var(--del,1.6s); }
+  .real .photo { opacity:1; }
+  .real svg { opacity:.0; }
+  .shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(13,13,13,.82) 0%,rgba(13,13,13,.25) 34%,rgba(13,13,13,0) 55%); opacity:.4; transition:opacity 1.5s; }
+  .real .shade { opacity:1; }
+  .copy { position:absolute; left:clamp(16px,5vw,72px); top:clamp(70px,10vh,110px); max-width:720px; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:14px 0 0; font:400 clamp(38px,5.6vw,84px)/1.02 Forum,serif; letter-spacing:.03em; display:flex; gap:.35em; flex-wrap:wrap; }
+  h1 span { opacity:.18; transition:opacity .6s, color .6s; }
+  h1 span.on { opacity:1; }
+  h1 span.on.last { color:var(--gold-hi); }
+  .sub { margin-top:14px; font-size:clamp(15px,1.5vw,19px); color:var(--ink2); max-width:520px; opacity:0; transition:opacity .8s; }
+  .cta { margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; opacity:0; transform:translateY(10px); transition:all .8s; }
+  .real .sub, .real .cta { opacity:1; transform:none; }
+  .btn { padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6); cursor:pointer;
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
+         box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .btn.ghost { color:var(--ink); background:rgba(13,13,13,.55); border-color:rgba(255,255,255,.35); box-shadow:none; }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <div class="photo"></div>
+  <svg viewBox="0 0 1912 1076" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <!-- колонны слева -->
+    <path class="d" style="--del:.1s" pathLength="1" d="M376 304H700V820H376Z"/>
+    <path class="d thin" style="--del:.5s" pathLength="1" d="M448 304V820M570 304V500"/>
+    <path class="d thin" style="--del:.7s" pathLength="1" d="M570 500H700V730H570Z"/>
+    <!-- верхние шкафы -->
+    <path class="d" style="--del:.3s" pathLength="1" d="M700 304H1336V496H700Z"/>
+    <path class="d thin" style="--del:.8s" pathLength="1" d="M830 304V496M1000 304V496M1166 304V496"/>
+    <!-- столешница и нижние -->
+    <path class="d" style="--del:.5s" pathLength="1" d="M700 644H1336V794H700Z"/>
+    <path class="d thin" style="--del:.9s" pathLength="1" d="M830 662V794M1116 662V794M700 730H1336M700 662H1336"/>
+    <path class="d thin" style="--del:1s" pathLength="1" d="M890 640H1064"/>
+    <!-- колонны справа -->
+    <path class="d" style="--del:.2s" pathLength="1" d="M1336 304H1652V824H1336Z"/>
+    <path class="d thin" style="--del:.6s" pathLength="1" d="M1496 304V824"/>
+    <!-- остров -->
+    <path class="d" style="--del:.9s;--dur:1.2s" pathLength="1" d="M430 796H1520L1580 920H350ZM350 920V1076M1580 920V1076"/>
+    <!-- светильники -->
+    <path class="d thin" style="--del:1.1s" pathLength="1" d="M596 0V478M1314 0V478"/>
+    <path class="d thin" style="--del:1.3s" pathLength="1" d="M524 556Q524 478 596 478Q668 478 668 556ZM1242 556Q1242 478 1314 478Q1386 478 1386 556Z"/>
+    <!-- размерные линии -->
+    <path class="d thin" style="--del:1.3s" pathLength="1" d="M376 262H1652M376 248V276M1652 248V276"/>
+    <path class="d thin" style="--del:1.4s" pathLength="1" d="M1704 304V824M1690 304H1718M1690 824H1718"/>
+    <text class="dim" style="--del:1.8s" x="1014" y="244" text-anchor="middle">4 300</text>
+    <text class="dim" style="--del:1.9s" x="1734" y="574">2 600</text>
+    <!-- лазерная линия уровня по столешнице -->
+    <path class="d laser" style="--del:1.6s;--dur:1.2s" pathLength="1" d="M0 644H1912"/>
+  </svg>
+  <div class="shade"></div>
+  <div class="copy">
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <h1><span id="w1">Замерили.</span><span id="w2">Начертили.</span><span id="w3" class="last">Сделали.</span></h1>
+    <div class="sub">Ремонт и мебель под ключ одной командой: кухня по чертежу встаёт точно в размер ваших стен.</div>
+    <div class="cta"><a class="btn" href="#">Получить смету</a><button class="btn ghost" id="again">↻ Ещё раз</button></div>
+  </div>
+</section>
+<script>
+(function () {
+  var hero = document.getElementById('hero'), timers = [];
+  function on(id) { document.getElementById(id).classList.add('on'); }
+  function play() {
+    timers.forEach(clearTimeout); timers = [];
+    hero.classList.remove('go', 'real'); ['w1','w2','w3'].forEach(function (i) { document.getElementById(i).classList.remove('on'); });
+    void hero.offsetWidth;
+    on('w1');
+    timers.push(setTimeout(function () { hero.classList.add('go'); on('w2'); }, 600));
+    timers.push(setTimeout(function () { hero.classList.add('real'); on('w3'); }, 3600));
+  }
+  document.getElementById('again').addEventListener('click', play);
+  play();
+})();
+</script>
+</body>
+</html>

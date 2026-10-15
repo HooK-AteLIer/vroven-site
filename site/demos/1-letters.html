@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 1 · буквы выравниваются</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; overflow:hidden; }
+  .hero { position:relative; height:100svh; display:grid; place-items:center; overflow:hidden;
+          background:radial-gradient(1000px 600px at 15% -10%,#3A2E10 0%,transparent 60%),radial-gradient(800px 500px at 100% 110%,#1E1A10 0%,transparent 60%),#0D0D0D; }
+  /* лёгкая фактура стены */
+  .hero::before { content:''; position:absolute; inset:0; opacity:.07; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .inner { position:relative; width:min(1200px,92vw); text-align:center; }
+  .eyebrow { font:500 clamp(10px,1.1vw,13px)/1 'JetBrains Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); opacity:0; transition:opacity .8s 2.6s; }
+  .word { position:relative; display:flex; justify-content:center; margin:2.2vh 0 0; font:400 clamp(64px,15.5vw,230px)/1 Forum,serif; letter-spacing:.04em; }
+  .word span { display:inline-block; transform-origin:50% 90%; transition:transform .55s cubic-bezier(.2,1.4,.4,1), color .4s; color:#CDBF98; }
+  .word span.ok { transform:none !important; color:var(--ink); }
+  .line { position:absolute; left:0; right:0; height:2px; top:calc(var(--base,82%)); pointer-events:none;
+          background:linear-gradient(90deg,transparent,var(--laser) 6%,var(--laser) 94%,transparent); box-shadow:0 0 14px var(--laser),0 0 2px var(--laser);
+          clip-path:inset(0 100% 0 0); }
+  .line.go { animation:draw 1.5s cubic-bezier(.6,0,.3,1) .5s forwards; }
+  .dot { position:absolute; top:calc(var(--base,82%) - 6px); left:0; width:14px; height:14px; margin-left:-7px; border-radius:50%;
+         background:var(--laser); box-shadow:0 0 22px 6px rgba(47,209,107,.7); opacity:0; }
+  .dot.go { animation:run 1.5s cubic-bezier(.6,0,.3,1) .5s forwards; }
+  @keyframes draw { to { clip-path:inset(0 0 0 0); } }
+  @keyframes run { 0% { left:0; opacity:1; } 92% { opacity:1; } 100% { left:100%; opacity:0; } }
+  .tag { margin:3.4vh 0 0; font:400 clamp(18px,2.2vw,30px)/1.2 Forum,serif; letter-spacing:.04em; color:var(--ink2); opacity:0; transform:translateY(10px); transition:all .8s 2.3s; }
+  .cta { margin-top:4.5vh; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(10px); transition:all .8s 2.7s; }
+  .btn { padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6);
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
+         box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .btn.ghost { color:var(--ink); background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.03)); border-color:rgba(255,255,255,.35); box-shadow:none; }
+  .done .eyebrow, .done .tag, .done .cta { opacity:1; transform:none; }
+  .replay { position:fixed; right:16px; bottom:16px; font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.1em; color:#9C9480; background:none; border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:9px 14px; cursor:pointer; }
+  @media (prefers-reduced-motion:reduce) { .word span { transition:none; } .line.go,.dot.go { animation-duration:.01s; } }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <div class="inner">
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <div class="word" id="word" aria-label="ВРОВЕНЬ"></div>
+    <div class="tag">Ремонт и мебель под ключ. Одна команда — всё встаёт вровень.</div>
+    <div class="cta"><a class="btn" href="#">Получить смету</a><a class="btn ghost" href="#">Конструктор кухни</a></div>
+  </div>
+</section>
+<button class="replay" id="replay">↻ ещё раз</button>
+<script>
+(function () {
+  var word = document.getElementById('word'), hero = document.getElementById('hero');
+  var tilt = [[-9,-14],[7,10],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8]]; // [градусы, сдвиг px]
+  function build() {
+    word.innerHTML = '';
+    'ВРОВЕНЬ'.split('').forEach(function (ch, i) {
+      var s = document.createElement('span'); s.textContent = ch;
+      s.style.transform = 'translateY(' + tilt[i][1] + 'px) rotate(' + tilt[i][0] + 'deg)';
+      word.appendChild(s);
+    });
+    var line = document.createElement('div'); line.className = 'line';
+    var dot = document.createElement('div'); dot.className = 'dot';
+    word.appendChild(line); word.appendChild(dot);
+    return { line: line, dot: dot };
+  }
+  function play() {
+    hero.classList.remove('done');
+    var p = build();
+    setTimeout(function () {
+      p.line.classList.add('go'); p.dot.classList.add('go');
+      var spans = word.querySelectorAll('span'), w = word.getBoundingClientRect();
+      spans.forEach(function (s) {
+        var r = s.getBoundingClientRect(), frac = (r.left + r.width / 2 - w.left) / w.width;
+        setTimeout(function () { s.classList.add('ok'); }, 500 + frac * 1500 * .85);
+      });
+      setTimeout(function () { hero.classList.add('done'); }, 100);
+    }, 60);
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  document.fonts && document.fonts.ready.then(play) || play();
+})();
+</script>
+</body>
+</html>

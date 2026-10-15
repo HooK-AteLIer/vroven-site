@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 6 · квартира в разрезе</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --ink3:#9C9480; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; --w:0%; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; }
+  .hero { min-height:100svh; display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr); gap:clamp(16px,3vw,40px); align-items:center;
+          padding:clamp(60px,8vh,100px) clamp(16px,4vw,60px) 30px; background:radial-gradient(900px 600px at 70% 50%,#2A2416 0%,transparent 65%),#0D0D0D; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:12px 0 14px; font:400 clamp(34px,4.2vw,64px)/1.04 Forum,serif; letter-spacing:.02em; }
+  .sub { color:var(--ink2); font-size:clamp(15px,1.4vw,18px); max-width:440px; }
+  .switch { display:inline-flex; margin:20px 0 18px; padding:4px; border-radius:999px; border:1.5px solid rgba(255,255,255,.3); background:rgba(255,255,255,.05); }
+  .switch button { border:0; background:none; color:var(--ink); padding:9px 18px; border-radius:999px; font:500 14px/1 Onest,sans-serif; cursor:pointer; }
+  .switch button[aria-pressed="true"] { color:#1A1405; background:linear-gradient(135deg,var(--gold-hi),var(--gold)); }
+  .btn { display:inline-block; padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6);
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A); box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .hint { margin-top:14px; font-size:13px; color:var(--ink3); }
+  .plan { position:relative; aspect-ratio:1344/752; }
+  .plan img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
+  .plan .done { clip-path:inset(0 calc(100% - var(--w)) 0 0); }
+  .wipe { position:absolute; top:4%; bottom:4%; left:var(--w); width:2px; margin-left:-1px; background:var(--laser); box-shadow:0 0 16px var(--laser); opacity:0; transition:opacity .3s; }
+  .wiping .wipe { opacity:1; }
+  .spot { position:absolute; width:30px; height:30px; margin:-15px 0 0 -15px; border-radius:50%; border:0; cursor:pointer; opacity:0; transform:scale(.6); transition:opacity .4s, transform .4s;
+          background:radial-gradient(circle,var(--gold-hi) 0 5px,rgba(255,200,87,.25) 6px 14px,transparent 15px); }
+  .spot::after { content:''; position:absolute; inset:-6px; border-radius:50%; border:1.5px solid rgba(255,200,87,.7); animation:pulse 1.8s infinite; }
+  @keyframes pulse { from { transform:scale(.6); opacity:1; } to { transform:scale(1.5); opacity:0; } }
+  .ready .spot { opacity:1; transform:none; }
+  .tip { position:absolute; z-index:2; width:min(270px,70vw); padding:13px 15px; border-radius:14px; background:rgba(13,13,13,.86); border:1px solid rgba(255,200,87,.5);
+         -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); box-shadow:0 18px 40px -18px rgba(0,0,0,.9); pointer-events:none; opacity:0; transform:translateY(6px); transition:all .2s; }
+  .tip.on { opacity:1; transform:none; }
+  .tip b { display:block; font:400 20px/1.1 Forum,serif; margin-bottom:4px; }
+  .tip span { font-size:13px; color:var(--ink2); display:block; }
+  .tip i { display:block; margin-top:6px; font:normal 500 12px/1.2 'JetBrains Mono',monospace; color:var(--gold-hi); }
+  @media (max-width:900px) { .hero { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<section class="hero">
+  <div>
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <h1>Из бетонной коробки — в готовую квартиру</h1>
+    <div class="sub">Ремонт и мебель под ключ одной командой. Нажмите на комнату: покажем, что в ней делаем и сколько стоит.</div>
+    <div class="switch" role="group" aria-label="Состояние квартиры"><button type="button" id="b0" aria-pressed="false">Было</button><button type="button" id="b1" aria-pressed="true">Стало</button></div>
+    <div><a class="btn" href="#">Получить смету</a></div>
+    <div class="hint">Цены ориентировочные, точную сумму пишем в смете после замера.</div>
+  </div>
+  <div class="plan" id="plan">
+    <img src="iso-raw.webp" alt="Квартира до ремонта: бетонные стены, выводы труб">
+    <img class="done" src="iso-done.webp" alt="Та же квартира после ремонта с мебелью">
+    <div class="wipe"></div>
+    <div class="tip" id="tip"></div>
+  </div>
+</section>
+<script>
+(function () {
+  var plan = document.getElementById('plan'), tip = document.getElementById('tip');
+  var ROOMS = [
+    { x:33, y:28, t:'Кухня-гостиная', d:'Кухня из своего цеха с островом, ТВ-зона, ровные стены и пол под мебель.', p:'кухня от 27 200 ₽/п.м.' },
+    { x:58, y:22, t:'Прихожая', d:'Встроенный шкаф до потолка, ниша со скамьёй.', p:'от 24 100 ₽/п.м.' },
+    { x:78, y:36, t:'Спальня', d:'Распашной шкаф от пола до потолка, отделка, свет.', p:'шкаф от 24 470 ₽/п.м.' },
+    { x:49, y:56, t:'Санузел', d:'Плитка, душ с трапом, подвесной унитаз, тумба.', p:'ремонт от 8 900 ₽/м²' },
+    { x:74, y:70, t:'Детская', d:'Стол, стеллаж и шкаф под рост ребёнка.', p:'по проекту после замера' }
+  ];
+  ROOMS.forEach(function (r) {
+    var b = document.createElement('button'); b.className = 'spot'; b.type = 'button'; b.style.left = r.x + '%'; b.style.top = r.y + '%'; b.setAttribute('aria-label', r.t);
+    function show() {
+      tip.innerHTML = '<b>' + r.t + '</b><span>' + r.d + '</span><i>' + r.p + '</i>';
+      var left = Math.min(r.x, 70), top = r.y > 55 ? r.y - 30 : r.y + 5;
+      tip.style.left = left + '%'; tip.style.top = top + '%'; tip.classList.add('on');
+    }
+    b.addEventListener('mouseenter', show); b.addEventListener('focus', show); b.addEventListener('click', show);
+    b.addEventListener('mouseleave', function () { tip.classList.remove('on'); }); b.addEventListener('blur', function () { tip.classList.remove('on'); });
+    plan.appendChild(b);
+  });
+  var w = 0, target = 100, raf = null;
+  function anim() {
+    w += (target - w) * .06; if (Math.abs(target - w) < .2) w = target;
+    plan.style.setProperty('--w', w + '%');
+    plan.classList.toggle('wiping', w > 0 && w < 100);
+    plan.classList.toggle('ready', w === 100);
+    raf = w === target ? null : requestAnimationFrame(anim);
+  }
+  function go(t) { target = t; document.getElementById('b0').setAttribute('aria-pressed', t === 0); document.getElementById('b1').setAttribute('aria-pressed', t === 100); tip.classList.remove('on'); if (!raf) raf = requestAnimationFrame(anim); }
+  document.getElementById('b0').addEventListener('click', function () { go(0); });
+  document.getElementById('b1').addEventListener('click', function () { go(100); });
+  plan.style.setProperty('--w', '0%');
+  setTimeout(function () { go(100); }, 900);
+})();
+</script>
+</body>
+</html>

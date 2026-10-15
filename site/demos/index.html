@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ВРОВЕНЬ · варианты первого экрана</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --ink3:#9C9480; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:radial-gradient(1000px 600px at 10% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; padding:48px 16px 64px; }
+  .wrap { max-width:1000px; margin:0 auto; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:12px 0 8px; font:400 clamp(32px,5vw,56px)/1.05 Forum,serif; letter-spacing:.02em; }
+  .lead { color:var(--ink2); margin:0 0 28px; max-width:640px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:14px; }
+  a.card { display:block; text-decoration:none; color:inherit; border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:20px; background:rgba(255,255,255,.03); transition:border-color .2s, transform .2s; }
+  a.card:hover { border-color:var(--gold); transform:translateY(-2px); }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:var(--gold); letter-spacing:.14em; }
+  .t { font:400 26px/1.1 Forum,serif; margin:8px 0 6px; }
+  .laser { height:2px; width:50%; background:linear-gradient(90deg,var(--laser),transparent); box-shadow:0 0 8px var(--laser); margin:0 0 10px; }
+  .d { color:var(--ink2); font-size:14.5px; }
+  .how { margin-top:10px; font-size:12.5px; color:var(--ink3); }
+  .foot { margin-top:28px; font-size:13px; color:var(--ink3); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">ВРОВЕНЬ · ремонт и мебель под ключ</div>
+  <h1>Шесть вариантов первого экрана</h1>
+  <p class="lead">Черновые примеры для выбора. Откройте каждый на телефоне и на компьютере: часть вариантов оживает при прокрутке или от касания.</p>
+  <div class="grid">
+    <a class="card" href="1-letters.html"><div class="n">01</div><div class="t">Буквы выравниваются</div><div class="laser"></div><div class="d">Кривые буквы ВРОВЕНЬ встают ровно, когда по ним проходит луч нивелира.</div><div class="how">Смотреть, кнопка «ещё раз» внизу</div></a>
+    <a class="card" href="2-laser.html"><div class="n">02</div><div class="t">Лазер в руке клиента</div><div class="laser"></div><div class="d">Проведите курсором или пальцем: бетонная стена превращается в готовую кухню.</div><div class="how">Водить мышкой или пальцем</div></a>
+    <a class="card" href="3-blueprint.html"><div class="n">03</div><div class="t">Чертёж оживает</div><div class="laser"></div><div class="d">Замерили, начертили, сделали: чертёж кухни превращается в фото.</div><div class="how">Смотреть, кнопка «ещё раз»</div></a>
+    <a class="card" href="4-halves.html"><div class="n">04</div><div class="t">Две половины сходятся</div><div class="laser"></div><div class="d">Бригада ремонта и мебельный цех съезжаются в одну готовую комнату.</div><div class="how">Листать вниз</div></a>
+    <a class="card" href="5-calc.html"><div class="n">05</div><div class="t">Собери квартиру за 10 секунд</div><div class="laser"></div><div class="d">Три нажатия: квартира, ремонт, стиль кухни — и сразу итоговая цена.</div><div class="how">Нажимать на варианты</div></a>
+    <a class="card" href="6-cutaway.html"><div class="n">06</div><div class="t">Квартира в разрезе</div><div class="laser"></div><div class="d">Бетонная коробка превращается в готовую квартиру; на комнатах цены.</div><div class="how">Нажимать на золотые точки, «Было / Стало»</div></a>
+  </div>
+  <p class="foot">Визуализации созданы для примера. Цены ориентировочные.</p>
+</div>
+</body>
+</html>
