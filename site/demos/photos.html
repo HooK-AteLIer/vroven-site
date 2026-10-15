@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ВРОВЕНЬ · 10 картинок первого экрана</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; }
+  .hero { position:relative; height:100svh; min-height:560px; overflow:hidden; }
+  .bg { position:absolute; inset:0; background-size:cover; background-position:center; transition:opacity .7s; }
+  .scrim { position:absolute; inset:0; background:linear-gradient(90deg,rgba(13,13,13,.86) 0%,rgba(13,13,13,.62) 32%,rgba(13,13,13,.1) 62%,rgba(13,13,13,0) 100%),linear-gradient(180deg,rgba(13,13,13,.55) 0%,transparent 22%,transparent 70%,rgba(13,13,13,.6) 100%); }
+  header { position:absolute; top:0; left:0; right:0; display:flex; align-items:center; gap:28px; padding:18px clamp(16px,4vw,56px); z-index:3; }
+  header img { height:30px; }
+  nav { display:flex; gap:22px; font-size:14.5px; color:var(--ink2); }
+  .hr { margin-left:auto; display:flex; align-items:center; gap:16px; font:500 14px/1 'JetBrains Mono',monospace; }
+  .btn { display:inline-block; padding:13px 24px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6); white-space:nowrap;
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A); box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .btn.ghost { color:var(--ink); background:rgba(13,13,13,.45); border-color:rgba(255,255,255,.35); box-shadow:none; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
+  .btn.sm { padding:10px 18px; font-size:14px; }
+  .copy { position:absolute; left:clamp(16px,5vw,80px); top:50%; transform:translateY(-46%); max-width:640px; z-index:2; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+  h1 { margin:16px 0 0; font:400 clamp(44px,6.2vw,96px)/.98 Forum,serif; letter-spacing:.03em; text-transform:uppercase; text-shadow:0 2px 30px rgba(0,0,0,.4); }
+  .laser { height:2px; width:min(520px,80%); margin:22px 0 20px; background:linear-gradient(90deg,var(--laser),var(--laser) 70%,transparent); box-shadow:0 0 12px var(--laser); }
+  .sub { font-size:clamp(16px,1.5vw,20px); color:var(--ink2); max-width:500px; margin:0 0 14px; }
+  .price { font-weight:500; margin:0 0 24px; }
+  .price span { color:var(--gold-hi); }
+  .cta { display:flex; gap:12px; flex-wrap:wrap; }
+  .pick { position:absolute; left:50%; bottom:18px; transform:translateX(-50%); z-index:4; display:flex; gap:6px; padding:6px; border-radius:999px; background:rgba(13,13,13,.6); border:1px solid rgba(255,255,255,.2); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
+  .pick button { width:34px; height:34px; border-radius:50%; border:0; cursor:pointer; font:500 13px/1 'JetBrains Mono',monospace; color:var(--ink); background:transparent; }
+  .pick button[aria-pressed="true"] { color:#1A1405; background:linear-gradient(135deg,var(--gold-hi),var(--gold)); }
+  .name { position:absolute; right:clamp(16px,4vw,56px); bottom:72px; z-index:4; font:500 11px/1 'JetBrains Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:var(--ink2); background:rgba(13,13,13,.55); padding:8px 12px; border-radius:999px; }
+  .shot .pick, .shot .name { display:none; }
+  @media (max-width:900px) { nav, .hr .tel { display:none; } .scrim { background:linear-gradient(180deg,rgba(13,13,13,.75) 0%,rgba(13,13,13,.35) 45%,rgba(13,13,13,.85) 100%); } .copy { top:auto; bottom:90px; transform:none; } }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <div class="bg" id="bg"></div>
+  <div class="scrim"></div>
+  <header>
+    <img src="../assets/img/logo/vroven-wordmark-inverse.svg" alt="ВРОВЕНЬ">
+    <nav><span>Ремонт</span><span>Мебель</span><span>Конструктор кухни</span><span>Лукбук</span><span>Контакты</span></nav>
+    <div class="hr"><span class="tel">+7 912 410 00 01</span><a class="btn sm" href="#">Получить смету</a></div>
+  </header>
+  <div class="copy">
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <h1>Ремонт и мебель<br>под ключ</h1>
+    <div class="laser"></div>
+    <p class="sub">Один прораб, одна смета, один срок. Мебель из своего цеха встаёт точно в размер после ремонта.</p>
+    <p class="price">Ремонт <span>от 8 900 ₽/м²</span> · кухня <span>от 27 200 ₽/п.м.</span></p>
+    <div class="cta"><a class="btn" href="#">Рассчитать комплект</a><a class="btn ghost" href="#">Конструктор кухни</a></div>
+  </div>
+  <div class="name" id="name"></div>
+  <div class="pick" id="pick"></div>
+</section>
+<script>
+(function () {
+  var NAMES = ['Тёмный орех ночью','Зелёный мрамор и латунь','Вид на ночную реку','Гардеробная с золотом','Одна стена и линия уровня','Изумрудная кухня','Джапанди у леса','Ящик крупным планом','Полосы солнца','Вид через арку'];
+  var q = new URLSearchParams(location.search), n = Math.min(10, Math.max(1, +q.get('n') || 1));
+  if (q.has('shot')) document.body.classList.add('shot');
+  var bg = document.getElementById('bg'), pick = document.getElementById('pick');
+  function set(k) {
+    n = k; bg.style.backgroundImage = "url('photos/h" + k + ".webp')";
+    document.getElementById('name').textContent = k + ' · ' + NAMES[k - 1];
+    pick.querySelectorAll('button').forEach(function (b, i) { b.setAttribute('aria-pressed', i + 1 === k); });
+    history.replaceState(null, '', '?n=' + k);
+  }
+  for (var i = 1; i <= 10; i++) (function (k) {
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = k; b.title = NAMES[k - 1];
+    b.addEventListener('click', function () { set(k); }); pick.appendChild(b);
+  })(i);
+  addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') set(n % 10 + 1); if (e.key === 'ArrowLeft') set((n + 8) % 10 + 1); });
+  set(n);
+})();
+</script>
+</body>
+</html>
