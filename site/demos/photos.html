@@ -59,15 +59,18 @@
 </section>
 <script>
 (function () {
-  var NAMES = ['Тёмный орех ночью','Зелёный мрамор и латунь','Вид на ночную реку','Гардеробная с золотом','Одна стена и линия уровня','Изумрудная кухня','Джапанди у леса','Ящик крупным планом','Полосы солнца','Вид через арку'];
   var q = new URLSearchParams(location.search), n = Math.min(10, Math.max(1, +q.get('n') || 1));
+  var core = q.get('set') === '2', PFX = core ? 'c' : 'h';
+  var NAMES = core
+    ? ['Комната пополам по лазеру','Монтаж шкафа к ровной стене','Штукатур и сборщики в одной комнате','Слои стены и шкаф заподлицо','Кухня: бетон и готово по диагонали','Мастерок и мебельная петля','Кухня по разметке на стене','Шкаф входит в нишу','Шкафы стоят, стену докрашивают','Весь путь в одной комнате']
+    : ['Тёмный орех ночью','Зелёный мрамор и латунь','Вид на ночную реку','Гардеробная с золотом','Одна стена и линия уровня','Изумрудная кухня','Джапанди у леса','Ящик крупным планом','Полосы солнца','Вид через арку'];
   if (q.has('shot')) document.body.classList.add('shot');
   var bg = document.getElementById('bg'), pick = document.getElementById('pick');
   function set(k) {
-    n = k; bg.style.backgroundImage = "url('photos/h" + k + ".webp')";
+    n = k; bg.style.backgroundImage = "url('photos/" + PFX + k + ".webp')";
     document.getElementById('name').textContent = k + ' · ' + NAMES[k - 1];
     pick.querySelectorAll('button').forEach(function (b, i) { b.setAttribute('aria-pressed', i + 1 === k); });
-    history.replaceState(null, '', '?n=' + k);
+    history.replaceState(null, '', '?' + (core ? 'set=2&' : '') + 'n=' + k);
   }
   for (var i = 1; i <= 10; i++) (function (k) {
     var b = document.createElement('button'); b.type = 'button'; b.textContent = k; b.title = NAMES[k - 1];
