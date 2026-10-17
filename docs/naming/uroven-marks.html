@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>УРОВЕНЬ · варианты эмблемы</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1200px; padding:40px; background:radial-gradient(900px 500px at 10% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 36px/1.1 Forum,serif; margin:10px 0 24px; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .c { border:1px solid rgba(255,255,255,.14); border-radius:16px; padding:22px 16px 16px; background:rgba(255,255,255,.03); text-align:center; }
+  .c svg.m { width:150px; height:150px; display:block; margin:0 auto 10px; }
+  .w { font:400 28px/1 Forum,serif; letter-spacing:.12em; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; margin:14px 0 6px; text-transform:uppercase; }
+  .d { font-size:13px; color:#D9D0B8; text-align:left; }
+  .light { margin-top:18px; display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+  .light div { background:#F4EFE6; border-radius:14px; padding:14px; display:flex; align-items:center; gap:10px; justify-content:center; color:#0D0D0D; font:400 22px/1 Forum,serif; letter-spacing:.1em; }
+  .light svg { width:46px; height:46px; }
+  .cap { margin:22px 0 8px; font:500 11px/1 'JetBrains Mono',monospace; letter-spacing:.14em; text-transform:uppercase; color:#9C9480; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="0" y="0" width="240" height="240"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <!-- 1. Пузырёк уровня на луче -->
+    <symbol id="m1" viewBox="0 0 240 240">
+      <path d="M70 40H88V160H190V178H70Z" fill="var(--ink)"/>
+      <line x1="14" y1="120" x2="226" y2="120" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <line x1="120" y1="20" x2="120" y2="220" stroke="var(--g)" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+      <rect x="86" y="104" width="68" height="32" rx="16" fill="rgba(47,209,107,.14)" stroke="var(--g)" stroke-width="3.2"/>
+      <circle cx="120" cy="120" r="9" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="106" y1="108" x2="106" y2="132" stroke="var(--g)" stroke-width="2"/><line x1="134" y1="108" x2="134" y2="132" stroke="var(--g)" stroke-width="2"/>
+    </symbol>
+    <!-- 2. Буква У на лазерном кресте -->
+    <symbol id="m2" viewBox="0 0 240 240">
+      <path d="M62 34L120 122" stroke="var(--ink)" stroke-width="20" stroke-linecap="square" fill="none"/>
+      <path d="M176 34L64 206" stroke="var(--ink)" stroke-width="20" stroke-linecap="square" fill="none"/>
+      <line x1="14" y1="122" x2="226" y2="122" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <line x1="120" y1="14" x2="120" y2="226" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="120" cy="122" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+    <!-- 3. Уголок и мерная шкала -->
+    <symbol id="m3" viewBox="0 0 240 240">
+      <path d="M70 40H88V160H190V178H70Z" fill="var(--ink)"/>
+      <line x1="14" y1="120" x2="226" y2="120" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <line x1="120" y1="14" x2="120" y2="226" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <g stroke="var(--g)" stroke-width="2" opacity=".85">
+        <line x1="24" y1="120" x2="24" y2="130"/><line x1="36" y1="120" x2="36" y2="126"/><line x1="48" y1="120" x2="48" y2="126"/><line x1="60" y1="120" x2="60" y2="126"/><line x1="72" y1="120" x2="72" y2="132"/><line x1="96" y1="120" x2="96" y2="126"/><line x1="144" y1="120" x2="144" y2="126"/><line x1="168" y1="120" x2="168" y2="132"/><line x1="180" y1="120" x2="180" y2="126"/><line x1="192" y1="120" x2="192" y2="126"/><line x1="204" y1="120" x2="204" y2="126"/><line x1="216" y1="120" x2="216" y2="130"/>
+      </g>
+      <circle cx="120" cy="120" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+    <!-- 4. Стена и столешница ровно по лучу -->
+    <symbol id="m4" viewBox="0 0 240 240">
+      <rect x="70" y="36" width="18" height="168" fill="var(--ink)"/>
+      <rect x="88" y="124" width="104" height="18" fill="var(--ink)"/>
+      <rect x="104" y="148" width="36" height="56" fill="none" stroke="var(--ink)" stroke-width="5"/>
+      <rect x="146" y="148" width="40" height="56" fill="none" stroke="var(--ink)" stroke-width="5"/>
+      <line x1="14" y1="124" x2="226" y2="124" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="88" cy="124" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">УРОВЕНЬ · ремонт и мебель под ключ</div>
+<h1>Четыре варианта эмблемы на основе уголка и зелёного лазера</h1>
+<div class="grid" style="--ink:#FFF3CC;--g:#2FD16B">
+  <div class="c"><svg class="m"><use href="#m1"/></svg><div class="w">УРОВЕНЬ</div><div class="n">1 · Пузырёк уровня</div><div class="d">В точку пересечения лучей встаёт ампула строительного уровня с пузырьком строго по центру. Инструмент узнают все: это прямо слово «уровень», нарисованное знаком.</div></div>
+  <div class="c"><svg class="m"><use href="#m2"/></svg><div class="w">УРОВЕНЬ</div><div class="n">2 · Буква У на кресте</div><div class="d">Первая буква названия, а её штрихи сходятся ровно в точке лазерного креста. Монограмма: знак и имя читаются как одно целое.</div></div>
+  <div class="c"><svg class="m"><use href="#m3"/></svg><div class="w">УРОВЕНЬ</div><div class="n">3 · Уголок и шкала</div><div class="d">Твой уголок с крестом, а на горизонтальном луче — деления, как на рулетке. Добавляет смысл «точный замер».</div></div>
+  <div class="c"><svg class="m"><use href="#m4"/></svg><div class="w">УРОВЕНЬ</div><div class="n">4 · Стена и столешница</div><div class="d">Стена и кухонная тумба, а зелёный луч проходит ровно по верху столешницы. Самый буквальный: мебель встала по уровню стены.</div></div>
+</div>
+<div class="cap">На светлом фоне: визитка, документы, печать</div>
+<div class="light" style="--ink:#0D0D0D;--g:#1FA552">
+  <div><svg><use href="#m1"/></svg>УРОВЕНЬ</div>
+  <div><svg><use href="#m2"/></svg>УРОВЕНЬ</div>
+  <div><svg><use href="#m3"/></svg>УРОВЕНЬ</div>
+  <div><svg><use href="#m4"/></svg>УРОВЕНЬ</div>
+</div>
+</body>
+</html>
