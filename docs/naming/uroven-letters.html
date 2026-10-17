@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>УРОВЕНЬ · игра с буквами</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1200px; padding:40px; background:radial-gradient(900px 500px at 10% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; --ink:#FFF3CC; --g:#2FD16B; --bg:#141414; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 34px/1.1 Forum,serif; margin:10px 0 22px; }
+  .row { display:grid; grid-template-columns:1fr 250px; gap:28px; align-items:center; border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:22px 26px; background:#141414; margin-bottom:14px; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 26px/1.1 Forum,serif; margin:8px 0 4px; }
+  .d { font-size:14px; color:#D9D0B8; max-width:760px; }
+  .wm { display:block; width:640px; height:150px; margin:14px 0 6px; }
+  .side { display:flex; flex-direction:column; gap:12px; align-items:flex-start; }
+  .icons { display:flex; gap:10px; }
+  .ico { width:72px; height:72px; border-radius:18px; background:#0D0D0D; border:1px solid rgba(255,255,255,.18); display:grid; place-items:center; --bg:#0D0D0D; }
+  .ico svg { width:54px; height:54px; }
+  .ico.round { border-radius:50%; }
+  .paper { background:#F4EFE6; border-radius:12px; padding:12px 14px; --ink:#0D0D0D; --g:#1FA552; --bg:#F4EFE6; color:#0D0D0D; display:flex; align-items:center; gap:10px; font:400 24px/1 Forum,serif; letter-spacing:.12em; }
+  .paper svg.w { width:210px; height:50px; }
+  .paper svg.m { width:42px; height:42px; }
+  /* 4: буквы встают ровно */
+  .tilt { position:relative; display:flex; align-items:flex-end; gap:6px; height:150px; padding:20px 0 0; margin:6px 0 6px; font:400 112px/1 Forum,serif; }
+  .tilt span { display:inline-block; transform-origin:50% 88%; }
+  .tilt .base { position:absolute; left:0; right:0; bottom:22px; height:0; }
+  .tilt .crook { position:absolute; left:-24px; width:246px; bottom:20px; border-top:2px dashed rgba(255,243,204,.28); transform:rotate(-5deg); transform-origin:100% 0; }
+  .tilt .laser { position:absolute; left:222px; width:244px; bottom:21px; height:4px; border-radius:2px; background:var(--g); box-shadow:0 0 10px var(--g),0 0 3px var(--g); }
+  /* 5: Н как знак */
+  .hword { display:flex; align-items:center; gap:4px; height:150px; margin:6px 0; font:400 112px/1 Forum,serif; letter-spacing:.06em; }
+  .hword svg { width:106px; height:106px; margin:0 2px; transform:translateY(-6px); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-100" y="-100" width="900" height="420"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+    <!-- 1. Середина всех букв — лазер -->
+    <symbol id="w1" viewBox="-30 -20 640 140">
+      <g fill="none" stroke="var(--ink)" stroke-width="12">
+        <path d="M6 0L36 50M58 0L14 100"/>
+        <path d="M92 0V100M92 6H122A22 22 0 0 1 122 50H92"/>
+        <rect x="178" y="6" width="52" height="88" rx="26"/>
+        <path d="M264 0V100M264 6H292A22 22 0 0 1 292 50H264M264 50H294A22 22 0 0 1 294 94H264"/>
+        <path d="M350 0V100M350 6H400M350 94H402"/>
+        <path d="M436 0V100M488 0V100"/>
+        <path d="M522 0V100M522 50H552A22 22 0 0 1 552 94H522"/>
+      </g>
+      <line x1="-24" y1="50" x2="604" y2="50" stroke="var(--g)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="36" cy="50" r="7" fill="var(--g)" filter="url(#glow)"/>
+      <circle cx="204" cy="50" r="10" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+    <symbol id="i1" viewBox="0 0 240 240">
+      <path d="M78 36V204M78 46H170M78 194H174" fill="none" stroke="var(--ink)" stroke-width="20"/>
+      <line x1="20" y1="120" x2="220" y2="120" stroke="var(--g)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="78" cy="120" r="8" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 2. Каждая буква — вещь -->
+    <symbol id="w2" viewBox="-30 -20 640 140">
+      <!-- У: нивелир и лучи -->
+      <g stroke="var(--g)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"><line x1="32" y1="52" x2="2" y2="2"/><line x1="32" y1="52" x2="62" y2="2"/></g>
+      <path d="M32 52L12 100" stroke="var(--ink)" stroke-width="12"/>
+      <rect x="23" y="43" width="18" height="18" rx="4" fill="var(--ink)"/><circle cx="32" cy="52" r="4" fill="var(--g)"/>
+      <!-- Р: валик -->
+      <path d="M92 22V100M92 22H104" fill="none" stroke="var(--ink)" stroke-width="10"/>
+      <rect x="85" y="64" width="14" height="36" rx="5" fill="var(--ink)"/>
+      <rect x="100" y="0" width="50" height="44" rx="10" fill="var(--ink)"/>
+      <g stroke="var(--bg)" stroke-width="2.4"><line x1="113" y1="7" x2="113" y2="37"/><line x1="125" y1="7" x2="125" y2="37"/><line x1="137" y1="7" x2="137" y2="37"/></g>
+      <!-- О: ампула уровня -->
+      <rect x="178" y="6" width="52" height="88" rx="26" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <g stroke="var(--ink)" stroke-width="3"><line x1="192" y1="36" x2="216" y2="36"/><line x1="192" y1="64" x2="216" y2="64"/></g>
+      <circle cx="204" cy="50" r="9" fill="var(--g)" filter="url(#glow)"/>
+      <!-- В: комод -->
+      <path d="M264 0V100M264 6H292A22 22 0 0 1 292 50H264M264 50H294A22 22 0 0 1 294 94H264" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <circle cx="288" cy="28" r="4.5" fill="var(--ink)"/><circle cx="290" cy="72" r="4.5" fill="var(--ink)"/>
+      <!-- Е: стеллаж -->
+      <path d="M350 0V100M350 6H400M350 50H400M350 94H402" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <rect x="364" y="24" width="7" height="20" fill="var(--ink)"/><rect x="374" y="28" width="7" height="16" fill="var(--ink)"/><rect x="384" y="22" width="7" height="22" fill="var(--ink)" transform="rotate(10 387 44)"/>
+      <rect x="370" y="74" width="16" height="14" rx="3" fill="var(--ink)"/><circle cx="374" cy="67" r="5" fill="var(--g)"/><circle cx="383" cy="65" r="5" fill="var(--g)"/>
+      <!-- Н: гардероб со штангой -->
+      <path d="M436 0V100M488 0V100" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <line x1="436" y1="34" x2="488" y2="34" stroke="var(--ink)" stroke-width="6"/>
+      <g fill="none" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"><path d="M452 34v5l-9 11h18l-9-11"/><path d="M472 34v5l-9 11h18l-9-11"/></g>
+      <!-- Ь: кресло -->
+      <path d="M522 0V100M522 50H552A22 22 0 0 1 552 94H522" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <line x1="-24" y1="108" x2="604" y2="108" stroke="var(--g)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+    </symbol>
+    <symbol id="i2" viewBox="0 0 240 240">
+      <path d="M70 70V206M70 70H92" fill="none" stroke="var(--ink)" stroke-width="18"/>
+      <rect x="58" y="146" width="24" height="62" rx="8" fill="var(--ink)"/>
+      <rect x="92" y="32" width="104" height="80" rx="18" fill="var(--ink)"/>
+      <g stroke="var(--bg)" stroke-width="4"><line x1="118" y1="46" x2="118" y2="98"/><line x1="144" y1="46" x2="144" y2="98"/><line x1="170" y1="46" x2="170" y2="98"/></g>
+      <line x1="20" y1="214" x2="220" y2="214" stroke="var(--g)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 3. Монограмма УР -->
+    <symbol id="i3" viewBox="0 0 240 240">
+      <path d="M58 40L132 120" stroke="var(--ink)" stroke-width="22" fill="none"/>
+      <path d="M132 40V204M132 51H160A34.5 34.5 0 0 1 160 120H132" stroke="var(--ink)" stroke-width="22" fill="none"/>
+      <line x1="16" y1="120" x2="224" y2="120" stroke="var(--g)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="132" cy="120" r="9" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 5. Н: стена и шкаф на одном уровне -->
+    <symbol id="i5" viewBox="0 0 240 240">
+      <rect x="46" y="30" width="50" height="180" fill="var(--ink)"/>
+      <g stroke="var(--bg)" stroke-width="3"><line x1="46" y1="66" x2="96" y2="66"/><line x1="46" y1="102" x2="96" y2="102"/><line x1="46" y1="138" x2="96" y2="138"/><line x1="46" y1="174" x2="96" y2="174"/><line x1="71" y1="30" x2="71" y2="66"/><line x1="71" y1="102" x2="71" y2="138"/><line x1="71" y1="174" x2="71" y2="210"/></g>
+      <rect x="144" y="30" width="50" height="180" fill="var(--ink)"/>
+      <rect x="153" y="132" width="6" height="30" rx="3" fill="var(--bg)"/>
+      <line x1="16" y1="120" x2="224" y2="120" stroke="var(--g)" stroke-width="7" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="120" cy="120" r="8" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+    <symbol id="i4" viewBox="0 0 240 240">
+      <text x="120" y="176" text-anchor="middle" font-family="Forum" font-size="190" fill="var(--ink)">У</text>
+      <line x1="16" y1="180" x2="224" y2="180" stroke="var(--g)" stroke-width="6" stroke-linecap="round" filter="url(#glow)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">УРОВЕНЬ · ремонт и мебель под ключ</div>
+<h1>Игра с буквами: слово само рассказывает, чем мы занимаемся</h1>
+
+<div class="row">
+  <div><div class="n">1 · Ровно посередине</div><div class="t">Лазер проходит через середину каждой буквы</div>
+    <svg class="wm"><use href="#w1"/></svg>
+    <div class="d">Буквы нарисованы так, что все их средние линии стоят на одной высоте: перекладина Н, средняя черта Е, низ петли Р, стык В. Эти черты и есть зелёный луч. «О» превращается в ампулу с пузырьком. Читается как обычное слово, а по сути это лазерный уровень.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#i1"/></svg></div><div class="ico round"><svg><use href="#i1"/></svg></div></div>
+    <div class="paper"><svg class="w"><use href="#w1"/></svg></div></div>
+</div>
+
+<div class="row">
+  <div><div class="n">2 · Каждая буква — вещь</div><div class="t">У — нивелир, Р — валик, О — уровень, В — комод, Е — стеллаж, Н — гардероб, Ь — кресло</div>
+    <svg class="wm"><use href="#w2"/></svg>
+    <div class="d">Первые три буквы — инструменты ремонта, следующие четыре — мебель. Все стоят на одной зелёной линии пола. Название само показывает путь: сначала ремонт, потом мебель. Отдельные буквы годятся для соцсетей, наклеек и формы бригады.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#i2"/></svg></div><div class="ico round"><svg><use href="#i2"/></svg></div></div>
+    <div class="paper"><svg class="w"><use href="#w2"/></svg></div></div>
+</div>
+
+<div class="row">
+  <div><div class="n">3 · Монограмма «УР»</div><div class="t">Две первые буквы с общей ножкой</div>
+    <div style="display:flex;align-items:center;gap:22px;margin:14px 0 6px"><svg style="width:150px;height:150px"><use href="#i3"/></svg><span style="font:400 64px/1 Forum,serif;letter-spacing:.12em">УРОВЕНЬ</span></div>
+    <div class="d">Ножка «У» одновременно служит стойкой «Р». Обе буквы сходятся в одной точке на лазерной линии. Строгий знак, как у мебельной фабрики или архитектурного бюро; хорошо смотрится тиснением на фасаде, коробке, визитке.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#i3"/></svg></div><div class="ico round"><svg><use href="#i3"/></svg></div></div>
+    <div class="paper"><svg class="m"><use href="#i3"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row">
+  <div><div class="n">4 · Буквы встают ровно</div><div class="t">Сначала криво, потом по уровню</div>
+    <div class="tilt"><div class="crook"></div><div class="laser"></div>
+      <span style="transform:rotate(-15deg) translateY(-6px)">У</span><span style="transform:rotate(-8deg) translateY(-3px)">Р</span><span style="transform:rotate(-3deg)">О</span><span>В</span><span>Е</span><span>Н</span><span>Ь</span></div>
+    <div class="d">Первые буквы завалены, как стены до ремонта; с того места, где включается зелёный луч, всё встаёт ровно. Обещание компании в одной надписи: было криво, стало по уровню. На сайте и в рекламе это можно оживить, буквы выравниваются при появлении.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#i4"/></svg></div><div class="ico round"><svg><use href="#i4"/></svg></div></div>
+    <div class="paper"><svg class="m"><use href="#i4"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row">
+  <div><div class="n">5 · Н — стена и шкаф</div><div class="t">Ремонт и мебель, соединённые лучом</div>
+    <div class="hword"><span>УРОВЕ</span><svg><use href="#i5"/></svg><span>Ь</span></div>
+    <div class="d">Левая ножка «Н» — стена с плиткой (ремонт), правая — дверца шкафа с ручкой (мебель), перекладина — зелёный луч на одной высоте. Буква в середине слова объясняет всю компанию, а отдельно становится знаком.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#i5"/></svg></div><div class="ico round"><svg><use href="#i5"/></svg></div></div>
+    <div class="paper"><svg class="m"><use href="#i5"/></svg>УРОВЕНЬ</div></div>
+</div>
+</body>
+</html>
