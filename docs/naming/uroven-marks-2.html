@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>УРОВЕНЬ · креативные эмблемы</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1200px; padding:40px; background:radial-gradient(900px 500px at 10% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 34px/1.1 Forum,serif; margin:10px 0 22px; }
+  .row { display:grid; grid-template-columns:230px 1fr 260px; gap:22px; align-items:center; border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:20px 24px; background:rgba(255,255,255,.03); margin-bottom:14px; }
+  .big { width:200px; height:200px; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 26px/1.1 Forum,serif; margin:8px 0 6px; }
+  .d { font-size:14px; color:#D9D0B8; max-width:520px; }
+  .side { display:flex; flex-direction:column; gap:12px; align-items:flex-start; }
+  .lock { display:flex; align-items:center; gap:10px; font:400 26px/1 Forum,serif; letter-spacing:.12em; }
+  .lock svg { width:44px; height:44px; }
+  .paper { background:#F4EFE6; color:#0D0D0D; border-radius:12px; padding:10px 14px; }
+  .icons { display:flex; gap:10px; }
+  .ico { width:64px; height:64px; border-radius:16px; background:#0D0D0D; border:1px solid rgba(255,255,255,.18); display:grid; place-items:center; }
+  .ico svg { width:46px; height:46px; }
+  .ico.round { border-radius:50%; }
+  .wm { width:100%; height:120px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-20" y="-20" width="1000" height="300"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+    <!-- A. Ампула вместо буквы О -->
+    <symbol id="a" viewBox="0 0 240 240">
+      <line x1="10" y1="120" x2="230" y2="120" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <rect x="44" y="84" width="152" height="72" rx="36" fill="none" stroke="var(--ink)" stroke-width="12"/>
+      <line x1="100" y1="92" x2="100" y2="148" stroke="var(--ink)" stroke-width="4"/><line x1="140" y1="92" x2="140" y2="148" stroke="var(--ink)" stroke-width="4"/>
+      <circle cx="120" cy="120" r="13" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- B. Уголок с ампулой внутри полки -->
+    <symbol id="b" viewBox="0 0 240 240">
+      <rect x="60" y="30" width="22" height="174" fill="var(--ink)"/>
+      <rect x="82" y="150" width="120" height="54" fill="var(--ink)"/>
+      <rect x="104" y="164" width="76" height="26" rx="13" fill="var(--bg)"/>
+      <line x1="10" y1="177" x2="230" y2="177" stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="142" cy="177" r="8" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="71" y1="10" x2="71" y2="228" stroke="var(--g)" stroke-width="2.2" stroke-linecap="round" opacity=".7"/>
+    </symbol>
+
+    <!-- C. План комнаты в прицеле -->
+    <symbol id="c" viewBox="0 0 240 240">
+      <path d="M40 40H200V200H134" fill="none" stroke="var(--ink)" stroke-width="14" stroke-linejoin="miter"/>
+      <path d="M106 200H40V40" fill="none" stroke="var(--ink)" stroke-width="14"/>
+      <rect x="54" y="54" width="132" height="22" fill="var(--ink)" opacity=".9"/>
+      <rect x="54" y="76" width="22" height="64" fill="var(--ink)" opacity=".9"/>
+      <line x1="10" y1="120" x2="230" y2="120" stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <line x1="120" y1="10" x2="120" y2="230" stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="120" cy="120" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- D. Буква У из лазерного света -->
+    <symbol id="d" viewBox="0 0 240 240">
+      <path d="M126 120L70 214" stroke="var(--ink)" stroke-width="22" stroke-linecap="butt"/>
+      <g stroke="var(--g)" stroke-width="4" stroke-linecap="round" filter="url(#glow)">
+        <line x1="120" y1="122" x2="62" y2="30"/>
+        <line x1="120" y1="122" x2="178" y2="30"/>
+      </g>
+      <line x1="16" y1="122" x2="224" y2="122" stroke="var(--g)" stroke-width="2" stroke-linecap="round" opacity=".55"/>
+      <rect x="110" y="112" width="20" height="20" rx="4" fill="var(--ink)"/>
+      <circle cx="120" cy="122" r="5" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- E. Отвес и уровень -->
+    <symbol id="e" viewBox="0 0 240 240">
+      <line x1="16" y1="62" x2="224" y2="62" stroke="var(--g)" stroke-width="2.4" stroke-linecap="round" opacity=".7"/>
+      <rect x="60" y="44" width="120" height="36" rx="18" fill="none" stroke="var(--ink)" stroke-width="9"/>
+      <circle cx="120" cy="62" r="9" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="120" y1="80" x2="120" y2="164" stroke="var(--g)" stroke-width="3" filter="url(#glow)"/>
+      <path d="M120 164C138 164 148 176 148 186C148 204 132 214 120 230C108 214 92 204 92 186C92 176 102 164 120 164Z" fill="var(--ink)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">УРОВЕНЬ · ремонт и мебель под ключ</div>
+<h1>Пять креативных эмблем: инструмент точности, уголок и зелёный луч</h1>
+
+<div class="row" style="--ink:#FFF3CC;--g:#2FD16B;--bg:#0D0D0D">
+  <svg class="big"><use href="#a"/></svg>
+  <div><div class="n">A · Ампула вместо «О»</div><div class="t">Слово со встроенным уровнем</div>
+    <div class="d">В слове «УРОВЕНЬ» буква «О» превращается в ампулу строительного уровня, пузырёк стоит ровно по центру, через всё слово идёт зелёный луч. Эмблема и название — одно целое, а отдельно ампула работает как значок.</div>
+    <svg class="wm" viewBox="0 0 560 120">
+      <line x1="0" y1="62" x2="400" y2="62" stroke="#2FD16B" stroke-width="2.2" filter="url(#glow)"/>
+      <text x="0" y="84" font-family="Forum" font-size="64" letter-spacing="10" fill="#FFF3CC">УР</text>
+      <rect x="84" y="34" width="86" height="54" rx="27" fill="#0D0D0D" stroke="#FFF3CC" stroke-width="5"/>
+      <circle cx="127" cy="61" r="9" fill="#2FD16B" filter="url(#glow)"/>
+      <text x="184" y="84" font-family="Forum" font-size="64" letter-spacing="10" fill="#FFF3CC">ВЕНЬ</text>
+    </svg></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#a"/></svg></div><div class="ico round"><svg><use href="#a"/></svg></div></div>
+    <div class="lock paper" style="--ink:#0D0D0D;--g:#1FA552;--bg:#F4EFE6"><svg><use href="#a"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row" style="--ink:#FFF3CC;--g:#2FD16B;--bg:#0D0D0D">
+  <svg class="big"><use href="#b"/></svg>
+  <div><div class="n">B · Уголок с ампулой</div><div class="t">Уровень встроен в мебель</div>
+    <div class="d">Твой уголок: вертикаль — стена, горизонталь — столешница или полка. Внутри полки вырезана ампула уровня с пузырьком на лазерной линии. Буквально: «мебель, в которую встроен уровень».</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#b"/></svg></div><div class="ico round"><svg><use href="#b"/></svg></div></div>
+    <div class="lock paper" style="--ink:#0D0D0D;--g:#1FA552;--bg:#F4EFE6"><svg><use href="#b"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row" style="--ink:#FFF3CC;--g:#2FD16B;--bg:#0D0D0D">
+  <svg class="big"><use href="#c"/></svg>
+  <div><div class="n">C · План комнаты в прицеле</div><div class="t">Квартира с мебелью под лазером</div>
+    <div class="d">Вид сверху: стены комнаты с дверным проёмом, вдоль стен встроенная кухня углом. Лазерный крест делит комнату ровно пополам. Ремонт (стены) и мебель (кухня) в одном знаке, похоже на прицел точности.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#c"/></svg></div><div class="ico round"><svg><use href="#c"/></svg></div></div>
+    <div class="lock paper" style="--ink:#0D0D0D;--g:#1FA552;--bg:#F4EFE6"><svg><use href="#c"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row" style="--ink:#FFF3CC;--g:#2FD16B;--bg:#0D0D0D">
+  <svg class="big"><use href="#d"/></svg>
+  <div><div class="n">D · Буква У из света</div><div class="t">Нивелир рисует первую букву</div>
+    <div class="d">В центре — лазерный нивелир. Два зелёных луча расходятся вверх и рисуют верх буквы «У», а её ножка — твёрдая, светлая, как стена. Свет и материал вместе дают первую букву названия.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#d"/></svg></div><div class="ico round"><svg><use href="#d"/></svg></div></div>
+    <div class="lock paper" style="--ink:#0D0D0D;--g:#1FA552;--bg:#F4EFE6"><svg><use href="#d"/></svg>УРОВЕНЬ</div></div>
+</div>
+
+<div class="row" style="--ink:#FFF3CC;--g:#2FD16B;--bg:#0D0D0D">
+  <svg class="big"><use href="#e"/></svg>
+  <div><div class="n">E · Отвес и уровень</div><div class="t">Горизонталь и вертикаль мастера</div>
+    <div class="d">Два главных инструмента точности в одном знаке: сверху ампула уровня (горизонталь), из её центра опускается зелёный луч-отвес с грузом (вертикаль). Похоже на изящный кулон, звучит дорого и спокойно.</div></div>
+  <div class="side"><div class="icons"><div class="ico"><svg><use href="#e"/></svg></div><div class="ico round"><svg><use href="#e"/></svg></div></div>
+    <div class="lock paper" style="--ink:#0D0D0D;--g:#1FA552;--bg:#F4EFE6"><svg><use href="#e"/></svg>УРОВЕНЬ</div></div>
+</div>
+</body>
+</html>
