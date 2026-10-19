@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Вариант 7 · буквы, лазер и «НА УРОВНЕ»</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  :root { --ink:#FFF3CC; --ink2:#D9D0B8; --gold:#D4AF37; --gold-hi:#FFC857; --laser:#2FD16B; }
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:#0D0D0D; color:var(--ink); font:16px/1.5 Onest,sans-serif; overflow:hidden; }
+  .hero { position:relative; height:100svh; overflow:hidden; }
+  canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .inner { position:absolute; inset:0; display:grid; place-items:center; text-align:center; pointer-events:none; }
+  .box { width:min(1200px,94vw); }
+  .eyebrow { font:500 clamp(10px,1.1vw,13px)/1 'JetBrains Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); opacity:0; transition:opacity .8s; }
+  .word { display:flex; justify-content:center; align-items:baseline; margin:2.2vh 0 0; font:400 clamp(48px,11.5vw,180px)/1 Forum,serif; letter-spacing:.03em; transition:opacity .45s, transform .45s; }
+  .word span { display:inline-block; transform-origin:50% 90%; transition:transform .55s cubic-bezier(.2,1.4,.4,1), color .4s; color:#CDBF98; }
+  .word span.ok { transform:none !important; color:var(--ink); }
+  .word .gap { width:.62em; }
+  .word.away { opacity:0; }
+  .tag { margin:3.2vh 0 0; font:400 clamp(18px,2.2vw,30px)/1.2 Forum,serif; letter-spacing:.04em; color:var(--ink2); opacity:0; transform:translateY(10px); transition:all .8s; }
+  .cta { margin-top:4.2vh; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(10px); transition:all .8s .15s; }
+  .btn { pointer-events:auto; padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6);
+         background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
+         box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
+  .btn.ghost { color:var(--ink); background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.03)); border-color:rgba(255,255,255,.35); box-shadow:none; backdrop-filter:blur(6px); }
+  .hero.start .eyebrow { opacity:1; }
+  .hero.done .eyebrow, .hero.done .tag, .hero.done .cta { opacity:1; transform:none; }
+  .replay { position:fixed; right:16px; bottom:16px; z-index:2; font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.1em; color:#9C9480; background:rgba(13,13,13,.6); border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:9px 14px; cursor:pointer; }
+</style>
+</head>
+<body>
+<section class="hero" id="hero">
+  <canvas id="cv"></canvas>
+  <div class="inner"><div class="box">
+    <div class="eyebrow">Тюмень · Нижневартовск</div>
+    <div class="word" id="word" aria-label="НА УРОВНЕ"></div>
+    <div class="tag">Ремонт и мебель под ключ. Всё на одном уровне.</div>
+    <div class="cta"><a class="btn" href="#">Получить смету</a><a class="btn ghost" href="#">Конструктор кухни</a></div>
+  </div></div>
+</section>
+<button class="replay" id="replay">↻ ещё раз</button>
+<script>
+(function () {
+  var hero = document.getElementById('hero'), word = document.getElementById('word'), cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  var rough = new Image(), final = new Image(); rough.src = 'rough.webp'; final.src = 'final.webp';
+  var mask = document.createElement('canvas'), mctx = mask.getContext('2d'), tmp = document.createElement('canvas'), tctx = tmp.getContext('2d');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
+  var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
+  // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
+  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5300, fade1:5800, back0:5500, back1:6600, word:6250, done:6700 };
+
+  function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function lerp(a, b, k) { return a + (b - a) * k; }
+
+  function build() {
+    word.innerHTML = ''; word.classList.remove('away');
+    spans = [];
+    'НА УРОВНЕ'.split('').forEach(function (ch, i) {
+      var s = document.createElement('span');
+      if (ch === ' ') { s.className = 'gap'; s.innerHTML = '&nbsp;'; }
+      else { s.textContent = ch; s.style.transform = 'translateY(' + tilt[i][1] + 'px) rotate(' + tilt[i][0] + 'deg)'; }
+      word.appendChild(s); spans.push(s);
+    });
+  }
+  function measure() { // где у слова базовая линия, середина заглавных и промежуток между словами
+    var cs = getComputedStyle(word), fs = parseFloat(cs.fontSize);
+    var c = document.createElement('canvas').getContext('2d'); c.font = fs + 'px Forum';
+    var m = c.measureText('Н'), asc = m.fontBoundingBoxAscent || fs * .9, desc = m.fontBoundingBoxDescent || fs * .25, cap = m.actualBoundingBoxAscent || fs * .7;
+    var ref = spans[2].getBoundingClientRect(), hr = hero.getBoundingClientRect(); // пробел не наклонён — по нему точная линия
+    var base = ref.top - hr.top + (ref.height - asc - desc) / 2 + asc;
+    var g = spans[2].getBoundingClientRect(), first = spans[0].getBoundingClientRect(), lastR = spans[spans.length - 1].getBoundingClientRect();
+    return { base: base, mid: base - cap / 2, cap: cap, gx: g.left - hr.left + g.width / 2, left: first.left - hr.left, right: lastR.right - hr.left };
+  }
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = hero.clientWidth; H = hero.clientHeight;
+    cv.width = tmp.width = W * dpr; cv.height = tmp.height = H * dpr;
+    var old = mask.width ? mctx.getImageData(0, 0, mask.width, mask.height) : null;
+    mask.width = Math.round(W / 4); mask.height = Math.round(H / 4);
+    if (old) mctx.putImageData(old, 0, 0);
+    if (spans) geo = measure();
+  }
+  function cover(img) { var s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s; return [(W - w) / 2, (H - h) / 2, w, h]; }
+  function brush(a, b) {
+    var r = H * .17;
+    mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r * 2 / 4; mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 4;
+    mctx.beginPath(); mctx.moveTo(a.x / 4, a.y / 4); mctx.lineTo(b.x / 4, b.y / 4); mctx.stroke();
+  }
+  function zigzag(k) { // змейка из четырёх проходов сверху вниз
+    var rows = 4, f = Math.min(rows - 1e-6, k * rows), i = Math.floor(f), u = ease(f - i);
+    var x = i % 2 ? lerp(W * 1.05, -W * .05, u) : lerp(-W * .05, W * 1.05, u);
+    var y = H * (.12 + .253 * i) + H * .253 * Math.max(0, (f - i - .85) / .15) * (i < rows - 1 ? 1 : 0);
+    return { x: x, y: y };
+  }
+  function cross(x, y, hx0, hx1, vy0, vy1, alpha, dot) {
+    ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.globalAlpha = alpha; ctx.strokeStyle = '#2FD16B'; ctx.lineCap = 'round'; ctx.shadowColor = '#2FD16B'; ctx.shadowBlur = 14; ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.moveTo(hx0, y); ctx.lineTo(hx1, y); ctx.moveTo(x, vy0); ctx.lineTo(x, vy1); ctx.stroke();
+    ctx.globalAlpha = 1; ctx.fillStyle = '#2FD16B'; ctx.shadowBlur = 22; ctx.beginPath(); ctx.arc(x, y, dot, 0, 7); ctx.fill();
+    ctx.restore();
+  }
+
+  function frame(now) {
+    if (!rough.complete || !final.complete || !geo) { requestAnimationFrame(frame); return; }
+    var t = reduce ? 1e9 : now - t0;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalAlpha = 1;
+    var a = cover(rough), b = cover(final);
+    ctx.drawImage(rough, a[0], a[1], a[2], a[3]);
+    // бетон темнее, пока лазер выравнивает буквы
+    ctx.fillStyle = 'rgba(13,13,13,' + lerp(.78, .35, ease((t - T.sweep1) / 400)) + ')'; ctx.fillRect(0, 0, W, H);
+
+    // фаза 2: лазер ведёт змейкой и открывает готовый ремонт
+    var p = null;
+    if (t >= T.rev0 && t < T.rev1 + 50) {
+      p = zigzag(Math.min(1, (t - T.rev0) / (T.rev1 - T.rev0)));
+      if (lastP) brush(lastP, p); lastP = p;
+    }
+    tctx.setTransform(1, 0, 0, 1, 0, 0); tctx.clearRect(0, 0, tmp.width, tmp.height);
+    tctx.globalCompositeOperation = 'source-over'; tctx.drawImage(final, b[0] * dpr, b[1] * dpr, b[2] * dpr, b[3] * dpr);
+    tctx.globalCompositeOperation = 'destination-in'; tctx.drawImage(mask, 0, 0, tmp.width, tmp.height);
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(tmp, 0, 0);
+    var fin = ease((t - T.rev1) / (T.fade1 - T.rev1));
+    if (fin > 0) { ctx.globalAlpha = fin; ctx.drawImage(final, b[0] * dpr, b[1] * dpr, b[2] * dpr, b[3] * dpr); ctx.globalAlpha = 1; }
+    // затемнение под надпись, когда она возвращается
+    var sh = ease((t - T.back0) / 900);
+    if (sh > 0) {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var g = ctx.createRadialGradient(W / 2, geo.mid, 0, W / 2, geo.mid, Math.max(W, H) * .7);
+      g.addColorStop(0, 'rgba(13,13,13,' + .72 * sh + ')'); g.addColorStop(1, 'rgba(13,13,13,' + .35 * sh + ')');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+
+    // фаза 1: луч по базовой линии выравнивает буквы
+    if (t >= T.sweep0 && t < T.rev0) {
+      var k = ease((t - T.sweep0) / (T.sweep1 - T.sweep0)), x0 = geo.left - 60, x1 = geo.right + 60, hx = lerp(x0, x1, k);
+      spans.forEach(function (s, i) {
+        if (flags[i]) return; var r = s.getBoundingClientRect(), hr = hero.getBoundingClientRect();
+        if (r.left - hr.left + r.width / 2 < hx) { flags[i] = 1; s.classList.add('ok'); }
+      });
+      var al = t > T.sweep1 ? 1 - (t - T.sweep1) / (T.rev0 - T.sweep1) : 1;
+      ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalAlpha = Math.max(0, al);
+      ctx.strokeStyle = '#2FD16B'; ctx.shadowColor = '#2FD16B'; ctx.shadowBlur = 14; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.moveTo(x0, geo.base + 2); ctx.lineTo(hx, geo.base + 2); ctx.stroke(); ctx.restore();
+      cross(hx, geo.base + 2, hx, hx, geo.base + 2, geo.base + 2, 1, 7);
+      if (t >= T.away && !word.classList.contains('away')) word.classList.add('away');
+      lastP = null;
+    }
+    // фаза 2: полный крест нивелира в точке луча
+    if (p) cross(p.x, p.y, 0, W, 0, H, .95, 6);
+    // фаза 3: крест летит обратно и встаёт между «НА» и «УРОВНЕ»
+    if (t >= T.rev1) {
+      if (!geo.straight) { geo = measure(); geo.straight = 1; } // буквы уже ровные — уточняем края
+      var q = ease((t - T.back0) / (T.back1 - T.back0)), from = zigzag(1);
+      var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, geo.mid, q);
+      var hl = lerp(0, geo.left - 34, q), hr2 = lerp(W, geo.right + 34, q), vh = lerp(H, geo.cap * .6, q);
+      cross(cx, cy, hl, hr2, cy - vh, cy + vh, lerp(.95, .8, q), lerp(6, Math.max(6, geo.cap * .07), q));
+      if (t >= T.word && word.classList.contains('away')) word.classList.remove('away');
+      if (t >= T.done && !hero.classList.contains('done')) hero.classList.add('done');
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function play() {
+    timers.forEach(clearTimeout); timers = [];
+    hero.classList.remove('done'); hero.classList.add('start');
+    build(); flags = spans.map(function () { return 0; });
+    mctx.clearRect(0, 0, mask.width || 1, mask.height || 1); lastP = null;
+    size();
+    if (reduce) { spans.forEach(function (s) { s.classList.add('ok'); }); hero.classList.add('done'); }
+    t0 = performance.now();
+  }
+  document.getElementById('replay').addEventListener('click', play);
+  addEventListener('resize', size);
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(function () { play(); requestAnimationFrame(frame); });
+})();
+</script>
+</body>
+</html>
