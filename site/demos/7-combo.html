@@ -49,7 +49,7 @@
   rough.src = tall ? 'assembly-before-m.webp' : 'assembly-before.webp'; final.src = tall ? 'assembly-after-m.webp' : 'assembly-after.webp';
   var mask = document.createElement('canvas'), mctx = mask.getContext('2d'), tmp = document.createElement('canvas'), tctx = tmp.getContext('2d');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
+  var sp = null, W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
   var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5400, fade1:6000, back0:5500, back1:6700 };
@@ -100,12 +100,12 @@
     mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r * 2 / 4; mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 4;
     mctx.beginPath(); mctx.moveTo(a.x / 4, a.y / 4); mctx.lineTo(b.x / 4, b.y / 4); mctx.stroke();
   }
-  function wander(k) { // плавное «блуждание» лазера: сумма синусов с разными частотами, без углов и остановок
+  function wander(k) { // плавное «блуждание» лазера: две широкие синусоиды, мягкий разгон и торможение
+    k = (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, k)))) / 2;
     var u = k * Math.PI * 2;
-    var x = .5 + .44 * Math.sin(1.6 * u + .2) + .06 * Math.sin(3.1 * u + 1.3);
-    var y = .5 + .37 * Math.sin(2.3 * u + 2.1) + .07 * Math.sin(3.9 * u + .5);
+    var x = .5 + .42 * Math.sin(1.2 * u + .2), y = .5 + .36 * Math.sin(1.7 * u + 2.1);
     var p = { x: x * W, y: y * H }, s0 = { x: geo.right + 60, y: geo.base + 2 }; // стартует оттуда, где закончил выравнивать буквы
-    var b = ease(Math.min(1, k / .1));
+    var b = ease(Math.min(1, k / .15));
     return { x: lerp(s0.x, p.x, b), y: lerp(s0.y, p.y, b) };
   }
   function cross(x, y, hx0, hx1, vy0, vy1, alpha, dot) {
@@ -128,7 +128,10 @@
     // фаза 2: лазер ведёт змейкой и открывает готовый ремонт
     var p = null;
     if (t >= T.rev0 && t < T.rev1 + 50) {
-      p = wander(Math.min(1, (t - T.rev0) / (T.rev1 - T.rev0)));
+      var aim = wander((t - T.rev0) / (T.rev1 - T.rev0)), dt = Math.min(50, now - (frame.prev || now));
+      if (!sp) sp = { x: aim.x, y: aim.y };
+      var f = 1 - Math.exp(-dt / 90); sp.x += (aim.x - sp.x) * f; sp.y += (aim.y - sp.y) * f; // точка мягко догоняет траекторию
+      p = { x: sp.x, y: sp.y };
       if (lastP) brush(lastP, p); lastP = p;
     }
     tctx.setTransform(1, 0, 0, 1, 0, 0); tctx.clearRect(0, 0, tmp.width, tmp.height);
@@ -166,19 +169,19 @@
     // фаза 3: крест летит обратно и встаёт между «НА» и «УРОВНЕ»
     if (t >= T.rev1) {
       if (!geo.straight) { geo = measure(); geo.straight = 1; } // буквы уже ровные — уточняем края
-      var q = ease((t - T.back0) / (T.back1 - T.back0)), from = wander(1);
+      var q = ease((t - T.back0) / (T.back1 - T.back0)), from = sp || wander(1);
       var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, geo.mid, q);
       var hl = lerp(0, geo.left - 34, q), hr2 = lerp(W, geo.right + 34, q), vh = lerp(H, geo.cap * .6, q);
       cross(cx, cy, hl, hr2, cy - vh, cy + vh, lerp(.95, .8, q), lerp(6, Math.max(6, geo.cap * .07), q));
           }
-    requestAnimationFrame(frame);
+    frame.prev = now; requestAnimationFrame(frame);
   }
 
   function play() {
     timers.forEach(clearTimeout); timers = [];
     hero.classList.remove('done'); hero.classList.add('start');
     build(); flags = spans.map(function () { return 0; });
-    mctx.clearRect(0, 0, mask.width || 1, mask.height || 1); lastP = null;
+    mctx.clearRect(0, 0, mask.width || 1, mask.height || 1); lastP = null; sp = null;
     size();
     if (reduce) { spans.forEach(function (s) { s.classList.add('ok'); }); hero.classList.add('done'); }
     t0 = performance.now();
