@@ -49,6 +49,7 @@
   rough.src = tall ? 'assembly-before-m.webp' : 'assembly-before.webp'; final.src = tall ? 'assembly-after-m.webp' : 'assembly-after.webp';
   var mask = document.createElement('canvas'), mctx = mask.getContext('2d'), tmp = document.createElement('canvas'), tctx = tmp.getContext('2d');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var LINE = /[?&]mode=line/.test(location.search); // ?mode=line — луч опускается сверху вниз
   var sp = null, W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
@@ -127,7 +128,12 @@
 
     // фаза 2: лазер ведёт змейкой и открывает готовый ремонт
     var p = null;
-    if (t >= T.rev0 && t < T.rev1 + 50) {
+    if (LINE && t >= T.rev0) { // режим «луч сверху вниз»: горизонтальная линия нивелира медленно опускается и открывает фон
+      var ly = lerp(-H * .04, H * 1.04, (1 - Math.cos(Math.PI * Math.min(1, (t - T.rev0) / (T.rev1 - T.rev0)))) / 2);
+      mctx.shadowBlur = 0; mctx.fillStyle = '#fff'; mctx.fillRect(0, 0, mask.width, Math.max(0, ly / 4));
+      if (t < T.rev1 + 50) p = { x: W / 2, y: ly };
+      sp = { x: W / 2, y: Math.min(ly, H * 1.04) };
+    } else if (t >= T.rev0 && t < T.rev1 + 50) {
       var aim = wander((t - T.rev0) / (T.rev1 - T.rev0)), dt = Math.min(50, now - (frame.prev || now));
       if (!sp) sp = { x: aim.x, y: aim.y };
       var f = 1 - Math.exp(-dt / 240); sp.x += (aim.x - sp.x) * f; sp.y += (aim.y - sp.y) * f; // точка мягко догоняет траекторию
@@ -165,7 +171,7 @@
       lastP = null;
     }
     // фаза 2: полный крест нивелира в точке луча
-    if (p) cross(p.x, p.y, 0, W, 0, H, .95, 6);
+    if (p) { if (LINE) cross(p.x, p.y, 0, W, p.y, p.y, .95, 6); else cross(p.x, p.y, 0, W, 0, H, .95, 6); }
     // фаза 3: крест летит обратно и встаёт между «НА» и «УРОВНЕ»
     if (t >= T.rev1) {
       if (!geo.straight) { geo = measure(); geo.straight = 1; } // буквы уже ровные — уточняем края
