@@ -52,7 +52,7 @@
   var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
-  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:6400, fade1:7000, back0:6500, back1:7700 };
+  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5400, fade1:6000, back0:5500, back1:6700 };
 
   function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function lerp(a, b, k) { return a + (b - a) * k; }
