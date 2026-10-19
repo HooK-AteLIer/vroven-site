@@ -53,7 +53,7 @@
   var sp = null, W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
-  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5400, fade1:6100, back0:5500, back1:6700 };
+  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5400, fade1:6400, back0:5500, back1:6700 };
 
   function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function lerp(a, b, k) { return a + (b - a) * k; }
@@ -97,8 +97,8 @@
     c.drawImage(img, r[0] * k, r[1] * k, r[2] * k, r[3] * k);
   }
   function brush(a, b) {
-    var r = Math.max(H * .24, W * .15);
-    mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r * 2 / 4; mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 2.5;
+    var r = Math.max(H * .13, W * .08); // узкая полоса: фон открывается ровно там, где прошёл лазер
+    mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r * 2 / 4; mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 5;
     mctx.beginPath(); mctx.moveTo(a.x / 4, a.y / 4); mctx.lineTo(b.x / 4, b.y / 4); mctx.stroke();
   }
   function wander(k) { // плавное «блуждание» лазера: две широкие синусоиды, мягкий разгон и торможение
@@ -144,7 +144,7 @@
     tctx.globalCompositeOperation = 'source-over'; put(tctx, final, b, dpr);
     tctx.globalCompositeOperation = 'destination-in'; tctx.drawImage(mask, 0, 0, tmp.width, tmp.height);
     ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(tmp, 0, 0);
-    var fin = ease((t - T.rev1 + 400) / (T.fade1 - T.rev1 + 400)); // остаток фона проявляется мягко, чуть раньше конца прохода
+    var fin = ease((t - T.rev1) / (T.fade1 - T.rev1)); // остаток фона проявляется только после прохода лазера
     if (fin > 0) { ctx.globalAlpha = fin; put(ctx, final, b, dpr); ctx.globalAlpha = 1; }
     // затемнение под надпись, когда она возвращается
     var sh = ease((t - T.rev0) / 700); // затемнение под надписью, пока открывается фон и после
