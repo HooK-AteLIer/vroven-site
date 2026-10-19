@@ -45,7 +45,7 @@
 <script>
 (function () {
   var hero = document.getElementById('hero'), word = document.getElementById('word'), cv = document.getElementById('cv'), ctx = cv.getContext('2d');
-  var rough = new Image(), final = new Image(); rough.src = 'rough.webp'; final.src = 'final.webp';
+  var rough = new Image(), final = new Image(); rough.src = 'assembly-before.webp'; final.src = 'assembly-after.webp';
   var mask = document.createElement('canvas'), mctx = mask.getContext('2d'), tmp = document.createElement('canvas'), tctx = tmp.getContext('2d');
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
