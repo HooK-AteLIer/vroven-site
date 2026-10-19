@@ -54,7 +54,7 @@
   var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
-  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:5900, fade1:6400, back0:6000, back1:7100, word:6750, done:7200 };
+  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:9400, fade1:10000, back0:9500, back1:10700, word:10300, done:10800 };
 
   function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function lerp(a, b, k) { return a + (b - a) * k; }
@@ -94,8 +94,8 @@
   }
   function wander(k) { // плавное «блуждание» лазера: сумма синусов с разными частотами, без углов и остановок
     var u = k * Math.PI * 2;
-    var x = .5 + .44 * Math.sin(2.3 * u + .2) + .06 * Math.sin(4.9 * u + 1.3);
-    var y = .5 + .37 * Math.sin(3.1 * u + 2.1) + .08 * Math.sin(6.3 * u + .5);
+    var x = .5 + .44 * Math.sin(1.6 * u + .2) + .06 * Math.sin(3.1 * u + 1.3);
+    var y = .5 + .37 * Math.sin(2.3 * u + 2.1) + .07 * Math.sin(3.9 * u + .5);
     var p = { x: x * W, y: y * H }, s0 = { x: geo.right + 60, y: geo.base + 2 }; // стартует оттуда, где закончил выравнивать буквы
     var b = ease(Math.min(1, k / .1));
     return { x: lerp(s0.x, p.x, b), y: lerp(s0.y, p.y, b) };
