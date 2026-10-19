@@ -19,7 +19,6 @@
   .word span { display:inline-block; transform-origin:50% 90%; transition:transform .55s cubic-bezier(.2,1.4,.4,1), color .4s; color:#CDBF98; }
   .word span.ok { transform:none !important; color:var(--ink); }
   .word .gap { width:.62em; }
-  .word.away { opacity:0; }
   .tag { margin:3.2vh 0 0; font:400 clamp(18px,2.2vw,30px)/1.2 Forum,serif; letter-spacing:.04em; color:var(--ink2); opacity:0; transform:translateY(10px); transition:all .8s; }
   .cta { margin-top:4.2vh; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(10px); transition:all .8s .15s; }
   .btn { pointer-events:auto; padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6);
@@ -27,7 +26,6 @@
          box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
   .btn.ghost { color:var(--ink); background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.03)); border-color:rgba(255,255,255,.35); box-shadow:none; backdrop-filter:blur(6px); }
   .hero.start .eyebrow { opacity:1; }
-  .hero.start.reveal .eyebrow { opacity:0; } /* пока лазер открывает картинку, на экране ничего лишнего */
   .hero.done .eyebrow, .hero.done .tag, .hero.done .cta { opacity:1; transform:none; }
   /* телефон: вертикальный кадр, надпись наверху на гладком потолке, мастера видны целиком */
   @media (max-aspect-ratio: 4/5) { .inner { place-items:start center; padding-top:11svh; } .tag { margin-top:2.2vh; } .cta { margin-top:2.6vh; } }
@@ -54,13 +52,13 @@
   var W, H, dpr, t0, geo, spans, flags, lastP, timers = [];
   var tilt = [[-9,-14],[7,10],[0,0],[-4,-22],[11,6],[-7,16],[5,-9],[-12,8],[8,-12]];
   // фазы, мс: 1 — лазер выравнивает буквы, 2 — сам открывает картинку, 3 — возвращается в название
-  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:6400, fade1:7000, back0:6500, back1:7700, word:7300, done:7800 };
+  var T = { sweep0:300, sweep1:2000, away:2150, rev0:2400, rev1:6400, fade1:7000, back0:6500, back1:7700 };
 
   function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
   function lerp(a, b, k) { return a + (b - a) * k; }
 
   function build() {
-    word.innerHTML = ''; word.classList.remove('away');
+    word.innerHTML = '';
     spans = [];
     'НА УРОВНЕ'.split('').forEach(function (ch, i) {
       var s = document.createElement('span');
@@ -130,7 +128,7 @@
     var fin = ease((t - T.rev1) / (T.fade1 - T.rev1));
     if (fin > 0) { ctx.globalAlpha = fin; ctx.drawImage(final, b[0] * dpr, b[1] * dpr, b[2] * dpr, b[3] * dpr); ctx.globalAlpha = 1; }
     // затемнение под надпись, когда она возвращается
-    var sh = ease((t - T.back0) / 900);
+    var sh = ease((t - T.rev0) / 700); // затемнение под надписью, пока открывается фон и после
     if (sh > 0) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var g = ctx.createRadialGradient(W / 2, geo.mid, 0, W / 2, geo.mid, Math.max(W, H) * .7);
@@ -150,7 +148,7 @@
       ctx.strokeStyle = '#2FD16B'; ctx.shadowColor = '#2FD16B'; ctx.shadowBlur = 14; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(x0, geo.base + 2); ctx.lineTo(hx, geo.base + 2); ctx.stroke(); ctx.restore();
       cross(hx, geo.base + 2, hx, hx, geo.base + 2, geo.base + 2, 1, 7);
-      if (t >= T.away && !word.classList.contains('away')) { word.classList.add('away'); hero.classList.add('reveal'); }
+      if (t >= T.away && !hero.classList.contains('done')) hero.classList.add('done'); // буквы ровные — надпись остаётся на экране, дальше лазер открывает фон
       lastP = null;
     }
     // фаза 2: полный крест нивелира в точке луча
@@ -162,15 +160,13 @@
       var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, geo.mid, q);
       var hl = lerp(0, geo.left - 34, q), hr2 = lerp(W, geo.right + 34, q), vh = lerp(H, geo.cap * .6, q);
       cross(cx, cy, hl, hr2, cy - vh, cy + vh, lerp(.95, .8, q), lerp(6, Math.max(6, geo.cap * .07), q));
-      if (t >= T.word && word.classList.contains('away')) { word.classList.remove('away'); hero.classList.remove('reveal'); }
-      if (t >= T.done && !hero.classList.contains('done')) hero.classList.add('done');
-    }
+          }
     requestAnimationFrame(frame);
   }
 
   function play() {
     timers.forEach(clearTimeout); timers = [];
-    hero.classList.remove('done', 'reveal'); hero.classList.add('start');
+    hero.classList.remove('done'); hero.classList.add('start');
     build(); flags = spans.map(function () { return 0; });
     mctx.clearRect(0, 0, mask.width || 1, mask.height || 1); lastP = null;
     size();
