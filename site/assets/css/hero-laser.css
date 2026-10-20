@@ -28,10 +28,8 @@
 
 .hl__tag {
   margin: 3.2vh 0 0; font: 400 clamp(18px, 2.2vw, 30px)/1.2 var(--f-display); letter-spacing: .04em; color: #FFF3CC;
-  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
-  opacity: 0; transform: translateY(10px); transition: opacity .8s, transform .8s;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5); /* подпись на экране всё время, не мигает */
 }
-.hl.is-done .hl__tag, .hl:not(.is-ready) .hl__tag { opacity: 1; transform: none; }
 
 /* телефон: вертикальный кадр прижат к низу, надпись наверху на гладком потолке */
 @media (max-aspect-ratio: 4/5) {
@@ -39,5 +37,5 @@
   .hl__tag { margin-top: 2.2vh; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hl__word span, .hl__tag { transition: none; }
+  .hl__word span { transition: none; }
 }

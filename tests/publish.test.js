@@ -22,8 +22,8 @@ for (const page of PAGES) {
     assert.ok(meta(html, 'property', 'og:title'), 'og:title');
     assert.ok(meta(html, 'property', 'og:description'), 'og:description');
     const img = meta(html, 'property', 'og:image');
-    assert.ok(img && /og-image\.jpg$/.test(img), 'og:image = финальный кадр героя');
-    assert.ok(fs.existsSync(path.join(SITE, 'assets/img/hero/og-image.jpg')), 'файл og:image есть');
+    assert.ok(img && /og-naurovne\.jpg$/.test(img), 'og:image = финальный кадр героя');
+    assert.ok(fs.existsSync(path.join(SITE, 'assets/img/hero/og-naurovne.jpg')), 'файл og:image есть');
     assert.match(html, /<link rel="icon" href="favicon\.svg" type="image\/svg\+xml">/);
   });
 
