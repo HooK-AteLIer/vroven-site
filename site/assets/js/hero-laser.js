@@ -145,6 +145,9 @@
         cross(hx, geo.base + 2, hx, hx, geo.base + 2, geo.base + 2, 1, 7);
         lastP = null;
       }
+      if (t >= T.sweep1 && flags.indexOf(0) !== -1) { // кадры могли пропуститься (вкладка в фоне): буквы всё равно встают ровно
+        spans.forEach(function (s, i) { flags[i] = 1; s.classList.add('is-level'); });
+      }
       if (t >= T.done && !hero.classList.contains('is-done')) hero.classList.add('is-done');
       if (p) cross(p.x, p.y, 0, W, 0, H, .95, 6);
       if (t >= T.rev1) { // крест возвращается и встаёт между словами
