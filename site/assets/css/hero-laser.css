@@ -1,0 +1,43 @@
+/* НА УРОВНЕ: первый экран главной. Логика в hero-laser.js. */
+.hl {
+  position: relative; overflow: hidden;
+  height: calc(100svh - var(--header-h)); min-height: 520px;
+  background: #0D0D0D url('../img/hero/laser-after-w.webp') center / cover no-repeat; /* без скрипта: сразу готовый кадр */
+  color: #FFF3CC;
+}
+@media (max-aspect-ratio: 4/5) { .hl { background-image: url('../img/hero/laser-after-m.webp'); background-position: center bottom; } }
+.hl.is-ready { background-image: none; }
+.hl__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+.hl__inner {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center;
+  padding-inline: var(--gutter); pointer-events: none;
+}
+.hl__box { width: min(1200px, 100%); }
+.hl__title { margin: 0; font: inherit; }
+.hl__word {
+  display: flex; justify-content: center; align-items: baseline;
+  font: 400 clamp(48px, 11.5vw, 180px)/1 var(--f-display); letter-spacing: .03em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, .55), 0 0 2px rgba(0, 0, 0, .35);
+}
+.hl__word span { display: inline-block; transform-origin: 50% 90%; color: #CDBF98; transition: transform .55s cubic-bezier(.2, 1.4, .4, 1), color .4s; }
+.hl__word span.is-level { transform: none !important; color: #FFF3CC; }
+.hl__word .hl__gap { width: .62em; }
+/* без скрипта буквы сразу ровные */
+.hl:not(.is-ready) .hl__word span { transform: none !important; color: #FFF3CC; }
+
+.hl__tag {
+  margin: 3.2vh 0 0; font: 400 clamp(18px, 2.2vw, 30px)/1.2 var(--f-display); letter-spacing: .04em; color: #FFF3CC;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, .7), 0 0 2px rgba(0, 0, 0, .5);
+  opacity: 0; transform: translateY(10px); transition: opacity .8s, transform .8s;
+}
+.hl.is-done .hl__tag, .hl:not(.is-ready) .hl__tag { opacity: 1; transform: none; }
+
+/* телефон: вертикальный кадр прижат к низу, надпись наверху на гладком потолке */
+@media (max-aspect-ratio: 4/5) {
+  .hl__inner { place-items: start center; padding-top: 9svh; }
+  .hl__tag { margin-top: 2.2vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl__word span, .hl__tag { transition: none; }
+}

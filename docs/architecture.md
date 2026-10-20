@@ -17,8 +17,8 @@
 - Чистые, без DOM, тестируются в Node: `pricing.js`, `kitchen-layout.js`, `lead.js`, `data.js`. Конец файла: `if (typeof module !== 'undefined') module.exports = X;`, вне Node вешаются на `window.VROVEN.X`.
 - `kitchen-render.js` только рисует то, что дал `kitchen-layout`, расчётов раскладки в нём нет.
 - `core.js` — общее: город, `format.rub/mm/num`, `placeholderBadge`, мобильное меню, активный пункт навигации. Шапка и подвал дублируются в HTML каждой страницы, не генерируются.
-- Страничные модули: `index.js` (+ `hero-scrub.js`, `hero-frames.js`, `before-after.js`, `design-layers.js`, `measure-clip.js` — общий модуль «ролик один раз при появлении»: атрибуты `data-once-clip`/`data-once-play`/`data-once-label` (и прежние `data-measure-*`), ролики в `#measure` и облёт офиса в `#commercial`), `kitchen-app.js` (+ `kitchen-accordion.js` — гармошка выбора стиля), `lookbook.js`, `jobs.js`; страничные стили лежат отдельно (`index.css`, `hero.css`, `kitchen.css`, `lookbook.css`, `jobs.css`), общие токены и компоненты в `site.css`.
-- Вне `site/`: `tests/` (node:test, швы: pricing, kitchen-layout, lead, kitchen-app, kitchen-accordion, hero-frames, before-after, design-layers, furniture, jobs-photos, publish), `brand/` (Python-сборка, не часть сайта), `media-raw/` (сырьё, не в git), `docs/`, `ref/`.
+- Страничные модули: `index.js` (+ `hero-laser.js`, `before-after.js`, `design-layers.js`, `measure-clip.js` — общий модуль «ролик один раз при появлении»: атрибуты `data-once-clip`/`data-once-play`/`data-once-label` (и прежние `data-measure-*`), ролики в `#measure` и облёт офиса в `#commercial`), `kitchen-app.js` (+ `kitchen-accordion.js` — гармошка выбора стиля), `lookbook.js`, `jobs.js`; страничные стили лежат отдельно (`index.css`, `hero-laser.css`, `kitchen.css`, `lookbook.css`, `jobs.css`), общие токены и компоненты в `site.css`.
+- Вне `site/`: `tests/` (node:test, швы: pricing, kitchen-layout, lead, kitchen-app, kitchen-accordion, hero-laser, before-after, design-layers, furniture, jobs-photos, publish), `brand/` (Python-сборка, не часть сайта), `media-raw/` (сырьё, не в git), `docs/`, `ref/`.
 
 ## Соглашения
 
@@ -27,6 +27,6 @@
 - Размеры конструктора в миллиметрах, целыми числами; цена кухни считается от погонного метра нижнего ряда.
 - Ставки в `data.js` читаются как `{value}` или по городу `{tyumen:{value}}`; `null` = «по смете».
 - Мобильная ширина от 360 px без горизонтального скролла; `prefers-reduced-motion` гасит анимации до конечного состояния.
-- Герой: режим выбирает `chooseMode` (`hero-frames.js`): широкий экран — скраб видео; телефон и вертикальный планшет — 72 кадра на canvas; телефон с Save-Data или 2g/3g — три картинки с кроссфейдом; file:// и reduced-motion — статичный финальный кадр.
+- Первый экран (`hero-laser.js`): canvas рисует бетон «до», маска по следу лазера открывает кадр «после»; на телефоне вертикальная пара кадров. reduced-motion — сразу финальный кадр; без JS CSS показывает финальный кадр фоном.
 - Раскладка кухни: стены A, B, C, стыки A->B->C; угол принадлежит A (на конце) и C (на начале); окно убирает верхние шкафы, дверной проём убирает все модули; дверь ближе 600 мм к стыку даёт ошибку `door`.
 - Публикация: `site/README.md`; перед выкладкой выполнить DEPLOY STEP (абсолютный `og:image`, `og:url`).

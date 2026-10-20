@@ -1,5 +1,5 @@
 /*
- * ВРОВЕНЬ: чертёж кухни в SVG.
+ * НА УРОВНЕ: чертёж кухни в SVG.
  *   renderElevation(svgEl, wallLayout, style, colorId, ceiling, opts?) — фасадная развёртка стены
  *   renderPlan(svgEl, layout, opts?) — вид сверху всех стен и острова
  *   swatch(style, colorId) — маленькая картинка стиля для выбора (строка SVG)

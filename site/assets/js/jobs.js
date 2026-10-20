@@ -1,4 +1,4 @@
-/* ВРОВЕНЬ: страница вакансий. Карточки собираются из VROVEN.data.jobs. */
+/* НА УРОВНЕ: страница вакансий. Карточки собираются из VROVEN.data.jobs. */
 (function () {
   'use strict';
   var V = window.VROVEN || {};

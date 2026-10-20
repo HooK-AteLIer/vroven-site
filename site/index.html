@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ВРОВЕНЬ: ремонт под ключ и мебель своего производства</title>
+  <title>НА УРОВНЕ: ремонт под ключ и мебель своего производства</title>
   <meta name="description" content="Ремонт квартир и коммерческих помещений под ключ и корпусная мебель своего производства в Тюмени и Нижневартовске. Один договор, один прораб.">
   <meta name="theme-color" content="#0D0D0D">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="ВРОВЕНЬ">
+  <meta property="og:site_name" content="НА УРОВНЕ">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:title" content="ВРОВЕНЬ: ремонт и мебель по одному договору">
+  <meta property="og:title" content="НА УРОВНЕ: ремонт и мебель по одному договору">
   <meta property="og:description" content="Ремонт квартир и помещений под ключ и мебель из своего цеха в Тюмени и Нижневартовске. Мебель встаёт точно в размер после ремонта.">
   <meta property="og:image" content="https://shatskihton-boop.github.io/vroven-site/assets/img/hero/og-image.jpg">
   <meta property="og:url" content="https://shatskihton-boop.github.io/vroven-site/">
@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Forum&family=Onest:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/index.css">
-  <link rel="stylesheet" href="assets/css/hero.css">
+  <link rel="stylesheet" href="assets/css/hero-laser.css">
   <!-- диагностика первого экрана на телефоне: открыть сайт с ?debug=1 -->
   <script>
     (function () {
@@ -30,16 +30,16 @@
       var errs = [];
       addEventListener('error', function (e) { errs.push((e.message || 'ресурс') + ' ' + ((e.target && (e.target.src || e.target.href)) || e.filename || '') + ':' + (e.lineno || '')); }, true);
       function show() {
-        var V = window.VROVEN || {}, H = V.hero, mq = function (q) { return matchMedia(q).matches ? 'да' : 'нет'; };
+        var V = window.VROVEN || {}, H = V.heroLaser, mq = function (q) { return matchMedia(q).matches ? 'да' : 'нет'; };
         var c = navigator.connection || {};
-        var hero = document.querySelector('[data-hero]');
+        var hero = document.querySelector('[data-hl]');
         var lines = [
           'режим: ' + (H ? H.mode() : 'скрипт героя не запустился'),
           'классы: ' + (hero ? hero.className : '-'),
           'уменьшение движения: ' + mq('(prefers-reduced-motion: reduce)'),
           'телефон: ' + mq('(max-width: 767px)') + ' / касание: ' + mq('(pointer: coarse)'),
           'экономия трафика: ' + (c.saveData ? 'да' : 'нет') + ', сеть: ' + (c.effectiveType || '?'),
-          'кадров загружено: ' + performance.getEntriesByType('resource').filter(function (r) { return /frames\//.test(r.name); }).length,
+          'картинок героя загружено: ' + performance.getEntriesByType('resource').filter(function (r) { return /hero\/laser-/.test(r.name); }).length,
           'ошибки: ' + (errs.length ? errs.slice(-4).join(' | ') : 'нет'),
           navigator.userAgent
         ];
@@ -61,16 +61,15 @@
   <script defer src="assets/js/index.js"></script>
   <script defer src="assets/js/before-after.js"></script>
   <script defer src="assets/js/design-layers.js"></script>
-  <script defer src="assets/js/hero-frames.js"></script>
-  <script defer src="assets/js/hero-scrub.js"></script>
+  <script defer src="assets/js/hero-laser.js"></script>
   <script defer src="assets/js/measure-clip.js"></script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">К содержанию</a>
   <header class="site-header">
     <div class="site-header__bar">
-      <a class="logo" href="index.html" aria-label="ВРОВЕНЬ, на главную">
-        <img class="logo__img" src="assets/img/logo/vroven-wordmark-inverse.svg" alt="ВРОВЕНЬ" width="865" height="122">
+      <a class="logo" href="index.html" aria-label="НА УРОВНЕ, на главную">
+        <img class="logo__img" src="assets/img/logo/naurovne-wordmark-inverse.svg" alt="НА УРОВНЕ" width="823" height="122">
       </a>
       <div class="site-menu" id="site-menu" data-menu>
         <nav class="site-nav" aria-label="Основное меню">
@@ -103,49 +102,13 @@
   </header>
 
   <main id="main">
-    <!-- Герой: на десктопе ролик прокручивается скроллом (hero-scrub.js), на телефоне кадры на canvas или три картинки при экономии трафика (hero-frames.js); при reduced motion, с file:// и без видео статичный кадр -->
-    <section class="hero" id="hero" aria-label="Ремонт и мебель одной командой" data-hero>
-      <div class="hero__stage">
-        <div class="hero__media" aria-hidden="true">
-          <div class="hero__still"></div>
-          <div class="hero__poster" data-hero-poster></div>
-          <canvas class="hero__canvas" data-hero-canvas aria-hidden="true"></canvas>
-          <video class="hero__video" data-hero-video preload="none" muted playsinline disablepictureinpicture aria-hidden="true" tabindex="-1"></video>
-          <div class="hero__scrim"></div>
-        </div>
-
-        <div class="hero__band hero__band--brand" data-band="0 0.14" data-fx="level">
-          <p class="hero__eyebrow mono">Тюмень · Нижневартовск</p>
-          <p class="hero__brand" data-split>ВРОВЕНЬ</p>
-          <span class="hero__laser" aria-hidden="true"></span>
-          <p class="hero__tag" data-split>Ремонт и мебель под ключ</p>
-        </div>
-
-        <div class="hero__band hero__band--beat hero__band--right" data-band="0.17 0.6" data-fx="drift">
-          <p class="hero__num mono">01 · ремонт</p>
-          <p class="hero__beat" data-split>Сначала выравниваем стены</p>
-          <p class="hero__beat-sub">Квартира, офис или кафе под ключ. Свои бригады, без субподряда.</p>
-        </div>
-
-        <div class="hero__band hero__band--beat" data-band="0.64 0.88" data-fx="rise">
-          <p class="hero__num mono">02 · мебель</p>
-          <p class="hero__beat" data-split>Потом делаем мебель под эти стены</p>
-          <p class="hero__beat-sub">Кухни, шкафы и гардеробные из своего цеха. Меряем после ремонта, поэтому всё встаёт в размер.</p>
-        </div>
-
-        <div class="hero__band hero__band--settle" data-band="0.9 1" data-fx="settle">
-          <h1 class="hero__title" data-split>Ремонт и мебель по&nbsp;одному договору</h1>
-          <p class="hero__sub">Один прораб, одна смета, один срок. Мебель встаёт точно в&nbsp;размер после ремонта.</p>
-          <p class="hero__price"><span data-hero-price="repair">Ремонт по смете</span><span class="hero__price-sep" aria-hidden="true">·</span><span data-hero-price="kitchen">кухня по смете</span><span class="badge-placeholder" data-hero-badge hidden>ориентировочно</span></p>
-          <div class="btn-row hero__cta">
-            <a class="btn" href="#bundle">Рассчитать комплект</a>
-            <a class="btn btn--ghost" href="kitchen.html">Конструктор кухни</a>
-          </div>
-        </div>
-
-        <div class="hero__cue" aria-hidden="true">
-          <svg class="hero__ring" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="3"/><circle class="hero__ring-bar" cx="24" cy="24" r="20" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="126"/></svg>
-          <span class="hero__cue-text mono">листайте</span>
+    <!-- Первый экран (hero-laser.js): кривые буквы «НА УРОВНЕ» выравниваются, лазер открывает готовый ремонт и сборку кухни, крест встаёт между словами. Без скрипта сразу готовый кадр -->
+    <section class="hl" id="hero" aria-label="НА УРОВНЕ: ремонт и мебель под ключ" data-hl>
+      <canvas class="hl__canvas" data-hl-canvas aria-hidden="true"></canvas>
+      <div class="hl__inner">
+        <div class="hl__box">
+          <h1 class="hl__title"><span class="visually-hidden">НА УРОВНЕ: ремонт и мебель под ключ</span><span class="hl__word" data-hl-word aria-hidden="true">НА<span class="hl__gap">&nbsp;</span>УРОВНЕ</span></h1>
+          <p class="hl__tag">Ремонт и мебель под ключ. Всё на&nbsp;одном уровне.</p>
         </div>
       </div>
     </section>
@@ -154,7 +117,7 @@
       <div class="container">
         <div class="about__grid">
           <div class="about__text" data-reveal>
-            <p class="eyebrow">Почему вровень</p>
+            <p class="eyebrow">Почему на уровне</p>
             <h2 id="about-title">Один договор на&nbsp;ремонт и&nbsp;мебель</h2>
             <p class="lead-text">Обычно стены делает одна бригада, а мебель заказывают в салоне. Потом шкаф не встаёт в нишу, розетка оказалась за пеналом, и каждый говорит, что виноват другой. У нас это одна команда: мы выравниваем стены и сами делаем под них мебель.</p>
           </div>
@@ -409,7 +372,7 @@
         </div>
         <div class="bundle" data-bundle>
           <div class="bundle__stage" data-bundle-stage>
-            <div class="bundle__level" aria-hidden="true"><span class="bundle__level-label mono">вровень</span></div>
+            <div class="bundle__level" aria-hidden="true"><span class="bundle__level-label mono">на уровне</span></div>
             <fieldset class="card bundle-card" data-bundle-card="repair">
               <legend class="bundle-card__legend"><span class="mono">01</span> Ремонт</legend>
               <p class="field__label" id="bundle-repair-label">Тип ремонта</p>
@@ -856,8 +819,8 @@
   <footer class="site-footer" id="footer">
     <div class="container site-footer__grid">
       <div>
-        <a class="logo" href="index.html" aria-label="ВРОВЕНЬ, на главную">
-          <img class="logo__img" src="assets/img/logo/vroven-wordmark-inverse.svg" alt="ВРОВЕНЬ" width="865" height="122">
+        <a class="logo" href="index.html" aria-label="НА УРОВНЕ, на главную">
+          <img class="logo__img" src="assets/img/logo/naurovne-wordmark-inverse.svg" alt="НА УРОВНЕ" width="823" height="122">
         </a>
         <p class="site-footer__tagline" data-fact="brand.tagline"></p>
         <p class="site-footer__tagline">Ремонт квартир и коммерческих помещений и корпусная мебель своего производства. Один договор, один прораб.</p>
@@ -891,7 +854,7 @@
     </div>
     <div class="container">
       <div class="site-footer__bottom">
-        <span>© <span data-year></span> <span data-fact="brand.name">ВРОВЕНЬ</span>. Цены на сайте ориентировочные, точная смета после замера.</span>
+        <span>© <span data-year></span> <span data-fact="brand.name">НА УРОВНЕ</span>. Цены на сайте ориентировочные, точная смета после замера.</span>
         <span>Тюмень · Нижневартовск</span>
       </div>
     </div>

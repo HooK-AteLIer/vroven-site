@@ -1,4 +1,4 @@
-/* ВРОВЕНЬ: конструктор кухни. Токены и общие компоненты в site.css. */
+/* НА УРОВНЕ: конструктор кухни. Токены и общие компоненты в site.css. */
 
 .kd { padding-block: 0 clamp(64px, 9vw, 120px); }
 .kd [hidden] { display: none !important; }
