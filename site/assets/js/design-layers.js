@@ -66,8 +66,9 @@
     var inputs = panel.querySelectorAll('input[data-bit]');
     var imgs = {};
     imgs[first.getAttribute('data-v') || FULL] = first;
-    var current = FULL;
-    var wanted = FULL;
+    var start = first.getAttribute('data-v') || FULL; // с чего начинает блок: сейчас всё выключено (000)
+    var current = start;
+    var wanted = start;
     var created = false;
 
     function readKey() {
@@ -127,9 +128,9 @@
     panel.addEventListener('focusin', ensure);
     panel.addEventListener('touchstart', ensure, { passive: true });
 
-    first.addEventListener('load', function () { if (wanted === FULL) show(FULL); });
+    first.addEventListener('load', function () { if (wanted === start) show(start); });
     first.classList.add('is-on');
-    first.alt = altText(FULL);
+    first.alt = altText(start);
     panel.hidden = false;
 
     if ('IntersectionObserver' in root) {
