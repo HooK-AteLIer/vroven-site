@@ -14,7 +14,6 @@
   canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
   .inner { position:absolute; inset:0; display:grid; place-items:center; text-align:center; pointer-events:none; }
   .box { width:min(1200px,94vw); }
-  .eyebrow { font:500 clamp(10px,1.1vw,13px)/1 'JetBrains Mono',monospace; letter-spacing:.24em; text-transform:uppercase; color:var(--gold); opacity:0; transition:opacity .8s; }
   .word { display:flex; justify-content:center; align-items:baseline; margin:2.2vh 0 0; font:400 clamp(48px,11.5vw,180px)/1 Forum,serif; letter-spacing:.03em; transition:opacity .45s, transform .45s; }
   .word span { display:inline-block; transform-origin:50% 90%; transition:transform .55s cubic-bezier(.2,1.4,.4,1), color .4s; color:#CDBF98; }
   .word span.ok { transform:none !important; color:var(--ink); }
@@ -25,8 +24,7 @@
          background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
          box-shadow:inset 0 1px 1px rgba(255,255,255,.9),0 10px 26px -8px rgba(212,175,55,.7); }
   .btn.ghost { color:var(--ink); background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,.03)); border-color:rgba(255,255,255,.35); box-shadow:none; backdrop-filter:blur(6px); }
-  .hero.start .eyebrow { opacity:1; }
-  .hero.done .eyebrow, .hero.done .tag, .hero.done .cta { opacity:1; transform:none; }
+  .hero.done .tag { opacity:1; transform:none; }
   /* телефон: вертикальный кадр, надпись наверху на гладком потолке, мастера видны целиком */
   @media (max-aspect-ratio: 4/5) { .inner { place-items:start center; padding-top:11svh; } .tag { margin-top:2.2vh; } .cta { margin-top:2.6vh; } }
   .replay { position:fixed; right:16px; bottom:16px; z-index:2; font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.1em; color:#9C9480; background:rgba(13,13,13,.6); border:1px solid rgba(255,255,255,.2); border-radius:999px; padding:9px 14px; cursor:pointer; }
@@ -36,7 +34,6 @@
 <section class="hero" id="hero">
   <canvas id="cv"></canvas>
   <div class="inner"><div class="box">
-    <div class="eyebrow">Тюмень · Нижневартовск</div>
     <div class="word" id="word" aria-label="НА УРОВНЕ"></div>
     <div class="tag">Ремонт и мебель под ключ. Всё на одном уровне.</div>
   </div></div>
