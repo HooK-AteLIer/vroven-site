@@ -192,7 +192,22 @@
     V.heroLaser = { mode: function () { return state + (tall ? ', телефон' : ', компьютер'); } };
   }
 
+  // шапка: нет, пока виден первый экран; выезжает, когда его низ уходит под шапку и начинается чёрный фон
+  function autoHeader(hero) {
+    var header = doc.querySelector('.site-header');
+    if (!header) return;
+    doc.documentElement.classList.add('hl-auto-header');
+    var on = null;
+    function update() {
+      var show = hero.getBoundingClientRect().bottom <= header.offsetHeight * 1.5;
+      if (show !== on) { on = show; header.classList.toggle('is-shown', show); }
+    }
+    root.addEventListener('scroll', update, { passive: true });
+    root.addEventListener('resize', update);
+    update();
+  }
+
   V.heroLaserInit = init;
-  function boot() { var el = doc.querySelector('[data-hl]'); if (el) init(el); }
+  function boot() { var el = doc.querySelector('[data-hl]'); if (el) { autoHeader(el); init(el); } }
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', boot); else boot();
 })(typeof window !== 'undefined' ? window : globalThis);
