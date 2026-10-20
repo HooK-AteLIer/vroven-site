@@ -14,11 +14,11 @@
   canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
   .inner { position:absolute; inset:0; display:grid; place-items:center; text-align:center; pointer-events:none; }
   .box { width:min(1200px,94vw); }
-  .word { display:flex; justify-content:center; align-items:baseline; margin:2.2vh 0 0; font:400 clamp(48px,11.5vw,180px)/1 Forum,serif; letter-spacing:.03em; transition:opacity .45s, transform .45s; }
+  .word { display:flex; justify-content:center; align-items:baseline; margin:2.2vh 0 0; font:400 clamp(48px,11.5vw,180px)/1 Forum,serif; letter-spacing:.03em; transition:opacity .45s, transform .45s; text-shadow:0 2px 18px rgba(0,0,0,.55), 0 0 2px rgba(0,0,0,.35); }
   .word span { display:inline-block; transform-origin:50% 90%; transition:transform .55s cubic-bezier(.2,1.4,.4,1), color .4s; color:#CDBF98; }
   .word span.ok { transform:none !important; color:var(--ink); }
   .word .gap { width:.62em; }
-  .tag { margin:3.2vh 0 0; font:400 clamp(18px,2.2vw,30px)/1.2 Forum,serif; letter-spacing:.04em; color:var(--ink2); opacity:0; transform:translateY(10px); transition:all .8s; }
+  .tag { margin:3.2vh 0 0; font:400 clamp(18px,2.2vw,30px)/1.2 Forum,serif; letter-spacing:.04em; color:var(--ink); opacity:0; transform:translateY(10px); transition:all .8s; text-shadow:0 1px 10px rgba(0,0,0,.7), 0 0 2px rgba(0,0,0,.5); }
   .cta { margin-top:4.2vh; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; opacity:0; transform:translateY(10px); transition:all .8s .15s; }
   .btn { pointer-events:auto; padding:14px 26px; border-radius:999px; font:500 15px/1 Onest,sans-serif; text-decoration:none; color:#1A1405; border:1.5px solid rgba(255,255,255,.6);
          background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.1) 45%,transparent 55%),linear-gradient(135deg,var(--gold-hi),var(--gold) 55%,#A8862A);
@@ -89,9 +89,11 @@
     return [(W - w) / 2, tall ? H - h : (H - h) / 2, w, h]; // на телефоне прижат к низу
   }
   function put(c, img, r, k) { // рисует кадр; если сверху остаётся полоса, тянет в неё гладкий потолок
+    c.filter = img === final ? 'brightness(1.12) saturate(1.08) contrast(1.04)' : 'none'; // готовый ремонт чуть светлее и сочнее
     k = k || 1;
     if (r[1] > 0) c.drawImage(img, 0, 0, img.width, img.height * .06, r[0] * k, 0, r[2] * k, (r[1] + 2) * k);
     c.drawImage(img, r[0] * k, r[1] * k, r[2] * k, r[3] * k);
+    c.filter = 'none';
   }
   function brush(a, b) {
     var r = Math.max(H * .13, W * .08); // узкая полоса: фон открывается ровно там, где прошёл лазер
@@ -147,8 +149,8 @@
     var sh = ease((t - T.rev0) / 700); // затемнение под надписью, пока открывается фон и после
     if (sh > 0) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var g = ctx.createRadialGradient(W / 2, geo.mid, 0, W / 2, geo.mid, Math.max(W, H) * .7);
-      g.addColorStop(0, 'rgba(13,13,13,' + .72 * sh + ')'); g.addColorStop(1, 'rgba(13,13,13,' + .35 * sh + ')');
+      var g = ctx.createRadialGradient(W / 2, geo.mid, 0, W / 2, geo.mid, Math.max(geo.right - geo.left, W * .5) * .62); // тень только под надписью, остальное фото яркое
+      g.addColorStop(0, 'rgba(13,13,13,' + .48 * sh + ')'); g.addColorStop(.6, 'rgba(13,13,13,' + .22 * sh + ')'); g.addColorStop(1, 'rgba(13,13,13,0)');
       ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
     }
 
