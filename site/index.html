@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="assets/css/site.css">
   <link rel="stylesheet" href="assets/css/index.css">
   <link rel="stylesheet" href="assets/css/hero-laser.css">
+  <!-- шапка спрятана над первым экраном с первого кадра, без мигания; показывает её hero-laser.js при прокрутке. Без JS шапка видна как обычно -->
+  <script>document.documentElement.classList.add('hl-auto-header');</script>
   <!-- диагностика первого экрана на телефоне: открыть сайт с ?debug=1 -->
   <script>
     (function () {
