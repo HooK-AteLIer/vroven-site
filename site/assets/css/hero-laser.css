@@ -2,17 +2,6 @@
 .hl {
   position: relative; overflow: hidden;
   height: calc(100svh - var(--header-h)); min-height: 520px;
-}
-/* шапка прячется, пока на экране первый кадр, и выезжает, когда начинается чёрный фон (hero-laser.js) */
-html.hl-auto-header .hl { height: 100svh; }
-html.hl-auto-header .site-header {
-  position: fixed; left: 0; right: 0; top: calc(-1 * var(--header-h) - 4px); opacity: 0;
-  transition: top .4s cubic-bezier(.2, .8, .2, 1), opacity .3s; /* без transform: иначе сломается fixed-панель меню */
-}
-html.hl-auto-header .site-header.is-shown,
-html.hl-auto-header .site-header:focus-within,
-html.hl-auto-header.menu-open .site-header { top: 0; opacity: 1; }
-.hl {
   background: #0D0D0D url('../img/hero/laser-after-w.webp') center / cover no-repeat; /* без скрипта: сразу готовый кадр */
   color: #FFF3CC;
 }
