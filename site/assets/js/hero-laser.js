@@ -88,12 +88,13 @@
       mctx.strokeStyle = '#fff'; mctx.lineCap = 'round'; mctx.lineWidth = r / 2; mctx.shadowColor = '#fff'; mctx.shadowBlur = r / 5;
       mctx.beginPath(); mctx.moveTo(a.x / 4, a.y / 4); mctx.lineTo(b.x / 4, b.y / 4); mctx.stroke();
     }
+    function lineY() { return geo.base + Math.max(6, geo.cap * .14); } // луч чуть ниже букв, чтобы был хорошо виден
     function wander(k) { // две широкие дуги с мягким разгоном и торможением
       k = (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, k)))) / 2;
       var u = k * Math.PI * 2;
       var p = { x: (.5 + .40 * Math.sin(.8 * u + .2)) * W, y: (.5 + .34 * Math.sin(1.1 * u + 2.1)) * H };
       var b = ease(Math.min(1, k / .15)); // стартует оттуда, где закончил выравнивать буквы
-      return { x: lerp(geo.right + 60, p.x, b), y: lerp(geo.base + 2, p.y, b) };
+      return { x: lerp(geo.right + 60, p.x, b), y: lerp(lineY(), p.y, b) };
     }
     function cross(x, y, hx0, hx1, vy0, vy1, alpha, dot) {
       ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -141,8 +142,8 @@
         var al = t > T.sweep1 ? 1 - (t - T.sweep1) / (T.rev0 - T.sweep1) : 1;
         ctx.save(); ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.globalAlpha = Math.max(0, al);
         ctx.strokeStyle = '#2FD16B'; ctx.shadowColor = '#2FD16B'; ctx.shadowBlur = 14; ctx.lineWidth = 2;
-        ctx.beginPath(); ctx.moveTo(x0, geo.base + 2); ctx.lineTo(hx, geo.base + 2); ctx.stroke(); ctx.restore();
-        cross(hx, geo.base + 2, hx, hx, geo.base + 2, geo.base + 2, 1, 7);
+        ctx.beginPath(); ctx.moveTo(x0, lineY()); ctx.lineTo(hx, lineY()); ctx.stroke(); ctx.restore();
+        cross(hx, lineY(), hx, hx, lineY(), lineY(), 1, 7);
         lastP = null;
       }
       if (t >= T.sweep1 && flags.indexOf(0) !== -1) { // кадры могли пропуститься (вкладка в фоне): буквы всё равно встают ровно
@@ -154,8 +155,8 @@
         if (!geo.straight) { geo = measure(); geo.straight = 1; }
         var q = ease((t - T.back0) / (T.back1 - T.back0)), from = sp || wander(1);
         // финал как в начале: луч под словами (по базовой линии), вертикаль между «НА» и «УРОВНЕ», точка на нижней линии
-        var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, geo.base + 2, q);
-        cross(cx, cy, lerp(0, geo.left - 34, q), lerp(W, geo.right + 34, q), cy - lerp(H, geo.cap * 1.08, q), cy + lerp(H, geo.cap * .16, q),
+        var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, lineY(), q);
+        cross(cx, cy, lerp(0, geo.left - 34, q), lerp(W, geo.right + 34, q), cy - lerp(H, geo.cap * 1.2, q), cy + lerp(H, geo.cap * .16, q),
           lerp(.95, .85, q), lerp(6, Math.max(6, geo.cap * .07), q));
       }
     }
