@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>НА УРОВНЕ · десять надписей</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Unbounded:wght@500;700;800&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500;700;800&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1400px; padding:40px; background:radial-gradient(1000px 520px at 8% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif;
+         --ink:#FFF3CC; --g:#2FD16B; --gold:#D4AF37; --bg:#0D0D0D; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 36px/1.1 Forum,serif; margin:10px 0 6px; }
+  .lead { color:#D9D0B8; margin:0 0 24px; max-width:980px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:18px; background:#141414; }
+  .stage { height:190px; border-radius:12px; background:#0D0D0D; display:grid; place-items:center; overflow:hidden; position:relative; }
+  .light { --ink:#141414; --g:#1FA552; --gold:#A8862A; --bg:#F4EFE6; background:#F4EFE6; height:96px; margin-top:10px; border-radius:12px; display:grid; place-items:center; overflow:hidden; }
+  .light .lg { transform:scale(.5); }
+  .light .w2 { transform:scale(.4); }
+  .meta { margin-top:12px; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 22px/1.1 Forum,serif; margin:6px 0 4px; }
+  .d { font-size:13.5px; color:#D9D0B8; }
+  .lg { position:relative; color:var(--ink); white-space:nowrap; }
+  .laser { background:var(--g); box-shadow:0 0 10px var(--g), 0 0 2px var(--g); }
+
+  /* 1. Подпись на луче */
+  .w1 { font:400 64px/1 Forum,serif; letter-spacing:.16em; padding-bottom:26px; }
+  .w1 .l { position:absolute; left:-.2em; right:.0em; bottom:4px; height:2px; }
+  .w1 .dot { position:absolute; left:50%; bottom:-1px; width:12px; height:12px; margin-left:-6px; border-radius:50%; }
+
+  /* 2. В две строки */
+  .w2 { text-align:center; font-family:Forum,serif; }
+  .w2 .a { font-size:26px; letter-spacing:.6em; margin-right:-.6em; color:var(--gold); }
+  .w2 .l { height:2px; width:300px; margin:12px auto 10px; }
+  .w2 .b { font-size:72px; letter-spacing:.08em; line-height:1; }
+
+  /* 3. Золото */
+  .w3 { font:600 72px/1 'Cormorant Garamond',serif; letter-spacing:.1em; background:linear-gradient(180deg,#FFE7A3 0%,#D4AF37 45%,#9A7420 70%,#E9C873 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .light .w3 { background:linear-gradient(180deg,#B8902F 0%,#8A6A1C 60%,#C9A44B 100%); -webkit-background-clip:text; background-clip:text; }
+  .w3 .dot { position:absolute; width:10px; height:10px; border-radius:50%; left:calc(2.5em*0 + 2.05em); top:52%; }
+
+  /* 4. Буквы стоят на луче */
+  .w4 { font:400 70px/1 Forum,serif; letter-spacing:.06em; }
+  .w4 .l { position:absolute; left:-80px; right:-80px; bottom:12px; height:3px; }
+
+  /* 5. Луч через середину */
+  .w5 { font:800 54px/1 Unbounded,sans-serif; letter-spacing:.02em; }
+  .w5 .l { position:absolute; left:-30px; right:-30px; top:50%; height:4px; margin-top:-2px; mix-blend-mode:normal; }
+  .w5 .t2 { position:relative; z-index:1; }
+
+  /* 6. Пузырёк в О */
+  .w6 { font:400 70px/1 Forum,serif; letter-spacing:.08em; display:flex; align-items:center; }
+  .w6 .o { display:inline-block; width:.9em; height:.66em; border:5px solid var(--ink); border-radius:.4em; position:relative; margin:0 .08em; top:.02em; }
+  .w6 .o::after { content:''; position:absolute; left:50%; top:50%; width:.2em; height:.2em; margin:-.1em 0 0 -.1em; border-radius:50%; background:var(--g); box-shadow:0 0 10px var(--g); }
+
+  /* 7. Латунная табличка */
+  .w7 { padding:18px 38px; border:2px solid var(--gold); outline:1px solid var(--gold); outline-offset:6px; font:500 44px/1 'Cormorant Garamond',serif; letter-spacing:.32em; margin-right:-.32em; text-align:center; }
+  .w7 small { display:block; font:500 11px/1 'JetBrains Mono',monospace; letter-spacing:.5em; color:var(--gold); margin-top:12px; }
+  .w7 .l { display:block; height:2px; margin:12px auto 0; width:60%; }
+
+  /* 8. Трафарет */
+  .w8 { font:800 52px/1 'JetBrains Mono',monospace; letter-spacing:.08em; }
+  .w8 .s { color:var(--g); text-shadow:0 0 10px var(--g); }
+  .w8 small { display:block; font:700 11px/1 'JetBrains Mono',monospace; letter-spacing:.42em; color:var(--gold); margin-top:12px; }
+
+  /* 9. Два тона и крест */
+  .w9 { font:400 70px/1 Forum,serif; letter-spacing:.06em; display:flex; align-items:center; gap:.28em; }
+  .w9 .na { color:var(--g); text-shadow:0 0 14px rgba(47,209,107,.45); }
+  .w9 .x { position:relative; width:.3em; height:.7em; }
+  .w9 .x::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:2px; margin-left:-1px; background:var(--gold); }
+  .w9 .x::after { content:''; position:absolute; top:50%; left:-.12em; right:-.12em; height:2px; margin-top:-1px; background:var(--gold); }
+
+  /* 10. Линейка */
+  .w10 { font:500 58px/1 Unbounded,sans-serif; letter-spacing:.04em; padding-bottom:30px; }
+  .w10 .rule { position:absolute; left:0; right:0; bottom:0; height:22px; background:
+      repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 14px) bottom/100% 10px no-repeat,
+      repeating-linear-gradient(90deg, var(--ink) 0 2px, transparent 2px 70px) bottom/100% 20px no-repeat; opacity:.75; }
+  .w10 .rule::after { content:''; position:absolute; left:0; right:0; bottom:0; height:2px; background:var(--ink); }
+  .w10 .mk { position:absolute; left:50%; bottom:-4px; width:3px; height:30px; margin-left:-1.5px; }
+</style>
+</head>
+<body>
+<div class="eyebrow">НА УРОВНЕ · логотип-надпись</div>
+<h1>Десять надписей «НА УРОВНЕ»: просто, лаконично, вкусно</h1>
+<p class="lead">Здесь нет картинок, только слово и одна фирменная деталь: луч, пузырёк, золото или линейка. Такой логотип выглядит дорого, мгновенно читается на вывеске и в телефоне, легко вышивается и печатается. Каждый показан на тёмном и светлом фоне.</p>
+
+<div class="grid">
+
+<div class="card">
+  <div class="stage"><div class="lg w1">НА УРОВНЕ<span class="l laser"></span><span class="dot laser"></span></div></div>
+  <div class="light"><div class="lg w1">НА УРОВНЕ<span class="l laser"></span><span class="dot laser"></span></div></div>
+  <div class="meta"><div class="n">01 · Подпись на луче</div><div class="t">Спокойная классика</div>
+  <div class="d">Фирменный шрифт с широкой разрядкой, под надписью тонкий лазерный луч, по центру светится точка. Как подпись мастера под работой: сдержанно и уверенно.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w2"><div class="a">НА</div><div class="l laser"></div><div class="b">УРОВНЕ</div></div></div>
+  <div class="light"><div class="lg w2"><div class="a">НА</div><div class="l laser"></div><div class="b">УРОВНЕ</div></div></div>
+  <div class="meta"><div class="n">02 · В две строки</div><div class="t">«НА» над лучом, «УРОВНЕ» под ним</div>
+  <div class="d">Маленькое золотое «НА» сверху, крупное «УРОВНЕ» снизу, между ними линия уровня. Надпись буквально стоит на уровне. Отлично для квадратной аватарки и вывески.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w3">НА УРОВНЕ</div></div>
+  <div class="light"><div class="lg w3">НА УРОВНЕ</div></div>
+  <div class="meta"><div class="n">03 · Золотое тиснение</div><div class="t">Премиум без слов</div>
+  <div class="d">Изящная антиква с золотым переливом, как тиснение фольгой на коробке дорогой мебели. Подходит для визиток, упаковки, таблички в шоуруме. Говорит: «здесь дорого и аккуратно».</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w4">НА УРОВНЕ<span class="l laser"></span></div></div>
+  <div class="light"><div class="lg w4">НА УРОВНЕ<span class="l laser"></span></div></div>
+  <div class="meta"><div class="n">04 · Буквы стоят на луче</div><div class="t">Базовая линия — это лазер</div>
+  <div class="d">Все буквы ровно стоят на светящейся линии, которая уходит за края слова, как луч нивелира по стене. Просто и очень наглядно: всё выровнено по одной линии.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w5"><span class="t2">НА УРОВНЕ</span><span class="l laser"></span></div></div>
+  <div class="light"><div class="lg w5"><span class="t2">НА УРОВНЕ</span><span class="l laser"></span></div></div>
+  <div class="meta"><div class="n">05 · Луч через середину</div><div class="t">Смело и современно</div>
+  <div class="d">Жирный современный шрифт, ровно по середине букв проходит лазерный луч. Выглядит энергично, заметно с дороги. Хорош для машины бригады, баннера, рекламы в соцсетях.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w6">НА УР<span class="o"></span>ВНЕ</div></div>
+  <div class="light"><div class="lg w6">НА УР<span class="o"></span>ВНЕ</div></div>
+  <div class="meta"><div class="n">06 · Пузырёк в «О»</div><div class="t">Одна деталь — и всё понятно</div>
+  <div class="d">Буква «О» — это колба уровня с зелёным пузырьком ровно по центру. Всё остальное спокойно, и глаз сразу находит эту изюминку. Самый остроумный вариант среди простых.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w7">НА УРОВНЕ<span class="l laser"></span><small>РЕМОНТ · МЕБЕЛЬ</small></div></div>
+  <div class="light"><div class="lg w7">НА УРОВНЕ<span class="l laser"></span><small>РЕМОНТ · МЕБЕЛЬ</small></div></div>
+  <div class="meta"><div class="n">07 · Латунная табличка</div><div class="t">Как вывеска мастерской</div>
+  <div class="d">Надпись в двойной латунной рамке, как табличка на двери хорошей мастерской или ателье. Вызывает доверие и ощущение традиции. Идеально для фасада офиса и бирки на мебели.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w8">НА<span class="s">_</span>УРОВНЕ<small>ТЮМЕНЬ · НИЖНЕВАРТОВСК</small></div></div>
+  <div class="light"><div class="lg w8">НА<span class="s">_</span>УРОВНЕ<small>ТЮМЕНЬ · НИЖНЕВАРТОВСК</small></div></div>
+  <div class="meta"><div class="n">08 · Строительный трафарет</div><div class="t">Честно и по-мужски</div>
+  <div class="d">Шрифт как трафарет на строительных ящиках, вместо пробела зелёная черта уровня. Брутально и стильно, отлично ложится на спецодежду, каски, кейсы с инструментом.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w9"><span class="na">НА</span><span class="x"></span><span>УРОВНЕ</span></div></div>
+  <div class="light"><div class="lg w9"><span class="na">НА</span><span class="x"></span><span>УРОВНЕ</span></div></div>
+  <div class="meta"><div class="n">09 · Два тона и крест</div><div class="t">«НА» светится зелёным</div>
+  <div class="d">Короткое «НА» горит лазерным зелёным, между словами стоит тонкий золотой крест прицела. Яркий акцент, хорошо работает в соцсетях и на сайте.</div></div>
+</div>
+
+<div class="card">
+  <div class="stage"><div class="lg w10">НА УРОВНЕ<span class="rule"></span><span class="mk laser"></span></div></div>
+  <div class="light"><div class="lg w10">НА УРОВНЕ<span class="rule"></span><span class="mk laser"></span></div></div>
+  <div class="meta"><div class="n">10 · На линейке</div><div class="t">Точность в каждом миллиметре</div>
+  <div class="d">Слово стоит на мерной линейке с делениями, ровно по центру зелёная отметка. Сразу понятно: здесь меряют точно и делают в размер. Хорошо для конструктора кухни и рекламы мебели.</div></div>
+</div>
+
+</div>
+</body>
+</html>
