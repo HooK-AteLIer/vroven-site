@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>НА УРОВНЕ · логотипы для спецодежды</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1400px; padding:40px; background:radial-gradient(1000px 520px at 8% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 36px/1.1 Forum,serif; margin:10px 0 6px; }
+  .lead { color:#D9D0B8; margin:0 0 24px; max-width:900px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:18px 20px; background:#141414; display:grid; grid-template-columns:300px 1fr; gap:18px; align-items:center; }
+  .mock { width:300px; height:220px; border-radius:12px; background:linear-gradient(180deg,#2A2722,#1B1A17); }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 24px/1.1 Forum,serif; margin:7px 0 5px; }
+  .d { font-size:13.5px; color:#D9D0B8; }
+  .where { margin-top:8px; font:500 11px/1.4 'JetBrains Mono',monospace; letter-spacing:.06em; color:#9C9480; text-transform:uppercase; }
+  .flat { display:flex; gap:10px; margin-top:10px; align-items:center; }
+  .flat svg { height:58px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="500" height="400"><feGaussianBlur stdDeviation="2.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <path id="arcTop" d="M30 100 A70 70 0 0 1 170 100"/>
+    <path id="arcBot" d="M22 100 A78 78 0 0 0 178 100"/>
+    <path id="arcTop2" d="M28 100 A72 72 0 0 1 172 100"/>
+    <path id="arcBot2" d="M24 100 A76 76 0 0 0 176 100"/>
+
+    <!-- кепка спереди: на неё кладём знак в зону (150,100) -->
+    <symbol id="cap" viewBox="0 0 300 220">
+      <defs>
+        <linearGradient id="capG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3A3833"/><stop offset="1" stop-color="#22211E"/></linearGradient>
+        <linearGradient id="brimG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A1916"/><stop offset="1" stop-color="#0F0E0C"/></linearGradient>
+      </defs>
+      <path d="M40 152C40 72 92 28 150 28C208 28 260 72 260 152Z" fill="url(#capG)"/>
+      <g fill="none" stroke="rgba(0,0,0,.35)" stroke-width="1.5"><path d="M150 30V152"/><path d="M100 42Q86 96 92 152"/><path d="M200 42Q214 96 208 152"/></g>
+      <g fill="none" stroke="rgba(255,243,204,.10)" stroke-width="1" stroke-dasharray="3 3"><path d="M147 32V152"/><path d="M153 32V152"/></g>
+      <circle cx="150" cy="29" r="6" fill="#2C2A26"/>
+      <path d="M30 150Q150 130 270 150Q286 170 250 184Q150 210 50 184Q14 170 30 150Z" fill="url(#brimG)"/>
+      <path d="M44 172Q150 196 256 172" fill="none" stroke="rgba(255,243,204,.16)" stroke-width="1.2" stroke-dasharray="4 3"/>
+    </symbol>
+
+    <!-- куртка со спины -->
+    <symbol id="jacket" viewBox="0 0 300 220">
+      <path d="M92 18Q150 6 208 18L262 46L280 132L250 138L240 92L238 208Q150 218 62 208L60 92L50 138L20 132L38 46Z" fill="#2E2C28"/>
+      <path d="M118 16Q150 30 182 16" fill="none" stroke="#1C1B18" stroke-width="6"/>
+      <g fill="none" stroke="rgba(0,0,0,.35)" stroke-width="1.4"><path d="M60 92L62 208"/><path d="M240 92L238 208"/></g>
+    </symbol>
+
+    <!-- 1. круглый шеврон -->
+    <symbol id="l1" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="96" fill="#161513" stroke="#2FD16B" stroke-width="4"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#FFF3CC" stroke-opacity=".5" stroke-width="1.4" stroke-dasharray="3 3"/>
+      <text font-family="Forum" font-size="20" letter-spacing="5" fill="#FFF3CC"><textPath href="#arcTop" startOffset="50%" text-anchor="middle">НА УРОВНЕ</textPath></text>
+      <text font-family="JetBrains Mono" font-weight="700" font-size="10" letter-spacing="3" fill="#D4AF37"><textPath href="#arcBot" startOffset="50%" text-anchor="middle" dominant-baseline="hanging">РЕМОНТ · МЕБЕЛЬ</textPath></text>
+      <path d="M74 66H84V124H132V134H74Z" fill="#FFF3CC"/>
+      <g stroke="#2FD16B" stroke-width="3" stroke-linecap="round" filter="url(#glow)"><line x1="48" y1="102" x2="152" y2="102"/><line x1="104" y1="56" x2="104" y2="148"/></g>
+      <circle cx="104" cy="102" r="5" fill="#2FD16B" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 2. резиновая нашивка со словом -->
+    <symbol id="l2" viewBox="0 0 260 96">
+      <rect x="3" y="3" width="254" height="90" rx="20" fill="#161513" stroke="#3A3833" stroke-width="3"/>
+      <rect x="10" y="10" width="240" height="76" rx="14" fill="none" stroke="#FFF3CC" stroke-opacity=".35" stroke-width="1.2" stroke-dasharray="3 3"/>
+      <image href="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" x="26" y="30" width="208" height="31"/>
+      <rect x="10" y="80" width="240" height="2.4" fill="#2FD16B" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 3. монограмма «НУ»: перекладина Н — лазер, проходит в стык У -->
+    <symbol id="l3" viewBox="0 0 200 200">
+      <rect x="6" y="6" width="188" height="188" rx="38" fill="#161513" stroke="#2FD16B" stroke-width="3"/>
+      <g fill="none" stroke="#FFF3CC" stroke-width="13" stroke-linecap="butt">
+        <path d="M44 48V152M92 48V152"/>
+        <path d="M108 48L136 102M164 48L120 152"/>
+      </g>
+      <line x1="30" y1="102" x2="172" y2="102" stroke="#2FD16B" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="136" cy="102" r="6.5" fill="#2FD16B" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 4. ампула уровня -->
+    <symbol id="l4" viewBox="0 0 240 120">
+      <rect x="20" y="18" width="200" height="64" rx="32" fill="#161513" stroke="#FFF3CC" stroke-width="7"/>
+      <g stroke="#FFF3CC" stroke-width="3"><line x1="96" y1="28" x2="96" y2="72"/><line x1="144" y1="28" x2="144" y2="72"/></g>
+      <line x1="4" y1="50" x2="236" y2="50" stroke="#2FD16B" stroke-width="2.4" filter="url(#glow)"/>
+      <circle cx="120" cy="50" r="13" fill="#2FD16B" filter="url(#glow)"/>
+      <text x="120" y="112" text-anchor="middle" font-family="Forum" font-size="19" letter-spacing="6" fill="#FFF3CC">НА УРОВНЕ</text>
+    </symbol>
+
+    <!-- 5. щит бригады с уголком -->
+    <symbol id="l5" viewBox="0 0 200 230">
+      <path d="M100 6L190 34V118C190 172 150 206 100 224C50 206 10 172 10 118V34Z" fill="#161513" stroke="#D4AF37" stroke-width="4"/>
+      <path d="M100 18L178 42V118C178 164 144 194 100 210C56 194 22 164 22 118V42Z" fill="none" stroke="#FFF3CC" stroke-opacity=".35" stroke-dasharray="3 3"/>
+      <text x="100" y="58" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="11" letter-spacing="3" fill="#D4AF37">БРИГАДА</text>
+      <path d="M66 70H78V140H140V152H66Z" fill="#FFF3CC"/>
+      <g stroke="#2FD16B" stroke-width="3" stroke-linecap="round" filter="url(#glow)"><line x1="40" y1="112" x2="160" y2="112"/><line x1="104" y1="74" x2="104" y2="168"/></g>
+      <circle cx="104" cy="112" r="5" fill="#2FD16B" filter="url(#glow)"/>
+      <text x="100" y="190" text-anchor="middle" font-family="Forum" font-size="17" letter-spacing="4" fill="#FFF3CC">НА УРОВНЕ</text>
+    </symbol>
+
+    <!-- 8. нашивка с должностью -->
+    <symbol id="l8" viewBox="0 0 260 90">
+      <rect x="3" y="3" width="254" height="84" rx="10" fill="#161513" stroke="#2FD16B" stroke-width="3"/>
+      <rect x="18" y="26" width="56" height="38" rx="19" fill="none" stroke="#FFF3CC" stroke-width="4"/>
+      <circle cx="46" cy="45" r="8" fill="#2FD16B" filter="url(#glow)"/>
+      <text x="92" y="44" font-family="Forum" font-size="26" letter-spacing="4" fill="#FFF3CC">СБОРЩИК</text>
+      <text x="93" y="66" font-family="JetBrains Mono" font-weight="700" font-size="10" letter-spacing="3" fill="#D4AF37">НА УРОВНЕ · МЕБЕЛЬ</text>
+    </symbol>
+
+    <!-- 9. печать «проверено уровнем» -->
+    <symbol id="l9" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="96" fill="#161513" stroke="#FFF3CC" stroke-width="3"/>
+      <g stroke="#FFF3CC" stroke-opacity=".7" stroke-width="2" transform="translate(100 100)">
+        <line x1="0" y1="-92" x2="0" y2="-82"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(10)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(20)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(30)"/><line x1="0" y1="-92" x2="0" y2="-82" transform="rotate(40)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(-10)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(-20)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(-30)"/><line x1="0" y1="-92" x2="0" y2="-82" transform="rotate(-40)"/>
+        <line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(140)"/><line x1="0" y1="-92" x2="0" y2="-82" transform="rotate(150)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(160)"/><line x1="0" y1="-92" x2="0" y2="-82" transform="rotate(180)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(200)"/><line x1="0" y1="-92" x2="0" y2="-82" transform="rotate(210)"/><line x1="0" y1="-92" x2="0" y2="-86" transform="rotate(220)"/>
+      </g>
+      <text font-family="JetBrains Mono" font-weight="700" font-size="11" letter-spacing="3" fill="#D4AF37"><textPath href="#arcTop2" startOffset="50%" text-anchor="middle">ПРОВЕРЕНО</textPath></text>
+      <text font-family="JetBrains Mono" font-weight="700" font-size="11" letter-spacing="3" fill="#D4AF37"><textPath href="#arcBot2" startOffset="50%" text-anchor="middle" dominant-baseline="hanging">УРОВНЕМ</textPath></text>
+      <line x1="36" y1="100" x2="164" y2="100" stroke="#2FD16B" stroke-width="3" filter="url(#glow)"/>
+      <text x="100" y="94" text-anchor="middle" font-family="Forum" font-size="30" letter-spacing="3" fill="#FFF3CC">НА</text>
+      <text x="100" y="128" text-anchor="middle" font-family="Forum" font-size="24" letter-spacing="3" fill="#FFF3CC">УРОВНЕ</text>
+      <circle cx="100" cy="100" r="5" fill="#2FD16B" filter="url(#glow)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">НА УРОВНЕ · спецодежда бригады</div>
+<h1>Десять вариантов логотипа для кепок, курток и нашивок</h1>
+<p class="lead">Всё держится на одном знаке: зелёный луч нивелира и ровная линия. На одежде он работает и как узнаваемый бренд, и как мысль «эти люди делают ровно». Цвета под вышивку и шелкографию: графит, светлый кремовый, зелёный, немного латуни.</p>
+
+<div class="grid">
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l1" x="104" y="60" width="92" height="92"/></svg>
+    <div><div class="n">01 · Круглый шеврон</div><div class="t">Классика для кепки и груди</div>
+      <div class="d">Круг с надписью по дуге «НА УРОВНЕ», снизу «РЕМОНТ · МЕБЕЛЬ», в центре уголок и лазерный крест. Вышивается нашивкой 7–8 см, хорошо читается издалека.</div>
+      <div class="where">кепка спереди · грудь слева · рукав</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l2" x="88" y="84" width="124" height="46"/></svg>
+    <div><div class="n">02 · Резиновая нашивка</div><div class="t">Слово-логотип в рамке</div>
+      <div class="d">Тот же логотип, что на сайте: «НА·УРОВНЕ» с крестом между словами, снизу светящаяся зелёная полоса. Делается из ПВХ-резины, не боится краски и стирки.</div>
+      <div class="where">кепка спереди · грудь · сумка для инструмента</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l3" x="112" y="64" width="76" height="76"/></svg>
+    <div><div class="n">03 · Монограмма «НУ»</div><div class="t">Перекладина «Н» — это лазер</div>
+      <div class="d">Две первые буквы. Зелёная перекладина «Н» продолжается лучом и упирается в стык «У», там светится точка нивелира. Компактный знак для кепки и воротника.</div>
+      <div class="where">кепка спереди · воротник · каска</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l4" x="90" y="68" width="120" height="60"/></svg>
+    <div><div class="n">04 · Ампула уровня</div><div class="t">Пузырёк ровно по центру</div>
+      <div class="d">Колба строительного уровня, пузырёк стоит точно между рисками, через неё проходит луч. Самый «инструментальный» вариант: любой мастер узнаёт его сразу.</div>
+      <div class="where">кепка спереди · грудь · наклейка на каску</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l5" x="114" y="54" width="72" height="84"/></svg>
+    <div><div class="n">05 · Щит бригады</div><div class="t">Шеврон команды</div>
+      <div class="d">Щит с латунной каймой: «БРИГАДА», уголок с крестом и «НА УРОВНЕ». Звучит как форма команды, повышает гордость за свою работу.</div>
+      <div class="where">рукав · кепка · грудь справа</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220">
+      <use href="#jacket"/>
+      <image href="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" x="80" y="62" width="140" height="21"/>
+      <text x="150" y="104" text-anchor="middle" font-family="JetBrains Mono" font-weight="700" font-size="8" letter-spacing="3" fill="#D4AF37">РЕМОНТ И МЕБЕЛЬ ПОД КЛЮЧ</text>
+      <rect x="22" y="150" width="256" height="9" fill="#2FD16B"/><rect x="22" y="152.5" width="256" height="4" fill="#C9FFD9" opacity=".55"/>
+    </svg>
+    <div><div class="n">06 · Луч на спине</div><div class="t">Светоотражающая лазерная полоса</div>
+      <div class="d">На спине крупно «НА·УРОВНЕ», а через всю куртку от рукава до рукава идёт зелёная светоотражающая полоса, как луч нивелира. Это и знак бренда, и безопасность на объекте.</div>
+      <div class="where">спина куртки · жилет · худи</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220">
+      <use href="#cap"/>
+      <path d="M41 128Q150 116 259 128" fill="none" stroke="#2FD16B" stroke-width="4" filter="url(#glow)"/>
+      <g transform="translate(150 122)"><line x1="0" y1="-26" x2="0" y2="24" stroke="#2FD16B" stroke-width="3" filter="url(#glow)"/><circle r="6" fill="#2FD16B" filter="url(#glow)"/></g>
+      <text x="150" y="98" text-anchor="middle" font-family="Forum" font-size="15" letter-spacing="4" fill="#FFF3CC">НА УРОВНЕ</text>
+    </svg>
+    <div><div class="n">07 · Линия вокруг кепки</div><div class="t">Кепка, выставленная по уровню</div>
+      <div class="d">Зелёная строчка обходит всю кепку по кругу на одной высоте, как луч нивелира по стенам комнаты. Спереди крест с точкой и маленькая надпись. Необычно, запоминается, легко вышить.</div>
+      <div class="where">кепка по кругу · манжеты · низ куртки</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220">
+      <use href="#jacket"/>
+      <use href="#l8" x="196" y="64" width="64" height="22" transform="rotate(8 228 75)"/>
+      <use href="#l1" x="108" y="56" width="30" height="30"/>
+    </svg>
+    <div><div class="n">08 · Нашивка с должностью</div><div class="t">Кто перед вами</div>
+      <div class="d">Прямоугольная нашивка на рукав: колба уровня и роль крупно, «СБОРЩИК», «МАСТЕР», «ПРОРАБ», «ПЛИТОЧНИК». Клиент сразу видит, кто за что отвечает.</div>
+      <div class="where">рукав · грудь над карманом</div>
+      <div class="flat"><svg viewBox="0 0 260 90"><use href="#l8"/></svg></div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220"><use href="#cap"/><use href="#l9" x="106" y="58" width="88" height="88"/></svg>
+    <div><div class="n">09 · Печать «Проверено уровнем»</div><div class="t">Знак качества</div>
+      <div class="d">Круглая печать с делениями, как на рулетке: «ПРОВЕРЕНО УРОВНЕМ» по кругу, в центре «НА УРОВНЕ» на лазерной линии. Её же можно ставить на акт сдачи и коробки из цеха.</div>
+      <div class="where">кепка · грудь · штамп на документах и упаковке</div></div>
+  </div>
+
+  <div class="card">
+    <svg class="mock" viewBox="0 0 300 220">
+      <use href="#jacket"/>
+      <text x="150" y="74" text-anchor="middle" font-family="Forum" font-size="26" letter-spacing="3" fill="#FFF3CC">ВСЁ</text>
+      <text x="150" y="104" text-anchor="middle" font-family="Forum" font-size="26" letter-spacing="3" fill="#FFF3CC">ПО УРОВНЮ</text>
+      <line x1="76" y1="114" x2="224" y2="114" stroke="#2FD16B" stroke-width="3" filter="url(#glow)"/>
+      <circle cx="150" cy="114" r="4.5" fill="#2FD16B" filter="url(#glow)"/>
+      <image href="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" x="108" y="176" width="84" height="13"/>
+    </svg>
+    <div><div class="n">10 · Фраза на спине</div><div class="t">«Всё по уровню»</div>
+      <div class="d">Крупная фраза на спине, под ней лазерная линия, ниже маленький логотип. Работает как реклама: соседи по подъезду видят бригаду и запоминают компанию.</div>
+      <div class="where">спина футболки и худи · фартук сборщика</div></div>
+  </div>
+
+</div>
+</body>
+</html>
