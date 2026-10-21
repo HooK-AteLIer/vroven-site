@@ -22,27 +22,15 @@
   .note small { display:block; font:600 17px/1.3 Onest,sans-serif; color:#D9D0B8; margin-top:6px; letter-spacing:.02em; }
   h1 { margin:40px 0 26px; text-align:center; font:400 54px/1.08 Forum,serif; letter-spacing:.01em; }
   h1 span { color:#FFC857; }
-  .list { list-style:none; margin:0; padding:0; display:grid; gap:20px; }
-  .list li { display:grid; grid-template-columns:22px 1fr auto; gap:16px; align-items:baseline; font:500 25px/1.25 Onest,sans-serif; color:#FFF3CC; border-bottom:1px solid rgba(255,243,204,.14); padding-bottom:18px; }
-  .list li::before { content:''; width:14px; height:14px; border-radius:50%; background:#2FD16B; box-shadow:0 0 12px #2FD16B; transform:translateY(-2px); }
-  .list b { font:400 27px/1 Forum,serif; color:#FFC857; white-space:nowrap; }
-  .offer { margin:34px 0 0; padding:26px 30px; border:2px solid #D4AF37; border-radius:16px; text-align:center;
-           background:linear-gradient(180deg,rgba(212,175,55,.16),rgba(212,175,55,.04)); }
-  .offer .k { font:700 16px/1 'JetBrains Mono',monospace; letter-spacing:.3em; color:#D4AF37; }
-  .offer .t { margin-top:12px; font:400 36px/1.15 Forum,serif; }
-  .offer .t em { font-style:normal; color:#2FD16B; text-shadow:0 0 14px rgba(47,209,107,.4); }
-  .contact { margin:40px 0 0; display:grid; grid-template-columns:1fr 210px; gap:30px; align-items:center; }
-  .phone { font:600 58px/1 Onest,sans-serif; letter-spacing:.01em; white-space:nowrap; }
-  .ways { margin-top:14px; font:500 21px/1.4 Onest,sans-serif; color:#D9D0B8; }
-  .ways b { color:#2FD16B; font-weight:600; }
-  .qr { width:210px; text-align:center; }
-  .qr img { width:210px; height:210px; display:block; padding:14px; border:2px solid rgba(255,243,204,.5); border-radius:14px; background:#0D0D0D; }
-  .qr span { display:block; margin-top:10px; font:600 15px/1.25 'JetBrains Mono',monospace; letter-spacing:.06em; color:#D4AF37; }
-  .foot { position:absolute; left:64px; right:64px; bottom:62px; }
-  .laser { position:relative; height:3px; background:#2FD16B; box-shadow:0 0 14px #2FD16B; }
-  .laser::before { content:''; position:absolute; left:50%; top:-34px; width:3px; height:52px; margin-left:-1.5px; background:#2FD16B; box-shadow:0 0 12px #2FD16B; }
-  .laser::after { content:''; position:absolute; left:50%; top:50%; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:#2FD16B; box-shadow:0 0 18px #2FD16B; }
-  .foot p { margin:30px 0 0; text-align:center; font:500 17px/1.3 'JetBrains Mono',monospace; letter-spacing:.14em; color:#9C9480; }
+  .rule { position:relative; height:3px; margin:0 -10px; background:#2FD16B; box-shadow:0 0 14px #2FD16B; }
+  .rule::after { content:''; position:absolute; left:50%; top:50%; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:#2FD16B; box-shadow:0 0 18px #2FD16B; }
+  .tel { padding:42px 0 46px; text-align:center; }
+  .tel .k { font:700 20px/1 'JetBrains Mono',monospace; letter-spacing:.3em; color:#D4AF37; }
+  .tel .n { margin-top:22px; font:600 128px/1 Onest,sans-serif; letter-spacing:.02em; color:#FFF3CC; white-space:nowrap; }
+  .qr { margin:46px auto 0; width:470px; text-align:center; }
+  .qr img { width:470px; height:470px; display:block; padding:26px; border:2px solid rgba(255,243,204,.5); border-radius:20px; background:#0D0D0D; }
+  .qr span { display:block; margin-top:18px; font:600 20px/1.3 'JetBrains Mono',monospace; letter-spacing:.14em; color:#D4AF37; }
+  .foot { position:absolute; left:64px; right:64px; bottom:56px; margin:0; text-align:center; font:500 17px/1.3 'JetBrains Mono',monospace; letter-spacing:.14em; color:#9C9480; }
 </style>
 </head>
 <body>
@@ -51,24 +39,17 @@
   <img class="logo" src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg?v=3" alt="НА УРОВНЕ">
   <div class="tag">Ремонт и мебель под ключ</div>
 
-  <div class="photo"><div class="note">Соседи, простите за шум.<br>Скоро здесь будет красиво.<small>Работаем по будням с 9:00 до 19:00</small></div></div>
+  <div class="photo"><div class="note">Соседи, простите за шум.<br>Скоро здесь будет красиво.</div></div>
 
   <h1>Один договор на&nbsp;ремонт <span>и&nbsp;мебель</span></h1>
-  <ul class="list">
-    <li><span>Ремонт квартир под ключ</span><b>от 8 900 ₽/м²</b></li>
-    <li><span>Кухни и шкафы из своего цеха</span><b>от 27 200 ₽/п.м.</b></li>
-    <li><span>Один прораб, одна смета, один срок</span><b></b></li>
-    <li><span>Гарантия: ремонт 2 года, мебель 3 года</span><b></b></li>
-  </ul>
 
-  <div class="offer"><div class="k">СОСЕДЯМ ПО ДОМУ</div><div class="t">Замер <em>бесплатно</em>, скидка на&nbsp;мебель <em>до&nbsp;15&nbsp;%</em> при заказе ремонта</div></div>
+  <div class="rule"></div>
+  <div class="tel"><div class="k">ТЕЛЕФОН ДЛЯ СВЯЗИ</div><div class="n">68-22-66</div></div>
+  <div class="rule"></div>
 
-  <div class="contact">
-    <div><div class="phone">+7 912 410 00 01</div><div class="ways">Звоните или пишите в <b>WhatsApp</b>.<br>Посчитайте ремонт и кухню на сайте →</div></div>
-    <div class="qr"><img src="qr-site.svg" alt="QR-код сайта"><span>САЙТ И РАСЧЁТ<br>СТОИМОСТИ</span></div>
-  </div>
+  <div class="qr"><img src="qr-site.svg" alt="QR-код сайта"><span>САЙТ И РАСЧЁТ СТОИМОСТИ</span></div>
 
-  <div class="foot"><div class="laser"></div><p>ВСЁ НА ОДНОМ УРОВНЕ · ЦЕНЫ ОРИЕНТИРОВОЧНЫЕ</p></div>
+  <p class="foot">ВСЁ НА ОДНОМ УРОВНЕ</p>
 </div>
 </body>
 </html>
