@@ -188,7 +188,7 @@
       (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(start);
     }
     loadImg(IMG + 'before-' + rr, function (im) { rough = im; got(); });
-    loadImg(IMG + 'after-' + rr, function (im) { final = im; got(); });
+    loadImg(IMG + 'after-' + rr + '?v=2', function (im) { final = im; got(); });
 
     root.addEventListener('resize', function () {
       if (!spans || !rough || !final) return;

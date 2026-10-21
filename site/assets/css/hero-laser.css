@@ -2,10 +2,10 @@
 .hl {
   position: relative; overflow: hidden;
   height: calc(100svh - var(--header-h)); min-height: 520px;
-  background: #0D0D0D url('../img/hero/laser-after-w.webp') center / cover no-repeat; /* без скрипта: сразу готовый кадр */
+  background: #0D0D0D url('../img/hero/laser-after-w.webp?v=2') center / cover no-repeat; /* без скрипта: сразу готовый кадр */
   color: #FFF3CC;
 }
-@media (max-aspect-ratio: 4/5) { .hl { background-image: url('../img/hero/laser-after-m.webp'); background-position: center bottom; } }
+@media (max-aspect-ratio: 4/5) { .hl { background-image: url('../img/hero/laser-after-m.webp?v=2'); background-position: center bottom; } }
 .hl.is-ready { background-image: none; }
 .hl__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
