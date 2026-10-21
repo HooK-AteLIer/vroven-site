@@ -26,7 +26,7 @@ GAP = 64        # промежуток между словами под крес
 PAD_Y = 11      # поля сверху и снизу
 
 
-def wordmark(ink, laser):
+def wordmark(ink, laser, tagline=False):
     na, w_na = text_path("НА", TRACK)
     ur, w_ur = text_path("УРОВНЕ", TRACK)
     x_ur = w_na + GAP
@@ -42,6 +42,13 @@ def wordmark(ink, laser):
         f'<rect x="{fmt(cx - 2)}" y="{fmt(PAD_Y + 2)}" width="4" height="{fmt(base - PAD_Y - 2 + 20)}" fill="{laser}"/>'
         f'<circle cx="{fmt(cx)}" cy="{fmt(base)}" r="7" fill="{laser}"/>'
     )
+    if tagline:
+        # подпись «РЕМОНТ И МЕБЕЛЬ»: под лучом, начинается от точки пересечения, мелко и с разрядкой
+        tp, wt = text_path("РЕМОНТ И МЕБЕЛЬ", 46, space=70)
+        k = min(0.2, (w - cx - 16) / wt)
+        ty = base + 16
+        inner += f'<g fill="{ink}" opacity=".88" transform="translate({fmt(cx + 16)} {fmt(ty)}) scale({fmt(k)})">{tp}</g>'
+        h = ty + 100 * k + 10
     vb_x = -6
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{fmt(vb_x)} 0 {fmt(w + 12)} {fmt(h)}" '
             f'width="{fmt(w + 12)}" height="{fmt(h)}" role="img" aria-label="НА УРОВНЕ">'
@@ -67,6 +74,9 @@ def main():
     write(os.path.join(SITE_LOGO, "naurovne-wordmark.svg"), light)
     write(os.path.join(SITE_LOGO, "naurovne-wordmark-inverse.svg"), dark)
     write(os.path.join(SITE, "favicon.svg"), favicon())
+    # вариант с подписью «РЕМОНТ И МЕБЕЛЬ» для формы, вывесок и печати
+    write(os.path.join(SITE_LOGO, "naurovne-lockup.svg"), wordmark(INK, LASER, True)[0])
+    write(os.path.join(SITE_LOGO, "naurovne-lockup-inverse.svg"), wordmark(CANVAS, LASER_ON_DARK, True)[0])
     print(f"размер слова: {fmt(w)} x {fmt(h)}")
 
 
