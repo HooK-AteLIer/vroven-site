@@ -32,15 +32,15 @@ def wordmark(ink, laser):
     x_ur = w_na + GAP
     w = x_ur + w_ur
     cx = w_na + GAP / 2
-    h = 100 + PAD_Y * 2
-    base = PAD_Y + 100 + 5     # луч под словами, по базовой линии, как в финале первого экрана
+    h = PAD_Y + 100 + 14 + 8   # снизу место под луч и точку
+    base = PAD_Y + 100 + 14    # луч под словами, по базовой линии, как в финале первого экрана
     inner = (
-        f'<rect x="-6" y="{fmt(base - 1.4)}" width="{fmt(w + 12)}" height="2.8" fill="{laser}"/>'
+        f'<rect x="-6" y="{fmt(base - 2.3)}" width="{fmt(w + 12)}" height="4.6" fill="{laser}"/>'
         f'<g fill="{ink}" transform="translate(0 {PAD_Y})">{na}</g>'
         f'<g fill="{ink}" transform="translate({fmt(x_ur)} {PAD_Y})">{ur}</g>'
         # вертикаль креста между словами, точка пересечения лежит на нижнем луче
-        f'<rect x="{fmt(cx - 1.6)}" y="{fmt(PAD_Y + 2)}" width="3.2" height="{fmt(base - PAD_Y - 2)}" fill="{laser}"/>'
-        f'<circle cx="{fmt(cx)}" cy="{fmt(base)}" r="6" fill="{laser}"/>'
+        f'<rect x="{fmt(cx - 2)}" y="{fmt(PAD_Y + 2)}" width="4" height="{fmt(base - PAD_Y - 2)}" fill="{laser}"/>'
+        f'<circle cx="{fmt(cx)}" cy="{fmt(base)}" r="7" fill="{laser}"/>'
     )
     vb_x = -6
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{fmt(vb_x)} 0 {fmt(w + 12)} {fmt(h)}" '
