@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>НА УРОВНЕ · десять знаков с каской</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1400px; padding:40px; background:radial-gradient(1000px 520px at 8% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; --ink:#FFF3CC; --g:#2FD16B; --gold:#D4AF37; --cut:#141414; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 36px/1.1 Forum,serif; margin:10px 0 6px; }
+  .lead { color:#D9D0B8; margin:0 0 24px; max-width:980px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:20px 22px; background:#141414; display:grid; grid-template-columns:170px 1fr; gap:20px; }
+  .mark { width:170px; height:170px; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 24px/1.1 Forum,serif; margin:7px 0 5px; }
+  .d { font-size:13.5px; color:#D9D0B8; }
+  .hook { margin-top:6px; font:400 16px/1.3 Forum,serif; color:#FFC857; }
+  .apps { display:flex; gap:10px; margin-top:12px; align-items:center; }
+  .lock { display:flex; align-items:center; gap:10px; height:62px; padding:0 14px; border-radius:12px; background:#0D0D0D; border:1px solid rgba(255,255,255,.1); }
+  .lock svg { width:46px; height:46px; }
+  .lock img { height:20px; }
+  .icon { width:62px; height:62px; border-radius:16px; background:#0D0D0D; border:1px solid rgba(255,255,255,.16); display:grid; place-items:center; }
+  .icon svg { width:46px; height:46px; }
+  .paper { --ink:#0D0D0D; --g:#1FA552; --cut:#F4EFE6; --gold:#9A7A22; width:62px; height:62px; border-radius:16px; background:#F4EFE6; display:grid; place-items:center; }
+  .paper svg { width:46px; height:46px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-60" y="-60" width="400" height="400"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+    <!-- каска-основа, вид сбоку, козырёк вправо. Цвет купола: --hat (по умолчанию --ink) -->
+    <symbol id="hh" viewBox="0 0 120 70">
+      <path d="M14 58C14 22 38 4 64 4C90 4 108 22 110 52V58Z" fill="var(--hat, var(--ink))"/>
+      <path d="M58 6C62 20 64 38 64 56H72C72 38 70 20 66 6Z" fill="var(--cut)" opacity=".55"/>
+      <path d="M6 55H112Q120 55 120 62V64H4V61Q4 55 6 55Z" fill="var(--hat, var(--ink))"/>
+    </symbol>
+    <!-- только купол, без полей -->
+    <symbol id="hd" viewBox="0 0 120 60">
+      <path d="M14 58C14 22 38 4 64 4C90 4 108 22 110 52V58Z" fill="var(--hat, var(--ink))"/>
+      <path d="M58 6C62 20 64 38 64 56H72C72 38 70 20 66 6Z" fill="var(--cut)" opacity=".55"/>
+    </symbol>
+
+    <!-- 1. Уровень в каске: мастер-талисман -->
+    <symbol id="h1" viewBox="0 0 200 200">
+      <use href="#hh" x="44" y="40" width="112" height="65"/>
+      <rect x="28" y="104" width="144" height="58" rx="29" fill="none" stroke="var(--ink)" stroke-width="9"/>
+      <line x1="80" y1="114" x2="80" y2="152" stroke="var(--ink)" stroke-width="3"/><line x1="120" y1="114" x2="120" y2="152" stroke="var(--ink)" stroke-width="3"/>
+      <line x1="6" y1="133" x2="194" y2="133" stroke="var(--g)" stroke-width="2.6" filter="url(#glow)"/>
+      <circle cx="100" cy="133" r="11" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 2. Дом под каской -->
+    <symbol id="h2" viewBox="0 0 200 200">
+      <path d="M44 118V180H156V118" fill="none" stroke="var(--ink)" stroke-width="10" stroke-linejoin="round"/>
+      <use href="#hh" x="18" y="40" width="164" height="95"/>
+      <g stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"><line x1="58" y1="152" x2="142" y2="152"/><line x1="100" y1="132" x2="100" y2="174"/></g>
+      <circle cx="100" cy="152" r="6" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 3. Каска с лазерным фонарём -->
+    <symbol id="h3" viewBox="0 0 200 200">
+      <use href="#hh" x="8" y="62" width="128" height="75"/>
+      <rect x="116" y="80" width="16" height="18" rx="4" fill="var(--ink)"/>
+      <polygon points="132,84 196,72 196,104 132,94" fill="var(--g)" opacity=".18"/>
+      <line x1="132" y1="89" x2="196" y2="89" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="132" cy="89" r="5" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="10" y1="160" x2="190" y2="160" stroke="var(--g)" stroke-width="2" opacity=".55"/>
+    </symbol>
+
+    <!-- 4. Буква «Н» в каске -->
+    <symbol id="h4" viewBox="0 0 200 200">
+      <use href="#hh" x="34" y="30" width="132" height="77"/>
+      <rect x="54" y="104" width="20" height="80" fill="var(--ink)"/><rect x="126" y="104" width="20" height="80" fill="var(--ink)"/>
+      <line x1="20" y1="144" x2="180" y2="144" stroke="var(--g)" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="100" cy="144" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 5. Ключ с головкой-каской -->
+    <symbol id="h5" viewBox="0 0 200 200">
+      <use href="#hh" x="8" y="62" width="96" height="56"/>
+      <rect x="98" y="108" width="88" height="13" rx="3" fill="var(--ink)"/>
+      <path d="M150 121H162V138H150ZM170 121H186V146H170Z" fill="var(--ink)"/>
+      <circle cx="58" cy="132" r="9" fill="none" stroke="var(--g)" stroke-width="3" filter="url(#glow)"/>
+      <line x1="6" y1="160" x2="194" y2="160" stroke="var(--g)" stroke-width="2.4" opacity=".7"/>
+    </symbol>
+
+    <!-- 6. Каска на шкафу -->
+    <symbol id="h6" viewBox="0 0 200 200">
+      <use href="#hh" x="58" y="24" width="96" height="56"/>
+      <rect x="46" y="82" width="108" height="100" rx="4" fill="none" stroke="var(--ink)" stroke-width="8"/>
+      <line x1="100" y1="86" x2="100" y2="178" stroke="var(--ink)" stroke-width="5"/>
+      <rect x="88" y="120" width="5" height="22" rx="2.5" fill="var(--ink)"/><rect x="107" y="120" width="5" height="22" rx="2.5" fill="var(--ink)"/>
+      <line x1="10" y1="82" x2="190" y2="82" stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="46" cy="82" r="6" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 7. Поля каски — ампула уровня -->
+    <symbol id="h7" viewBox="0 0 200 200">
+      <use href="#hd" x="30" y="44" width="140" height="70"/>
+      <rect x="12" y="116" width="176" height="34" rx="17" fill="var(--cut)" stroke="var(--ink)" stroke-width="7"/>
+      <line x1="80" y1="122" x2="80" y2="144" stroke="var(--ink)" stroke-width="2.4"/><line x1="120" y1="122" x2="120" y2="144" stroke="var(--ink)" stroke-width="2.4"/>
+      <circle cx="100" cy="133" r="9" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="2" y1="133" x2="12" y2="133" stroke="var(--g)" stroke-width="2.4"/><line x1="188" y1="133" x2="198" y2="133" stroke="var(--g)" stroke-width="2.4"/>
+    </symbol>
+
+    <!-- 8. Каска в перекрестье: круглый знак -->
+    <symbol id="h8" viewBox="0 0 200 200">
+      <circle cx="100" cy="100" r="92" fill="none" stroke="var(--gold)" stroke-width="4"/>
+      <circle cx="100" cy="100" r="82" fill="none" stroke="var(--ink)" stroke-opacity=".35" stroke-width="1.4" stroke-dasharray="3 3"/>
+      <g stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"><line x1="16" y1="122" x2="184" y2="122"/><line x1="100" y1="16" x2="100" y2="184"/></g>
+      <use href="#hh" x="46" y="62" width="108" height="63"/>
+      <circle cx="100" cy="122" r="6.5" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 9. Каска-рассвет -->
+    <symbol id="h9" viewBox="0 0 200 200">
+      <g stroke="var(--gold)" stroke-width="5" stroke-linecap="round">
+        <line x1="100" y1="18" x2="100" y2="40"/><line x1="40" y1="44" x2="54" y2="58"/><line x1="160" y1="44" x2="146" y2="58"/><line x1="14" y1="100" x2="32" y2="100"/><line x1="168" y1="100" x2="186" y2="100"/>
+      </g>
+      <use href="#hd" x="38" y="66" width="124" height="62" style="--hat:var(--gold)"/>
+      <line x1="6" y1="128" x2="194" y2="128" stroke="var(--g)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+      <g stroke="var(--ink)" stroke-linecap="round" opacity=".5"><line x1="60" y1="148" x2="140" y2="148" stroke-width="5"/><line x1="78" y1="166" x2="122" y2="166" stroke-width="4"/><line x1="92" y1="182" x2="108" y2="182" stroke-width="3"/></g>
+    </symbol>
+
+    <!-- 10. Команда: две каски, ремонт и мебель -->
+    <symbol id="h10" viewBox="0 0 200 200">
+      <use href="#hh" x="8" y="70" width="112" height="65"/>
+      <g transform="translate(200 0) scale(-1 1)"><use href="#hh" x="8" y="78" width="104" height="61" style="--hat:var(--gold)"/></g>
+      <line x1="6" y1="146" x2="194" y2="146" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="100" cy="146" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">НА УРОВНЕ · знаки с каской</div>
+<h1>Десять знаков, где главный герой — строительная каска</h1>
+<p class="lead">Каска — символ мастера, ответственности и безопасности. Сама по себе она скучная, поэтому в каждом знаке она «играет»: светит лазером, накрывает дом, держит уровень, встречает рассвет. И везде есть зелёный луч нивелира, фирменная примета «НА УРОВНЕ». Клиент видит: здесь работают профессионалы, и им не всё равно.</p>
+
+<div class="grid">
+  <div class="card"><svg class="mark"><use href="#h1"/></svg><div>
+    <div class="n">01 · Уровень в каске</div><div class="t">Талисман бренда</div>
+    <div class="d">Строительный уровень надел каску и стал персонажем: пузырёк ровно по центру, через него идёт луч. Из такого героя легко сделать стикеры, наклейки, фигурку на стол прораба и мультяшные ролики для соцсетей.</div>
+    <div class="hook">«Мастер Уровень на объекте»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h1"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h1"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h1"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h2"/></svg><div>
+    <div class="n">02 · Дом под каской</div><div class="t">Каска вместо крыши</div>
+    <div class="d">Крыша дома — это каска мастера, внутри светится лазерный крест. Смысл понятен без слов: «ваш дом под защитой профессионалов». Тёплый, надёжный знак, хорошо работает на вывеске.</div>
+    <div class="hook">«Ваш дом под нашей ответственностью»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h2"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h2"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h2"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h3"/></svg><div>
+    <div class="n">03 · Каска с лазерным фонарём</div><div class="t">Видим каждый миллиметр</div>
+    <div class="d">На каске вместо фонарика стоит лазер, и он светит зелёным лучом вперёд, как нивелир. Технологично и смело: компания, которая всё проверяет лазером. Луч продолжается в надпись, логотип читается как «каска → НА·УРОВНЕ».</div>
+    <div class="hook">«Мы всё проверяем лазером»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h3"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h3"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h3"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h4"/></svg><div>
+    <div class="n">04 · Буква «Н» в каске</div><div class="t">Монограмма-мастер</div>
+    <div class="d">Первая буква названия надела каску, её перекладина — зелёный лазерный луч. Буква превращается в человечка-мастера. Отличная иконка для аватарки и приложения.</div>
+    <div class="hook">«Н — значит надёжно»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h4"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h4"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h4"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h5"/></svg><div>
+    <div class="n">05 · Ключ-каска</div><div class="t">Под ключ, от мастера</div>
+    <div class="d">Головка ключа — это каска, на ней светится зелёное кольцо. Мастер «превращается» в ключ от вашей квартиры: знак сразу говорит «ремонт под ключ» и «сделано руками профессионалов».</div>
+    <div class="hook">«Мастер отдаёт вам ключи»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h5"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h5"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h5"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h6"/></svg><div>
+    <div class="n">06 · Каска на шкафу</div><div class="t">Мебель от строителей</div>
+    <div class="d">Каска лежит на крыше шкафа, а верх шкафа идёт ровно по лазерной линии. Знак рассказывает редкую историю: мебель делают те же люди, что выравнивали стены. Поэтому всё встаёт идеально.</div>
+    <div class="hook">«Мебель от тех, кто делал ваши стены»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h6"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h6"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h6"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h7"/></svg><div>
+    <div class="n">07 · Поля-уровень</div><div class="t">Каска, выверенная по уровню</div>
+    <div class="d">Поля каски сделаны из ампулы уровня, пузырёк стоит ровно посередине. Изящно и остроумно: даже каска у нас «по уровню». Хорошо смотрится тиснением и вышивкой.</div>
+    <div class="hook">«У нас даже каска ровная»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h7"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h7"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h7"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h8"/></svg><div>
+    <div class="n">08 · Каска в перекрестье</div><div class="t">Знак качества</div>
+    <div class="d">Каска стоит точно в перекрестье лазерного нивелира, вокруг латунное кольцо. Выглядит как значок или орден мастера. Подходит для печати на акте сдачи, наклейки на готовую мебель и шеврона.</div>
+    <div class="hook">«Знак мастера НА УРОВНЕ»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h8"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h8"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h8"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h9"/></svg><div>
+    <div class="n">09 · Каска-рассвет</div><div class="t">Золотая каска встаёт над горизонтом</div>
+    <div class="d">Золотая каска поднимается над лазерной линией, как солнце, вокруг лучи. Это обещание: после нас в вашей квартире начнётся новое утро. Красиво, празднично и запоминается.</div>
+    <div class="hook">«Новый уровень жизни начинается утром»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h9"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h9"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h9"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#h10"/></svg><div>
+    <div class="n">10 · Две каски</div><div class="t">Одна команда: ремонт и мебель</div>
+    <div class="d">Две каски смотрят друг на друга: светлая — бригада ремонта, золотая — мебельный цех. Они стоят на одной лазерной линии. Главное преимущество компании, одна команда и один договор, в одном знаке.</div>
+    <div class="hook">«Одна команда. Один уровень»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#h10"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#h10"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#h10"/></svg></div></div></div></div>
+</div>
+</body>
+</html>
