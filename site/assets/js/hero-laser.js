@@ -156,7 +156,7 @@
         var q = ease((t - T.back0) / (T.back1 - T.back0)), from = sp || wander(1);
         // финал как в начале: луч под словами (по базовой линии), вертикаль между «НА» и «УРОВНЕ», точка на нижней линии
         var cx = lerp(from.x, geo.gx, q), cy = lerp(from.y, lineY(), q);
-        cross(cx, cy, lerp(0, geo.left - 34, q), lerp(W, geo.right + 34, q), cy - lerp(H, geo.cap * 1.2, q), cy + lerp(H, geo.cap * .16, q),
+        cross(cx, cy, lerp(0, geo.left - 34, q), lerp(W, geo.right + 34, q), cy - lerp(H, geo.cap * 1.2, q), cy + lerp(H, geo.cap * .3, q),
           lerp(.95, .85, q), lerp(6, Math.max(6, geo.cap * .07), q));
       }
     }
