@@ -6,6 +6,11 @@
   color: #FFF3CC;
 }
 @media (max-aspect-ratio: 4/5) { .hl { background-image: url('../img/hero/laser-after-m.webp?v=2'); background-position: center bottom; } }
+/* со скриптом до старта анимации: кадр «до», те же файлы, что грузит hero-laser.js */
+.hl-js .hl { background-image: url('../img/hero/laser-before-w.webp'); }
+@media (max-aspect-ratio: 4/5) { .hl-js .hl { background-image: url('../img/hero/laser-before-m.webp'); } }
+.hl-js .hl.is-fallback { background-image: url('../img/hero/laser-after-w.webp?v=2'); }
+@media (max-aspect-ratio: 4/5) { .hl-js .hl.is-fallback { background-image: url('../img/hero/laser-after-m.webp?v=2'); } }
 .hl.is-ready { background-image: none; }
 .hl__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
@@ -23,7 +28,8 @@
 .hl__word span { display: inline-block; transform-origin: 50% 90%; color: #CDBF98; transition: transform .55s cubic-bezier(.2, 1.4, .4, 1), color .4s; }
 .hl__word span.is-level { transform: none !important; color: #FFF3CC; }
 .hl__word .hl__gap { width: .62em; }
-/* без скрипта буквы сразу ровные */
+/* без скрипта буквы сразу ровные; со скриптом слово появляется вместе с анимацией */
+.hl-js .hl:not(.is-ready):not(.is-fallback) .hl__word { visibility: hidden; }
 .hl:not(.is-ready) .hl__word span { transform: none !important; color: #FFF3CC; }
 
 .hl__tag {
