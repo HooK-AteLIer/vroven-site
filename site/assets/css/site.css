@@ -424,16 +424,17 @@ html.menu-open .site-header::before { background: var(--canvas); }
   .site-header__cta { display: inline-flex; }
 }
 
-/* от 1024: в шапке номер, город и кнопка; меню ещё в выезжающей панели (в строку не помещается) */
+/* от 1024 (ноутбук): меню в строку; номер текстом только от 1280, на узком ноутбуке вместо него значок трубки */
 @media (min-width: 1024px) {
   :root { --header-h: 76px; }
-  .site-header__call { display: none; }
-  .site-header__city, .site-header__phone { display: inline-flex; }
   .site-menu__meta .city-switch, .site-menu__meta .header-phone { display: none; }
 }
+@media (min-width: 1280px) {
+  .site-header__call { display: none; }
+  .site-header__phone { display: inline-flex; }
+}
 
-/* от 1366: меню в строку */
-@media (min-width: 1366px) {
+@media (min-width: 1024px) {
   .site-header__bar { gap: clamp(14px, 1.2vw, 36px); }
   .site-header__actions { gap: 10px; }
   .site-header__city .city-switch__btn { padding-inline: 10px; }
