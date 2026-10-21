@@ -22,14 +22,17 @@
   .note small { display:block; font:600 17px/1.3 Onest,sans-serif; color:#D9D0B8; margin-top:6px; letter-spacing:.02em; }
   h1 { margin:40px 0 26px; text-align:center; font:400 54px/1.08 Forum,serif; letter-spacing:.01em; }
   h1 span { color:#FFC857; }
-  .rule { position:relative; height:3px; margin:0 -10px; background:#2FD16B; box-shadow:0 0 14px #2FD16B; }
-  .rule::after { content:''; position:absolute; left:50%; top:50%; width:16px; height:16px; margin:-8px 0 0 -8px; border-radius:50%; background:#2FD16B; box-shadow:0 0 18px #2FD16B; }
+  .rule { height:2px; margin:0 -10px; background:#2FD16B; box-shadow:0 0 8px #2FD16B; }
+  /* вертикаль лазерного креста под последней «6», пересекает нижнюю линию */
+  .tel .x { position:relative; display:inline-block; }
+  .tel .x::after { content:''; position:absolute; left:50%; top:calc(100% + 16px); width:2px; height:50px; margin-left:-1px; background:#2FD16B; box-shadow:0 0 8px #2FD16B; }
   .tel { padding:42px 0 46px; text-align:center; }
   .tel .k { font:700 20px/1 'JetBrains Mono',monospace; letter-spacing:.3em; color:#D4AF37; }
   .tel .n { margin-top:22px; font:600 128px/1 Onest,sans-serif; letter-spacing:.02em; color:#FFF3CC; white-space:nowrap; }
   .qr { margin:46px auto 0; width:470px; text-align:center; }
   .qr img { width:470px; height:470px; display:block; padding:26px; border:2px solid rgba(255,243,204,.5); border-radius:20px; background:#0D0D0D; }
   .qr span { display:block; margin-top:18px; font:600 20px/1.3 'JetBrains Mono',monospace; letter-spacing:.14em; color:#D4AF37; }
+  .foot span { display:inline-block; padding-bottom:10px; background:linear-gradient(#2FD16B,#2FD16B) left bottom / 100% 2px no-repeat; }
   .foot { position:absolute; left:64px; right:64px; bottom:56px; margin:0; text-align:center; font:500 17px/1.3 'JetBrains Mono',monospace; letter-spacing:.14em; color:#9C9480; }
 </style>
 </head>
@@ -44,12 +47,12 @@
   <h1>Один договор на&nbsp;ремонт <span>и&nbsp;мебель</span></h1>
 
   <div class="rule"></div>
-  <div class="tel"><div class="k">ТЕЛЕФОН ДЛЯ СВЯЗИ</div><div class="n">68-22-66</div></div>
+  <div class="tel"><div class="k">ТЕЛЕФОН ДЛЯ СВЯЗИ</div><div class="n">68-22-6<span class="x">6</span></div></div>
   <div class="rule"></div>
 
   <div class="qr"><img src="qr-site.svg" alt="QR-код сайта"><span>САЙТ И РАСЧЁТ СТОИМОСТИ</span></div>
 
-  <p class="foot">ВСЁ НА ОДНОМ УРОВНЕ</p>
+  <p class="foot"><span>ВСЁ НА ОДНОМ УРОВНЕ</span></p>
 </div>
 </body>
 </html>
