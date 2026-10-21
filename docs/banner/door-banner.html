@@ -25,7 +25,9 @@
   .rule { height:2px; margin:0 -10px; background:#2FD16B; box-shadow:0 0 8px #2FD16B; }
   /* вертикаль лазерного креста под последней «6», пересекает нижнюю линию */
   .tel .x { position:relative; display:inline-block; }
-  .tel .x::after { content:''; position:absolute; left:50%; top:calc(100% + 16px); width:2px; height:50px; margin-left:-1px; background:#2FD16B; box-shadow:0 0 8px #2FD16B; }
+  .tel .x::after { content:''; position:absolute; left:50%; top:calc(100% + 16px); width:2px; height:100px; margin-left:-1px; background:#2FD16B; box-shadow:0 0 8px #2FD16B; }
+  /* точка в пересечении с нижней линией (линия на 46px ниже цифр, это нижний отступ .tel) */
+  .tel .x::before { content:''; position:absolute; left:50%; top:calc(100% + 47px); width:12px; height:12px; margin:-6px 0 0 -6px; border-radius:50%; background:#2FD16B; box-shadow:0 0 12px #2FD16B; z-index:1; }
   .tel { padding:42px 0 46px; text-align:center; }
   .tel .k { font:700 20px/1 'JetBrains Mono',monospace; letter-spacing:.3em; color:#D4AF37; }
   .tel .n { margin-top:22px; font:600 128px/1 Onest,sans-serif; letter-spacing:.02em; color:#FFF3CC; white-space:nowrap; }
