@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>НА УРОВНЕ · десять знаков, в которые влюбляются</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=block">
+<style>
+  * { box-sizing:border-box; }
+  body { margin:0; width:1400px; padding:40px; background:radial-gradient(1000px 520px at 8% -10%,#3A2E10 0%,transparent 60%),#0D0D0D; color:#FFF3CC; font:15px/1.5 Onest,sans-serif; --ink:#FFF3CC; --g:#2FD16B; --gold:#D4AF37; --cut:#141414; }
+  .eyebrow { font:500 12px/1 'JetBrains Mono',monospace; letter-spacing:.16em; text-transform:uppercase; color:#D4AF37; }
+  h1 { font:400 36px/1.1 Forum,serif; margin:10px 0 6px; }
+  .lead { color:#D9D0B8; margin:0 0 24px; max-width:980px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { border:1px solid rgba(255,255,255,.14); border-radius:18px; padding:20px 22px; background:#141414; display:grid; grid-template-columns:170px 1fr; gap:20px; }
+  .mark { width:170px; height:170px; }
+  .n { font:500 11px/1 'JetBrains Mono',monospace; color:#D4AF37; letter-spacing:.14em; text-transform:uppercase; }
+  .t { font:400 24px/1.1 Forum,serif; margin:7px 0 5px; }
+  .d { font-size:13.5px; color:#D9D0B8; }
+  .hook { margin-top:6px; font:400 16px/1.3 Forum,serif; color:#FFC857; }
+  .apps { display:flex; gap:10px; margin-top:12px; align-items:center; }
+  .lock { display:flex; align-items:center; gap:10px; height:62px; padding:0 14px; border-radius:12px; background:#0D0D0D; border:1px solid rgba(255,255,255,.1); }
+  .lock svg { width:46px; height:46px; }
+  .lock img { height:20px; }
+  .icon { width:62px; height:62px; border-radius:16px; background:#0D0D0D; border:1px solid rgba(255,255,255,.16); display:grid; place-items:center; }
+  .icon svg { width:46px; height:46px; }
+  .paper { --ink:#0D0D0D; --g:#1FA552; --cut:#F4EFE6; --gold:#9A7A22; width:62px; height:62px; border-radius:16px; background:#F4EFE6; display:grid; place-items:center; }
+  .paper svg { width:46px; height:46px; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="glow" filterUnits="userSpaceOnUse" x="-60" y="-60" width="400" height="400"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+
+    <!-- 1. Ключ-уровень -->
+    <symbol id="k1" viewBox="0 0 200 200">
+      <line x1="6" y1="100" x2="104" y2="100" stroke="var(--g)" stroke-width="2.6" filter="url(#glow)"/>
+      <rect x="22" y="68" width="82" height="64" rx="32" fill="none" stroke="var(--ink)" stroke-width="10"/>
+      <line x1="48" y1="80" x2="48" y2="120" stroke="var(--ink)" stroke-width="3"/><line x1="78" y1="80" x2="78" y2="120" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="63" cy="100" r="10" fill="var(--g)" filter="url(#glow)"/>
+      <rect x="104" y="93" width="84" height="14" rx="3" fill="var(--ink)"/>
+      <path d="M150 107H162V124H150ZM170 107H186V132H170Z" fill="var(--ink)"/>
+    </symbol>
+
+    <!-- 2. Дверь в новый уровень -->
+    <symbol id="k2" viewBox="0 0 200 200">
+      <path d="M66 18L150 18L150 172" fill="none" stroke="var(--ink)" stroke-width="0"/>
+      <polygon points="66,172 150,172 196,198 20,198" fill="var(--g)" opacity=".22"/>
+      <rect x="66" y="22" width="84" height="150" fill="none" stroke="var(--ink)" stroke-width="10"/>
+      <polygon points="71,27 40,42 40,186 71,167" fill="var(--ink)"/>
+      <circle cx="49" cy="108" r="4" fill="var(--cut)"/>
+      <line x1="6" y1="172" x2="194" y2="172" stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="108" cy="172" r="6.5" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 3. Ступени: черновик → ремонт → мебель -->
+    <symbol id="k3" viewBox="0 0 200 200">
+      <rect x="22" y="128" width="50" height="50" fill="var(--ink)" opacity=".45"/>
+      <rect x="76" y="96" width="50" height="82" fill="var(--ink)" opacity=".75"/>
+      <rect x="130" y="62" width="50" height="116" fill="var(--ink)"/>
+      <g stroke="var(--cut)" stroke-width="3"><line x1="134" y1="100" x2="176" y2="100"/><line x1="134" y1="138" x2="176" y2="138"/></g>
+      <g fill="var(--cut)"><rect x="148" y="78" width="14" height="4" rx="2"/><rect x="148" y="116" width="14" height="4" rx="2"/><rect x="148" y="154" width="14" height="4" rx="2"/></g>
+      <line x1="10" y1="62" x2="190" y2="62" stroke="var(--g)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="155" cy="62" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 4. Дом-уровень -->
+    <symbol id="k4" viewBox="0 0 200 200">
+      <path d="M28 98L100 36L172 98V172H28Z" fill="none" stroke="var(--ink)" stroke-width="10" stroke-linejoin="round"/>
+      <rect x="54" y="112" width="92" height="38" rx="19" fill="none" stroke="var(--ink)" stroke-width="6"/>
+      <line x1="84" y1="118" x2="84" y2="144" stroke="var(--ink)" stroke-width="2.4"/><line x1="116" y1="118" x2="116" y2="144" stroke="var(--ink)" stroke-width="2.4"/>
+      <line x1="6" y1="131" x2="194" y2="131" stroke="var(--g)" stroke-width="2.4" opacity=".85" filter="url(#glow)"/>
+      <circle cx="100" cy="131" r="9" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 5. Рулетка -->
+    <symbol id="k5" viewBox="0 0 200 200">
+      <rect x="22" y="48" width="110" height="110" rx="26" fill="var(--ink)"/>
+      <circle cx="77" cy="103" r="26" fill="var(--cut)"/>
+      <circle cx="77" cy="103" r="7" fill="var(--g)" filter="url(#glow)"/>
+      <rect x="120" y="138" width="66" height="18" fill="var(--gold)"/>
+      <g stroke="var(--cut)" stroke-width="2"><line x1="132" y1="138" x2="132" y2="148"/><line x1="142" y1="138" x2="142" y2="144"/><line x1="152" y1="138" x2="152" y2="148"/><line x1="162" y1="138" x2="162" y2="144"/><line x1="172" y1="138" x2="172" y2="148"/></g>
+      <rect x="184" y="132" width="8" height="30" rx="2" fill="var(--g)" filter="url(#glow)"/>
+      <line x1="6" y1="172" x2="194" y2="172" stroke="var(--g)" stroke-width="2.4" opacity=".7"/>
+    </symbol>
+
+    <!-- 6. Выдвинутый ящик -->
+    <symbol id="k6" viewBox="0 0 200 200">
+      <rect x="34" y="30" width="132" height="146" rx="6" fill="none" stroke="var(--ink)" stroke-width="8"/>
+      <line x1="38" y1="76" x2="162" y2="76" stroke="var(--ink)" stroke-width="4"/>
+      <line x1="38" y1="136" x2="162" y2="136" stroke="var(--ink)" stroke-width="4"/>
+      <rect x="22" y="88" width="156" height="40" rx="4" fill="var(--ink)"/>
+      <rect x="84" y="104" width="32" height="7" rx="3.5" fill="var(--cut)"/>
+      <rect x="86" y="50" width="28" height="6" rx="3" fill="var(--ink)"/><rect x="86" y="152" width="28" height="6" rx="3" fill="var(--ink)"/>
+      <line x1="6" y1="88" x2="194" y2="88" stroke="var(--g)" stroke-width="3.2" stroke-linecap="round" filter="url(#glow)"/>
+      <circle cx="178" cy="88" r="6" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 7. Угол комнаты под нивелиром -->
+    <symbol id="k7" viewBox="0 0 200 200">
+      <polygon points="24,12 100,42 100,132 24,172" fill="var(--ink)" opacity=".72"/>
+      <polygon points="100,42 176,12 176,172 100,132" fill="var(--ink)"/>
+      <polygon points="24,172 100,132 176,172 100,198" fill="none" stroke="var(--ink)" stroke-width="3" opacity=".8"/>
+      <g stroke="var(--g)" stroke-width="3.4" stroke-linecap="round" filter="url(#glow)">
+        <line x1="24" y1="96" x2="100" y2="88"/><line x1="100" y1="88" x2="176" y2="96"/>
+        <line x1="100" y1="42" x2="100" y2="132"/>
+      </g>
+      <circle cx="100" cy="88" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 8. Отвес-сердце -->
+    <symbol id="k8" viewBox="0 0 200 200">
+      <line x1="100" y1="6" x2="100" y2="62" stroke="var(--g)" stroke-width="3" filter="url(#glow)"/>
+      <rect x="92" y="58" width="16" height="10" rx="2" fill="var(--ink)"/>
+      <path d="M100 186C46 146 30 112 46 88C60 66 88 68 100 90C112 68 140 66 154 88C170 112 154 146 100 186Z" fill="var(--ink)"/>
+      <line x1="14" y1="118" x2="186" y2="118" stroke="var(--g)" stroke-width="2.6" opacity=".9" filter="url(#glow)"/>
+      <circle cx="100" cy="118" r="7" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 9. Улыбка уровня -->
+    <symbol id="k9" viewBox="0 0 200 200">
+      <circle cx="68" cy="62" r="10" fill="var(--ink)"/><circle cx="132" cy="62" r="10" fill="var(--ink)"/>
+      <path d="M26 92Q100 182 174 92" fill="none" stroke="var(--ink)" stroke-width="38" stroke-linecap="round"/>
+      <path d="M26 92Q100 182 174 92" fill="none" stroke="var(--cut)" stroke-width="24" stroke-linecap="round"/>
+      <line x1="80" y1="122" x2="80" y2="146" stroke="var(--ink)" stroke-width="3"/><line x1="120" y1="122" x2="120" y2="146" stroke="var(--ink)" stroke-width="3"/>
+      <circle cx="100" cy="137" r="9" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+
+    <!-- 10. Рассвет над линией -->
+    <symbol id="k10" viewBox="0 0 200 200">
+      <g stroke="var(--gold)" stroke-width="5" stroke-linecap="round">
+        <line x1="100" y1="22" x2="100" y2="44"/><line x1="44" y1="48" x2="58" y2="62"/><line x1="156" y1="48" x2="142" y2="62"/><line x1="18" y1="104" x2="38" y2="104"/><line x1="162" y1="104" x2="182" y2="104"/>
+      </g>
+      <path d="M46 126A54 54 0 0 1 154 126Z" fill="var(--ink)"/>
+      <line x1="6" y1="126" x2="194" y2="126" stroke="var(--g)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+      <g stroke="var(--ink)" stroke-linecap="round" opacity=".5"><line x1="62" y1="146" x2="138" y2="146" stroke-width="5"/><line x1="78" y1="164" x2="122" y2="164" stroke-width="4"/><line x1="92" y1="180" x2="108" y2="180" stroke-width="3"/></g>
+      <circle cx="100" cy="126" r="6.5" fill="var(--g)" filter="url(#glow)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="eyebrow">НА УРОВНЕ · креативные знаки бренда</div>
+<h1>Десять знаков, в которые влюбляются</h1>
+<p class="lead">Каждый знак рассказывает маленькую историю: о ключах от готовой квартиры, о первом утре в новом доме, о мебели, которая встала идеально. И в каждом светится зелёный луч нивелира, фирменная примета «НА УРОВНЕ». Клиент не видит в таком знаке стройку, он видит свой будущий дом.</p>
+
+<div class="grid">
+  <div class="card"><svg class="mark"><use href="#k1"/></svg><div>
+    <div class="n">01 · Ключ-уровень</div><div class="t">Ремонт под ключ, буквально</div>
+    <div class="d">Головка ключа — ампула уровня с пузырьком ровно по центру. Знак одновременно говорит «под ключ» и «ровно», а клиенту обещает главное: ключи от готового дома.</div>
+    <div class="hook">«Вам остаётся только повернуть ключ»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k1"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k1"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k1"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k2"/></svg><div>
+    <div class="n">02 · Дверь в новый уровень</div><div class="t">Открытая дверь, свет на полу</div>
+    <div class="d">Дверь приоткрыта, из проёма на пол падает зелёный свет, по порогу идёт лазерная линия. Знак-приглашение: за этой дверью уже ваша новая жизнь. Самый эмоциональный вариант.</div>
+    <div class="hook">«Войдите в квартиру на новом уровне»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k2"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k2"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k2"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k3"/></svg><div>
+    <div class="n">03 · Три ступени</div><div class="t">Черновик → ремонт → мебель</div>
+    <div class="d">Три ступени растут: бледная (черновые стены), плотнее (ремонт), яркая с ящиками и ручками (мебель). Верх последней ступени ровно на лазерной линии. Весь путь компании в одном знаке.</div>
+    <div class="hook">«От бетона до последней полки»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k3"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k3"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k3"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k4"/></svg><div>
+    <div class="n">04 · Дом-уровень</div><div class="t">Сердце дома — точность</div>
+    <div class="d">Контур дома, внутри ампула уровня, пузырёк ровно посередине, через дом проходит луч. Простой, тёплый, понятный любому: «в этом доме всё выверено».</div>
+    <div class="hook">«Дом, в котором всё ровно»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k4"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k4"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k4"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k5"/></svg><div>
+    <div class="n">05 · Рулетка</div><div class="t">Всё начинается с замера</div>
+    <div class="d">Рулетка с выдвинутой золотой лентой, на конце зелёный крючок. Говорит о главном отличии компании: замеряем сами и мебель делаем точно в размер. Узнаваемо и по-мужски надёжно.</div>
+    <div class="hook">«Миллиметр в миллиметр»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k5"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k5"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k5"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k6"/></svg><div>
+    <div class="n">06 · Выдвинутый ящик</div><div class="t">Мебель, которая встала идеально</div>
+    <div class="d">Шкаф с выдвинутым ящиком. Его верхняя кромка лежит точно на лазерной линии. Хочется протянуть руку и задвинуть ящик: знак «трогательный», вызывает желание пользоваться.</div>
+    <div class="hook">«Ящик ходит мягко, потому что стены ровные»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k6"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k6"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k6"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k7"/></svg><div>
+    <div class="n">07 · Угол комнаты</div><div class="t">Нивелир светит в угол</div>
+    <div class="d">Объёмный угол комнаты, по обеим стенам идёт лазерная линия на одной высоте, в углу вертикальный луч и точка. Так реально выглядит работа нивелира на объекте. Знак выглядит технологично и дорого.</div>
+    <div class="hook">«Ровно в каждом углу»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k7"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k7"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k7"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k8"/></svg><div>
+    <div class="n">08 · Отвес-сердце</div><div class="t">С любовью и по отвесу</div>
+    <div class="d">Строительный отвес висит на зелёной нити, но груз у него в форме сердца. Через сердце проходит лазерная линия. Неожиданно, трогательно, особенно нравится женщинам, которые чаще выбирают ремонт и кухню.</div>
+    <div class="hook">«Делаем с любовью. И строго по отвесу»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k8"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k8"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k8"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k9"/></svg><div>
+    <div class="n">09 · Улыбка уровня</div><div class="t">Уровень улыбается, когда всё ровно</div>
+    <div class="d">Изогнутая колба уровня складывается в улыбку, пузырёк стоит точно в центре, сверху два глаза. Дружелюбный характер бренда: годится для соцсетей, стикеров, наклеек на коробки и детских раскрасок для клиентов.</div>
+    <div class="hook">«Улыбнётся даже уровень»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k9"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k9"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k9"/></svg></div></div></div></div>
+
+  <div class="card"><svg class="mark"><use href="#k10"/></svg><div>
+    <div class="n">10 · Рассвет над линией</div><div class="t">Первое утро в новом доме</div>
+    <div class="d">Солнце встаёт ровно над лазерной линией горизонта, внизу его отражение. Это ощущение, ради которого делают ремонт: проснуться в своей готовой квартире. Самый «продающий мечту» знак.</div>
+    <div class="hook">«Новый уровень жизни начинается утром»</div>
+    <div class="apps"><div class="lock"><svg viewBox="0 0 200 200"><use href="#k10"/></svg><img src="../../site/assets/img/logo/naurovne-wordmark-inverse.svg" alt=""></div><div class="icon"><svg viewBox="0 0 200 200"><use href="#k10"/></svg></div><div class="paper"><svg viewBox="0 0 200 200"><use href="#k10"/></svg></div></div></div></div>
+</div>
+</body>
+</html>
