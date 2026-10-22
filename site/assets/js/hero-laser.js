@@ -41,7 +41,7 @@
     var tmp = doc.createElement('canvas'), tctx = tmp.getContext('2d');
     var reduce = root.matchMedia && root.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var tall = hero.clientWidth / Math.max(1, hero.clientHeight) < .8; // телефон: вертикальный кадр
-    var rough = null, final = null, W, H, dpr, t0, geo, spans, flags, lastP = null, sp = null, prev = 0, running = false;
+    var rough = null, final = null, W, H, dpr, clock = 0, geo, spans, flags, lastP = null, sp = null, prev = 0, running = false;
     var state = 'загрузка';
 
     function build() {
@@ -163,7 +163,9 @@
 
     function frame(now) {
       if (!running) return;
-      var t = reduce ? 1e9 : now - t0;
+      // время анимации идёт только пока кадры рисуются: страница в фоне или подвисший телефон не проматывают лазер до финала
+      clock += Math.min(100, now - (prev || now));
+      var t = reduce ? 1e9 : clock;
       draw(t, now); prev = now;
       if (t > T.end) { running = false; state = 'готово'; return; } // анимация закончилась: дальше только перерисовка при изменении размера
       root.requestAnimationFrame(frame);
@@ -178,7 +180,7 @@
       hero.classList.add('is-ready');
       build(); size();
       if (reduce) { state = 'статичный кадр'; still(); return; }
-      state = 'анимация'; t0 = root.performance.now(); running = true; root.requestAnimationFrame(frame);
+      state = 'анимация'; clock = 0; prev = 0; running = true; root.requestAnimationFrame(frame);
     }
 
     var rr = tall ? 'm.webp' : 'w.webp', left = 2;
