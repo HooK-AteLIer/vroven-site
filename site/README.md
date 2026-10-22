@@ -34,7 +34,7 @@ python -m http.server 8130 --directory site
 
 ### Вариант 1. GitHub Pages (так опубликовано сейчас)
 
-Репозиторий: https://github.com/shatskihton-boop/vroven-site, сайт: https://shatskihton-boop.github.io/vroven-site/
+Репозиторий: https://github.com/hook-atelier/vroven-site, сайт: https://hook-atelier.github.io/vroven-site/
 
 Публикует workflow `.github/workflows/pages.yml`: при каждом пуше в `main` он прогоняет `node --test` и выкладывает папку `site/`. Если тесты упали, сайт не обновится. Ход публикации виден на вкладке Actions репозитория.
 
@@ -48,7 +48,7 @@ python -m http.server 8130 --directory site
 
 ### Адрес сайта в превью ссылок
 
-В `<head>` четырёх страниц `og:image` и `og:url` указаны абсолютными адресами `https://shatskihton-boop.github.io/vroven-site/…`: так превью ссылки работает в Telegram, WhatsApp и VK. При переезде на свой домен замените этот адрес во всех четырёх страницах.
+В `<head>` четырёх страниц `og:image` и `og:url` указаны абсолютными адресами `https://hook-atelier.github.io/vroven-site/…`: так превью ссылки работает в Telegram, WhatsApp и VK. При переезде на свой домен замените этот адрес во всех четырёх страницах.
 
 ## Первый экран
 

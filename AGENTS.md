@@ -33,7 +33,7 @@
 - GitHub Pages иногда отвечает 503 на отдельные файлы: любую загрузку картинок/кадров делать с повтором (`loadWithRetry` в `kitchen-accordion.js`, `loadImg` в `hero-laser.js`), иначе на телефоне герой молча уходит в статичный режим. Диагностика героя на телефоне: открыть сайт с `?debug=1`.
 - `media-raw/` (сырьё AI-картинок и ролика) не в git: источника для перекодирования в репозитории нет.
 - Edge в headless возвращается раньше, чем записан файл; ожидание файла в `brand/build/render.py`, не убирать.
-- Сайт публикуется на GitHub Pages workflow `.github/workflows/pages.yml` при пуше в `main` (сначала `node --test`): https://shatskihton-boop.github.io/vroven-site/. `og:image` и `og:url` абсолютные на этот адрес; при смене домена поправить в четырёх страницах.
+- Сайт публикуется на GitHub Pages workflow `.github/workflows/pages.yml` при пуше в `main` (сначала `node --test`): https://hook-atelier.github.io/vroven-site/. `og:image` и `og:url` абсолютные на этот адрес; при смене домена поправить в четырёх страницах.
 
 ## Как здесь работает Autopilot
 
