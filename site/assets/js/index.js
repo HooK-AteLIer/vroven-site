@@ -338,9 +338,16 @@
       objectSel.appendChild(opt);
     });
 
-    var cityChips = chipGroup($('[data-calc-city]', form), Object.keys(data.cities).map(function (id) {
-      return { id: id, name: data.cities[id].name };
-    }), cityId(), function (id) { V.city.set(id); });
+    var fixedCity = form.getAttribute('data-calc-fixed-city');
+    if (!fixedCity) {
+      var cityChips = chipGroup($('[data-calc-city]', form), Object.keys(data.cities).map(function (id) {
+        return { id: id, name: data.cities[id].name };
+      }), cityId(), function (id) { V.city.set(id); });
+      doc.addEventListener('vroven:city', function (e) {
+        cityChips.set(e.detail.id, true);
+        update();
+      });
+    }
 
     chipGroup($('[data-calc-type]', form), data.repairTypes, state.repairType, function (id) {
       state.repairType = id;
@@ -359,7 +366,7 @@
     }
 
     function update() {
-      var city = cityId();
+      var city = fixedCity || cityId();
       var input = {
         city: city,
         objectType: objectSel.value,
@@ -390,6 +397,7 @@
       }
       badgeInside(meta, !!(r.ok && r.placeholder));
 
+      if (!leadLink) return;
       leadLink.setAttribute('data-lead-payload', JSON.stringify({
         objectName: object ? object.name : '',
         repairName: type ? type.name : '',
@@ -405,10 +413,6 @@
     area.addEventListener('input', update);
     ceiling.addEventListener('input', update);
     form.addEventListener('submit', function (e) { e.preventDefault(); });
-    doc.addEventListener('vroven:city', function (e) {
-      cityChips.set(e.detail.id, true);
-      update();
-    });
     update();
   }
 

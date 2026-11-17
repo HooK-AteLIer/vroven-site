@@ -16,7 +16,7 @@
   var TEXT = 'НА УРОВНЕ';
   var TILT = [[-9, -14], [7, 10], [0, 0], [-4, -22], [11, 6], [-7, 16], [5, -9], [-12, 8], [8, -12]];
   // фазы, мс: буквы выравниваются, лазер открывает фон за 3 с, крест встаёт в название
-  var T = { sweep0: 300, sweep1: 2000, done: 2150, rev0: 2400, rev1: 5400, fade1: 6400, back0: 5500, back1: 6700, end: 7000 };
+  var DEFAULT_TIMING = { sweep0: 300, sweep1: 2000, done: 2150, rev0: 2400, rev1: 5400, fade1: 6400, back0: 5500, back1: 6700, end: 7000 };
   var RETRY_MS = [400, 1200]; // GitHub Pages иногда отвечает 503: повторяем загрузку
 
   function ease(x) { return x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
@@ -43,6 +43,12 @@
     var tall = hero.clientWidth / Math.max(1, hero.clientHeight) < .8; // телефон: вертикальный кадр
     var rough = null, final = null, W, H, dpr, clock = 0, geo, spans, flags, lastP = null, sp = null, prev = 0, running = false;
     var state = 'загрузка';
+    var workSource = hero.getAttribute('data-hl-work');
+    var work = null;
+    var T = DEFAULT_TIMING;
+    if (workSource) {
+      T = { sweep0: 1250, sweep1: 2600, done: 2750, rev0: 2900, rev1: 5400, fade1: 6400, back0: 5500, back1: 6700, end: 7000 };
+    }
 
     function build() {
       word.innerHTML = ''; spans = [];
@@ -72,6 +78,11 @@
       if (spans) geo = measure();
     }
     function cover(img) {
+      if (workSource) {
+        var scale = Math.max(W / img.width, H / img.height);
+        var width = img.width * scale, height = img.height * scale;
+        return [(W - width) * .62, (H - height) / 2, width, height];
+      }
       var s = tall ? W / img.width : Math.max(W / img.width, H / img.height); // телефон: целиком по ширине, все мастера в кадре
       var w = img.width * s, h = img.height * s;
       return [(W - w) / 2, tall ? H - h : (H - h) / 2, w, h];
@@ -109,6 +120,13 @@
       var a = cover(rough), b = cover(final);
       put(ctx, rough, a);
       ctx.fillStyle = 'rgba(13,13,13,' + lerp(.78, .35, ease((t - T.sweep1) / 400)) + ')'; ctx.fillRect(0, 0, W, H);
+      if (work) {
+        ctx.globalAlpha = ease((t - 350) / 450);
+        put(ctx, work, cover(work));
+        ctx.fillStyle = 'rgba(13,13,13,.22)';
+        ctx.fillRect(0, 0, W, H);
+        ctx.globalAlpha = 1;
+      }
 
       var p = null;
       if (t >= T.rev0 && t < T.rev1 + 50) {
@@ -183,14 +201,16 @@
       state = 'анимация'; clock = 0; prev = 0; running = true; root.requestAnimationFrame(frame);
     }
 
-    var rr = tall ? 'm.webp' : 'w.webp', left = 2;
+    var rr = tall ? 'm.webp' : 'w.webp', left = workSource ? 3 : 2;
     function got() {
       if (--left) return;
       if (!rough || !final) { state = 'картинки не загрузились'; hero.classList.add('is-fallback'); return; }
       (doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve()).then(start);
     }
-    loadImg(IMG + 'before-' + rr, function (im) { rough = im; got(); });
-    loadImg(IMG + 'after-' + rr + '?v=2', function (im) { final = im; got(); });
+    var imagePrefix = hero.getAttribute('data-hl-image-prefix') || IMG;
+    loadImg(hero.getAttribute('data-hl-before') || imagePrefix + 'before-' + rr, function (im) { rough = im; got(); });
+    loadImg(hero.getAttribute('data-hl-after') || imagePrefix + 'after-' + rr + '?v=2', function (im) { final = im; got(); });
+    if (workSource) loadImg(workSource, function (im) { work = im; got(); });
 
     root.addEventListener('resize', function () {
       if (!spans || !rough || !final) return;

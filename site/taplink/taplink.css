@@ -1,0 +1,18 @@
+.repair-city { font: 500 clamp(.66rem, 2.8vw, .85rem)/1.2 var(--f-body); }
+.repair-footer { padding-block: 24px; color: var(--ink-2); }
+.repair-taplink .repair-type__works { margin-top: 10px; }
+.repair-taplink .contacts { align-items: center; }
+
+@media (max-width: 480px) {
+  .repair-taplink .site-header__actions { gap: 4px; }
+  .repair-taplink .logo__img { width: clamp(85px, 29vw, 130px); }
+}
+
+.repair-taplink .hl[data-hl-work] {
+  background-image: url('../assets/img/hero/original-room-after-corner.jpg');
+  background-position: 62% center;
+}
+.hl-js .repair-taplink .hl[data-hl-work]:not(.is-ready):not(.is-fallback) {
+  background-image: url('../assets/img/hero/laser-before-w.webp');
+}
+.repair-taplink .hl[data-hl-work].is-ready { background-image: none; }
