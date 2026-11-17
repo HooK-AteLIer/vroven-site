@@ -8,6 +8,29 @@
   .repair-taplink .logo__img { width: clamp(85px, 29vw, 130px); }
 }
 
+@media (min-width: 1024px) {
+  .repair-taplink .menu-toggle { display: inline-grid; }
+  .repair-taplink .site-menu {
+    position: fixed;
+    inset: var(--header-h) var(--gutter) auto auto;
+    z-index: 49;
+    width: 320px;
+    max-height: calc(100dvh - var(--header-h) - 16px);
+    display: block;
+    padding: 12px 20px;
+    border: 1px solid var(--line);
+    border-radius: 0 0 12px 12px;
+    background: var(--canvas);
+    overflow-y: auto;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .repair-taplink .site-menu.is-open { visibility: visible; opacity: 1; }
+  .repair-taplink .site-menu .site-nav ul { display: grid; gap: 0; }
+  .repair-taplink .site-menu .site-nav li + li { border-top: 1px solid var(--line); }
+  .repair-taplink .site-menu .site-nav a { width: 100%; }
+}
+
 .repair-taplink .hl[data-hl-work] {
   background-image: url('../assets/img/hero/original-room-after-corner.jpg');
   background-position: 62% center;
@@ -16,7 +39,7 @@
   background-image: url('../assets/img/hero/laser-before-w.webp');
 }
 .repair-taplink .hl[data-hl-work].is-ready { background-image: none; }
-.repair-hero-mobile { display: none; }
+.repair-hero-mobile, .repair-hero-beam { display: none; }
 .hl-js .repair-taplink .hl:not(.is-ready):not(.is-fallback) .hl__word { visibility: visible; }
 
 @media (max-width: 767px) and (orientation: portrait) {
@@ -41,24 +64,25 @@
 }
 
 @media (max-width: 767px) and (orientation: portrait) and (prefers-reduced-motion: no-preference) {
-  .is-mobile-ready .repair-hero-mobile { animation: repair-reveal 1s .85s ease-in-out both; }
-  .is-mobile-ready .repair-hero-mobile::after {
-    content: '';
+  .is-mobile-ready .repair-hero-mobile { animation: repair-reveal 1.45s .65s ease-in-out both; }
+  .is-mobile-ready .repair-hero-beam {
+    display: block;
     position: absolute;
-    inset: 0 0 0 auto;
-    width: 2px;
-    background: #2fd16b;
-    box-shadow: 0 0 12px 2px #2fd16b;
-    animation: repair-laser 1s .85s ease-in-out both;
+    z-index: 1;
+    inset: 0 auto 0 0;
+    width: 3px;
+    background: #bcffd2;
+    box-shadow: 0 0 12px 3px #2fd16b;
+    pointer-events: none;
+    animation: repair-laser 1.45s .65s ease-in-out both;
   }
   @keyframes repair-reveal {
     from { clip-path: inset(0 100% 0 0); }
     to { clip-path: inset(0 0 0 0); }
   }
   @keyframes repair-laser {
-    0% { right: 100%; opacity: 0; }
-    12% { opacity: 1; }
-    88% { opacity: 1; }
-    100% { right: 0; opacity: 0; }
+    0% { left: 0; opacity: 0; }
+    12%, 88% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
   }
 }
