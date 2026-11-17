@@ -32,7 +32,7 @@
 }
 
 .repair-taplink .hl[data-hl-work] {
-  background-image: url('../assets/img/hero/original-room-after-corner.jpg');
+  background-image: url('../assets/img/hero/tyumen-uniform-after.jpg');
   background-position: 62% center;
 }
 .hl-js .repair-taplink .hl[data-hl-work]:not(.is-ready):not(.is-fallback) {
@@ -44,10 +44,10 @@
 
 @media (max-width: 767px) and (orientation: portrait) {
   .repair-taplink .hl[data-hl-work] {
-    background: #26241f url('../assets/img/hero/tyumen-mobile-work.jpg') center / cover no-repeat;
+    background: #26241f url('../assets/img/hero/tyumen-uniform-mobile-work.jpg') center / cover no-repeat;
   }
   .hl-js .repair-taplink .hl[data-hl-work]:not(.is-ready):not(.is-fallback) {
-    background-image: url('../assets/img/hero/tyumen-mobile-work.jpg');
+    background-image: url('../assets/img/hero/tyumen-uniform-mobile-work.jpg');
   }
   .repair-taplink .hl__canvas { display: none; }
   .repair-hero-mobile, .repair-hero-mobile img {
