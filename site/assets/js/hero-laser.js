@@ -34,6 +34,17 @@
   }
 
   function init(hero) {
+    var mobile = hero.querySelector('[data-hl-mobile]');
+    if (mobile) {
+      function revealMobile() { hero.classList.add('is-mobile-ready'); }
+      if (mobile.complete && mobile.naturalWidth) revealMobile();
+      else mobile.addEventListener('load', revealMobile, { once: true });
+      var mobileLayout = root.matchMedia('(max-width: 767px) and (orientation: portrait)');
+      if (mobileLayout.matches) {
+        mobileLayout.addEventListener('change', function () { init(hero); }, { once: true });
+        return;
+      }
+    }
     var word = hero.querySelector('[data-hl-word]'), cv = hero.querySelector('[data-hl-canvas]');
     if (!word || !cv || !cv.getContext) return;
     var ctx = cv.getContext('2d');

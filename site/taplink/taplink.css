@@ -16,3 +16,49 @@
   background-image: url('../assets/img/hero/laser-before-w.webp');
 }
 .repair-taplink .hl[data-hl-work].is-ready { background-image: none; }
+.repair-hero-mobile { display: none; }
+.hl-js .repair-taplink .hl:not(.is-ready):not(.is-fallback) .hl__word { visibility: visible; }
+
+@media (max-width: 767px) and (orientation: portrait) {
+  .repair-taplink .hl[data-hl-work] {
+    background: #26241f url('../assets/img/hero/tyumen-mobile-work.jpg') center / cover no-repeat;
+  }
+  .hl-js .repair-taplink .hl[data-hl-work]:not(.is-ready):not(.is-fallback) {
+    background-image: url('../assets/img/hero/tyumen-mobile-work.jpg');
+  }
+  .repair-taplink .hl__canvas { display: none; }
+  .repair-hero-mobile, .repair-hero-mobile img {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .repair-hero-mobile { visibility: hidden; }
+  .is-mobile-ready .repair-hero-mobile { visibility: visible; }
+  .repair-taplink .hl__inner { background: linear-gradient(#0d0d0d70, transparent 48%); }
+}
+
+@media (max-width: 767px) and (orientation: portrait) and (prefers-reduced-motion: no-preference) {
+  .is-mobile-ready .repair-hero-mobile { animation: repair-reveal 1s .85s ease-in-out both; }
+  .is-mobile-ready .repair-hero-mobile::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 2px;
+    background: #2fd16b;
+    box-shadow: 0 0 12px 2px #2fd16b;
+    animation: repair-laser 1s .85s ease-in-out both;
+  }
+  @keyframes repair-reveal {
+    from { clip-path: inset(0 100% 0 0); }
+    to { clip-path: inset(0 0 0 0); }
+  }
+  @keyframes repair-laser {
+    0% { right: 100%; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { right: 0; opacity: 0; }
+  }
+}
