@@ -17,8 +17,6 @@
   <script defer src="../../assets/js/data.js"></script>
   <script defer src="../../assets/js/core.js"></script>
   <script defer src="../../assets/js/lead.js"></script>
-  <script defer src="../../assets/js/pricing.js"></script>
-  <script defer src="../../assets/js/index.js"></script>
   <script defer src="../../assets/js/before-after.js"></script>
   <script defer src="../../assets/js/hero-laser.js"></script>
   <script defer src="../../assets/js/measure-clip.js"></script>
@@ -34,7 +32,6 @@
         <nav class="site-nav" aria-label="Основное меню">
           <ul>
             <li><a href="#repair">Квартиры</a></li>
-            <li><a href="#calc">Калькулятор</a></li>
             <li><a href="#commercial">Бизнес</a></li>
             <li><a href="#steps">Этапы</a></li>
             <li><a href="#estimate-checklist">Чек-лист сметы</a></li>
@@ -101,49 +98,6 @@
             <article class="repair-type card" data-reveal><h3>Дизайнерский ремонт</h3><ul class="repair-type__works"><li>Дизайн-проект и визуализация</li><li>Перепланировка по проекту</li><li>Сложные потолки и подсветка</li><li>Отделка по проекту</li><li>Авторский надзор</li></ul></article>
           </div>
         </div>
-      </div>
-    </section>
-    <section class="section" id="calc" aria-labelledby="calc-title">
-      <div class="container">
-        <div class="section-head" data-reveal>
-          <p class="eyebrow">Калькулятор ремонта</p>
-          <h2 id="calc-title">Сколько стоит ваш ремонт</h2>
-          <p class="lead-text">Укажите параметры объекта, чтобы оценить стоимость работ в Тюмени. Точную сумму назовём после замера.</p>
-        </div>
-        <form class="calc" data-calc data-calc-fixed-city="tyumen" novalidate>
-          <div class="calc__fields">
-            <div class="field">
-              <label for="calc-object">Объект</label>
-              <select id="calc-object" name="objectType" data-calc-object></select>
-            </div>
-            <div class="calc__pair">
-              <div class="field" data-calc-field="area">
-                <label for="calc-area">Площадь пола</label>
-                <div class="field__unit" data-unit="м²"><input id="calc-area" name="area" type="text" inputmode="decimal" autocomplete="off" value="54" aria-describedby="calc-area-error"></div>
-                <p class="field__error" id="calc-area-error" data-calc-error="area" hidden></p>
-              </div>
-              <div class="field" data-calc-field="ceiling">
-                <label for="calc-ceiling">Высота потолка</label>
-                <div class="field__unit" data-unit="мм"><input id="calc-ceiling" name="ceiling" type="text" inputmode="numeric" autocomplete="off" value="2700" aria-describedby="calc-ceiling-hint calc-ceiling-error"></div>
-                <p class="field__hint" id="calc-ceiling-hint">Выше 3000 мм ставка +10%</p>
-                <p class="field__error" id="calc-ceiling-error" data-calc-error="ceiling" hidden></p>
-              </div>
-            </div>
-            <div class="field">
-              <span class="field__label" id="calc-type-label">Тип ремонта</span>
-              <div class="chip-row" role="radiogroup" aria-labelledby="calc-type-label" data-calc-type></div>
-              <p class="field__hint" data-calc-works></p>
-            </div>
-          </div>
-          <div class="calc__result" aria-live="polite">
-            <p class="calc__result-label">Ориентир по работам</p>
-            <p class="calc__range"><span data-calc-out="range">Включите JavaScript для расчёта</span></p>
-            <p class="calc__meta" data-calc-out="meta"></p>
-            <div class="level-line calc__line" aria-hidden="true"></div>
-            <p class="calc__note">Вилка ±15%: точнее скажем после замера. Материалы считаем отдельно, по вашему выбору.</p>
-            <a class="btn btn--block" href="#contacts">Получить точную смету</a>
-          </div>
-        </form>
       </div>
     </section>
     <section class="section section--panel" id="estimate-checklist" aria-labelledby="estimate-checklist-title">
